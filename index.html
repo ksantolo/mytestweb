@@ -110,6 +110,27 @@
       font-weight: 700;
     }
 
+    .ig-header-btn {
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      color: var(--blanco);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.12s ease, background 0.15s ease;
+    }
+
+    .ig-header-btn:hover {
+      background: rgba(255, 255, 255, 0.34);
+      transform: scale(1.03);
+    }
+
     .btn {
       border: none;
       border-radius: 10px;
@@ -631,6 +652,22 @@
       </div>
 
       <div class="top-actions">
+        <a
+          id="headerInstagram"
+          class="ig-header-btn"
+          href="https://www.instagram.com/paos.world/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visitar Instagram de Pao's World"
+          title="Síguenos en Instagram @paos.world"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          <span id="headerIgText">@paos.world</span>
+        </a>
         <div class="tasa-pill" id="tasaPill">BCV: Bs. 890,00</div>
         <button class="btn btn-white" type="button" onclick="abrirModalPin()">Admin</button>
       </div>
@@ -1033,6 +1070,17 @@
       document.getElementById("brandTitle").textContent = c.nombre_tienda || "Pao's World";
       document.getElementById("brandSub").textContent = c.subtitulo_tienda || "The World of Princess • Caracas, Venezuela";
       document.title = `${c.nombre_tienda || "Pao's World"} — Catálogo Oficial`;
+
+      const igHandle = String(c.instagram || "@paos.world").trim();
+      const igUser = igHandle.replace(/^@/, "") || "paos.world";
+      const headerIg = document.getElementById("headerInstagram");
+      const headerIgText = document.getElementById("headerIgText");
+      if (headerIg) {
+        headerIg.href = `https://www.instagram.com/${encodeURIComponent(igUser)}/`;
+      }
+      if (headerIgText) {
+        headerIgText.textContent = igHandle.startsWith("@") ? igHandle : `@${igHandle}`;
+      }
 
       const waNum = String(c.whatsapp || "584242855733").replace(/\D/g, "") || "584242855733";
       const fabWa = document.getElementById("fabWhatsApp");
