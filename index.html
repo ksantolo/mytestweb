@@ -187,6 +187,41 @@
     .qty-btn { width: 26px; height: 26px; border-radius: 7px; border: 1px solid var(--borde); background: var(--fondo); font-weight: 800; cursor: pointer; }
     .promo-note { font-size: 12px; color: var(--exito); font-weight: 700; margin-top: 6px; }
 
+    .order-desc-box {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #FAF9FE;
+      border: 1px solid var(--borde);
+      font-size: 12.5px;
+    }
+    .order-desc-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--texto);
+      margin-bottom: 8px;
+    }
+    .order-desc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      color: var(--texto-suave);
+      margin-bottom: 8px;
+    }
+    .order-desc-total {
+      font-weight: 800;
+      color: var(--texto);
+      border-top: 1px dashed var(--borde);
+      padding-top: 8px;
+      line-height: 1.45;
+    }
+    .order-desc-bs {
+      color: var(--acento);
+      font-weight: 800;
+      margin-top: 3px;
+    }
+
     .admin-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
     .admin-panel { display: none; }
     .admin-panel.active { display: block; }
@@ -318,7 +353,7 @@
       </div>
       <div id="cartItemsList"></div>
       <div class="promo-note" id="cartPromoNote"></div>
-      <div style="margin-top: 10px; font-weight: 800; font-size: 14px;" id="cartSummaryTotals"></div>
+      <div id="orderDescriptionBox"></div>
 
       <form id="formPedido" style="margin-top: 14px;" onsubmit="enviarPedido(event)">
         <div class="field">
@@ -814,15 +849,16 @@
 
     function renderModalCarrito() {
       const list = $("cartItemsList");
-      const summary = $("cartSummaryTotals");
+      const descBox = $("orderDescriptionBox");
       const promoNote = $("cartPromoNote");
       const metodoPago = $("cliPago")?.value || "Pago Móvil";
+      const esPagoMovil = /m[oó]vil/i.test(metodoPago);
       const tasa = parseFloat(state.config.tasa_bcv) || 890;
 
       if (!state.carrito.length) {
         list.innerHTML = `<p style="color: var(--texto-suave); padding: 12px 0;">Tu carrito está vacío.</p>`;
         promoNote.textContent = "";
-        summary.textContent = "";
+        descBox.innerHTML = "";
         actualizarBadgeCarrito();
         return;
       }
@@ -851,7 +887,30 @@
       promoNote.textContent = ahorroPromo > 0
         ? `¡Promoción en Divisas aplicada! Ahorras $${ahorroPromo.toFixed(2)} en este pedido.`
         : "";
-      summary.innerHTML = `Total: $${totalUsd.toFixed(2)} USD • Bs. ${fmtBs(totalUsd * tasa)}`;
+
+      const detalleItemsHtml = state.carrito.map(it => {
+        const unit = precioUnitarioSegunPago(it, metodoPago);
+        const subUsd = unit * it.cantidad;
+        return `<li>• ${it.cantidad}x ${escHtml(it.nombre)} — $${unit.toFixed(2)} c/u (<b>$${subUsd.toFixed(2)}</b>)</li>`;
+      }).join("");
+
+      const totalBsFmt = fmtBs(totalUsd * tasa);
+      const tasaFmt = fmtBs(tasa);
+      const pagoMovilHtml = esPagoMovil
+        ? `<div class="order-desc-bs">Son $${totalUsd.toFixed(2)} de tu carrito • Total en Bs.: Bs. ${totalBsFmt} (Tasa BCV: Bs. ${tasaFmt})</div>`
+        : "";
+
+      descBox.innerHTML = `
+        <div class="order-desc-box">
+          <div class="order-desc-title">Descripción del pedido</div>
+          <ul class="order-desc-list">${detalleItemsHtml}</ul>
+          <div class="order-desc-total">
+            Total del carrito: $${totalUsd.toFixed(2)} USD
+            ${pagoMovilHtml}
+          </div>
+        </div>
+      `;
+
       actualizarBadgeCarrito();
     }
 
@@ -967,6 +1026,22 @@
       await cargarCatalogo();
     }
 
+    function limpiarCodigoInternoItem(textoItem) {
+      return String(textoItem || "")
+        .replace(/^\s*\[[^\]]+\]\s*/g, "")
+        .replace(/\s*\[[^\]]+\]\s*/g, " ")
+        .trim();
+    }
+
+    function formatearDetalleParaWhatsApp(detalleRaw) {
+      return String(detalleRaw || "")
+        .split(/\s*(?:\||;|\n)\s*/)
+        .map(s => limpiarCodigoInternoItem(s))
+        .filter(Boolean)
+        .map(s => `- ${s}`)
+        .join("\n");
+    }
+
     function poblarPanelAdmin() {
       const d = state.adminData;
       const cfg = d.config || {};
@@ -1012,20 +1087,36 @@
         const montoHoyBsFmt = fmtBs(totalUsdNum * tasaActual);
         const metodoPagoStr = String(ped.metodo_pago || "").trim();
         const esPagoMovil = /m[oó]vil/i.test(metodoPagoStr);
+        const nombreCliente = String(ped.cliente || "").trim();
+        const tiendaStr = String(cfg.nombre_tienda || "Pao's World").trim();
+        const detalleLineas = formatearDetalleParaWhatsApp(ped.detalle_items);
 
-        const lineaMonto = esPagoMovil
-          ? `Total: $${totalUsdNum.toFixed(2)} — el monto al día de hoy para Pago Móvil es Bs. ${montoHoyBsFmt} (Tasa BCV: Bs. ${tasaFmt}).`
-          : `Total: $${totalUsdNum.toFixed(2)} (referencia al día de hoy: Bs. ${montoHoyBsFmt} a tasa BCV Bs. ${tasaFmt}).`;
-
-        const textoCliente = [
-          `Hola ${ped.cliente}, te escribimos de ${cfg.nombre_tienda || "Pao's World"} respecto a tu orden ${ped.pedido_id}.`,
-          lineaMonto,
+        const cabecera = [
+          nombreCliente ? `Hola ${nombreCliente}, te escribimos de ${tiendaStr}` : `Te escribimos de ${tiendaStr}`,
+          ped.pedido_id ? `respecto a tu orden ${ped.pedido_id}.` : ".",
+          `Total: $${totalUsdNum.toFixed(2)}`,
           metodoPagoStr ? `Método de pago: ${metodoPagoStr}.` : "",
           ped.modalidad_entrega ? `Entrega: ${ped.modalidad_entrega}.` : ""
-        ].filter(Boolean).join("\n");
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .replace(" .", ".");
+
+        const cuerpo = [
+          cabecera,
+          "",
+          "detalle de la orden",
+          detalleLineas,
+          esPagoMovil
+            ? `\nEl monto al día de hoy para Pago Móvil es Bs. ${montoHoyBsFmt} (Tasa BCV: Bs. ${tasaFmt}).`
+            : ""
+        ]
+          .filter(line => line !== undefined)
+          .join("\n")
+          .trim();
 
         const linkWaHtml = waCliente
-          ? `<br><a class="btn-wa-mini" href="https://wa.me/${waCliente}?text=${encodeURIComponent(textoCliente)}" target="_blank" rel="noopener noreferrer">WhatsApp (+${waCliente})</a>`
+          ? `<br><a class="btn-wa-mini" href="https://wa.me/${waCliente}?text=${encodeURIComponent(cuerpo)}" target="_blank" rel="noopener noreferrer">WhatsApp (+${waCliente})</a>`
           : "";
 
         return `
