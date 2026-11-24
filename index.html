@@ -28,7 +28,7 @@
       background-color: var(--fondo);
       color: var(--texto);
       min-height: 100vh;
-      padding-bottom: 140px;
+      padding-bottom: 195px;
     }
 
     .topbar {
@@ -396,6 +396,29 @@
       color: var(--peligro);
     }
 
+    .fab-instagram {
+      position: fixed;
+      bottom: 146px;
+      right: 20px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(129, 52, 175, 0.35);
+      z-index: 45;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .fab-instagram:hover {
+      filter: brightness(1.06);
+      transform: scale(1.05);
+    }
+
     .fab-whatsapp {
       position: fixed;
       bottom: 82px;
@@ -698,6 +721,22 @@
       <p style="color: var(--texto-suave);">Cargando catálogo de Pao's World...</p>
     </section>
   </main>
+
+  <a
+    id="fabInstagram"
+    class="fab-instagram"
+    href="https://www.instagram.com/paos.world/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Visitar Instagram de Pao's World"
+    title="Visitar Instagram de Pao's World"
+  >
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </svg>
+  </a>
 
   <a
     id="fabWhatsApp"
@@ -1073,13 +1112,18 @@
 
       const igHandle = String(c.instagram || "@paos.world").trim();
       const igUser = igHandle.replace(/^@/, "") || "paos.world";
+      const igUrl = `https://www.instagram.com/${encodeURIComponent(igUser)}/`;
       const headerIg = document.getElementById("headerInstagram");
       const headerIgText = document.getElementById("headerIgText");
+      const fabIg = document.getElementById("fabInstagram");
       if (headerIg) {
-        headerIg.href = `https://www.instagram.com/${encodeURIComponent(igUser)}/`;
+        headerIg.href = igUrl;
       }
       if (headerIgText) {
         headerIgText.textContent = igHandle.startsWith("@") ? igHandle : `@${igHandle}`;
+      }
+      if (fabIg) {
+        fabIg.href = igUrl;
       }
 
       const waNum = String(c.whatsapp || "584242855733").replace(/\D/g, "") || "584242855733";
