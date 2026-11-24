@@ -34,6 +34,1280 @@
     .topbar {
       background: linear-gradient(135deg, var(--primario), var(--acento));
       color: var(--blanco);
+      padding: 12px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      box-shadow: 0 4px 18px rgba(105, 88, 175, 0.22);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      min-width: 50px;
+      max-width: 155px;
+      height: 48px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1.5px solid rgba(255, 255, 255, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .brand-title {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      opacity: 0.92;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tasa-pill {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.12s ease, opacity 0.15s ease, background 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .btn-white {
+      background: var(--blanco);
+      color: var(--acento);
+    }
+
+    .btn-primary {
+      background: var(--acento);
+      color: var(--blanco);
+    }
+
+    .btn-soft {
+      background: #ECE7FA;
+      color: var(--texto);
+    }
+
+    .btn-danger {
+      background: #FDECEF;
+      color: var(--peligro);
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 18px auto;
+      padding: 0 16px;
+    }
+
+    .banner-pausa {
+      background: #FFF3CD;
+      border: 1px solid #F2D388;
+      color: #6B4E00;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .portada-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      border: 1px solid var(--borde);
+      background: linear-gradient(135deg, var(--primario), var(--acento));
+      display: none;
+    }
+
+    .portada-box img {
+      width: 100%;
+      max-height: 260px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .controls-bar {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 14px rgba(85, 68, 150, 0.05);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 11px;
+      border: 1.5px solid var(--borde);
+      font-size: 14px;
+      color: var(--texto);
+      background: #FAF9FE;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--acento);
+      background: var(--blanco);
+    }
+
+    .cats-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
+    }
+
+    .cat-chip {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--borde);
+      background: #FAF9FE;
+      color: var(--texto-suave);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .cat-chip.active {
+      background: var(--acento);
+      color: var(--blanco);
+      border-color: var(--acento);
+    }
+
+    .grid-productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 14px rgba(85, 68, 150, 0.05);
+    }
+
+    .card-img {
+      height: 175px;
+      background: linear-gradient(135deg, #EFEBFB, #E4DDF8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(35, 30, 51, 0.72);
+      color: var(--blanco);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 999px;
+    }
+
+    .card-body {
+      padding: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .card-var {
+      font-size: 12px;
+      color: var(--texto-suave);
+      min-height: 16px;
+    }
+
+    .price-box {
+      margin-top: auto;
+      padding-top: 8px;
+    }
+
+    .price-usd {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--acento);
+    }
+
+    .price-promo {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--exito);
+      margin-top: 2px;
+    }
+
+    .price-bs {
+      font-size: 12.5px;
+      color: var(--texto-suave);
+      font-weight: 600;
+    }
+
+    .card-footer {
+      padding: 0 13px 13px;
+    }
+
+    .stock-txt {
+      font-size: 11.5px;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: var(--texto-suave);
+    }
+
+    .stock-out {
+      color: var(--peligro);
+    }
+
+    .fab-whatsapp {
+      position: fixed;
+      bottom: 82px;
+      right: 20px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background-color: #25D366;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
+      z-index: 45;
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+
+    .fab-whatsapp:hover {
+      background-color: #1ebe5d;
+      transform: scale(1.05);
+    }
+
+    .fab-cart {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--primario), var(--acento));
+      color: var(--blanco);
+      border: none;
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 8px 24px rgba(96, 75, 175, 0.35);
+      cursor: pointer;
+      z-index: 45;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(24, 19, 43, 0.52);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      z-index: 60;
+      overflow-y: auto;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--blanco);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 20px;
+      box-shadow: 0 18px 40px rgba(25, 18, 52, 0.25);
+    }
+
+    .modal-box.wide {
+      max-width: 980px;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--borde);
+    }
+
+    .modal-head h3 {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--texto-suave);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--borde);
+      font-size: 13.5px;
+      color: var(--texto);
+      background: #FAF9FE;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--borde);
+      font-size: 13px;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .qty-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      border: 1px solid var(--borde);
+      background: var(--fondo);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .admin-panel {
+      display: none;
+    }
+
+    .admin-panel.active {
+      display: block;
+    }
+
+    .admin-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--borde);
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+    }
+
+    th, td {
+      padding: 9px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--borde);
+    }
+
+    th {
+      background: #F5F2FC;
+      font-weight: 800;
+      color: var(--texto);
+    }
+
+    .status-msg {
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .status-msg.ok {
+      display: block;
+      background: #E7F7EF;
+      color: var(--exito);
+    }
+
+    .status-msg.err {
+      display: block;
+      background: #FDECEF;
+      color: var(--peligro);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-logo" id="brandLogo">PW</div>
+        <div>
+          <div class="brand-title" id="brandTitle">Pao's World</div>
+          <div class="brand-sub" id="brandSub">The World of Princess • Caracas, Venezuela</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <div class="tasa-pill" id="tasaPill">BCV: Bs. 890,00</div>
+        <button class="btn btn-white" type="button" onclick="abrirModalPin()">Admin</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="banner-pausa" id="bannerPausa">
+      La tienda se encuentra temporalmente pausada. Puedes explorar el catálogo o escribirnos por WhatsApp.
+    </div>
+
+    <div class="portada-box" id="portadaBox">
+      <img id="portadaImg" src="" alt="Portada Pao's World" />
+    </div>
+
+    <section class="controls-bar">
+      <input
+        type="text"
+        id="searchInput"
+        class="search-input"
+        placeholder="Buscar maquillaje, skincare, uñas, serums, papelería, navidad..."
+        oninput="renderCatalogo()"
+      />
+      <div class="cats-row" id="catsRow"></div>
+    </section>
+
+    <section class="grid-productos" id="gridProductos">
+      <p style="color: var(--texto-suave);">Cargando catálogo de Pao's World...</p>
+    </section>
+  </main>
+
+  <a
+    id="fabWhatsApp"
+    class="fab-whatsapp"
+    href="https://wa.me/584242855733"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chatear por WhatsApp con Paola"
+    title="Chatear por WhatsApp con Paola"
+  >
+    <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true">
+      <path d="M16 3C8.82 3 3 8.82 3 16c0 2.29.6 4.52 1.73 6.49L3.5 28.5l6.22-1.63A12.93 12.93 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm7.57 18.47c-.32.9-1.85 1.72-2.58 1.83-.67.1-1.52.14-2.45-.16-.56-.18-1.29-.42-2.22-.82-3.91-1.69-6.46-5.63-6.66-5.89-.2-.26-1.59-2.12-1.59-4.04 0-1.92 1.01-2.87 1.37-3.26.36-.39.78-.49 1.04-.49.26 0 .52 0 .75.01.24.01.56-.09.88.67.32.78 1.09 2.66 1.19 2.85.1.19.16.42.03.68-.13.26-.19.42-.39.65-.2.23-.41.51-.59.69-.2.2-.4.41-.17.8.23.39 1.02 1.68 2.19 2.72 1.5 1.34 2.77 1.75 3.16 1.95.39.2.62.16.85-.1.23-.26.98-1.14 1.24-1.53.26-.39.52-.32.88-.19.36.13 2.29 1.08 2.68 1.28.39.2.65.29.75.46.1.16.1.94-.22 1.84z"/>
+    </svg>
+  </a>
+
+  <button class="fab-cart" type="button" onclick="abrirCarrito()">
+    <span>Carrito</span>
+    <span id="cartCountBadge">(0)</span>
+    <span>•</span>
+    <span id="cartTotalUsdBadge">$0.00</span>
+  </button>
+
+  <!-- Modal Carrito y Pedido -->
+  <div class="modal-backdrop" id="modalCarrito">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>Tu Pedido en Pao's World</h3>
+        <button class="btn btn-soft" type="button" onclick="cerrarModal('modalCarrito')">✕</button>
+      </div>
+      <div id="cartItemsList"></div>
+      <div style="margin-top: 12px; font-weight: 800; font-size: 14px;" id="cartSummaryTotals"></div>
+
+      <form id="formPedido" style="margin-top: 14px;" onsubmit="enviarPedido(event)">
+        <div class="field">
+          <label>Nombre y Apellido *</label>
+          <input type="text" id="cliNombre" required placeholder="Ej. Valentina Pérez" />
+        </div>
+        <div class="field">
+          <label>Teléfono / WhatsApp *</label>
+          <input type="tel" id="cliTelefono" required placeholder="Ej. 0412-0000000" />
+        </div>
+        <div class="admin-grid-2">
+          <div class="field">
+            <label>Modalidad de Entrega *</label>
+            <select id="cliEntrega" required>
+              <option value="Delivery Caracas">Delivery Caracas</option>
+              <option value="Entrega personal / Punto acordado">Entrega personal / Punto acordado</option>
+              <option value="Envío nacional (MRW / Zoom / Tealca)">Envío nacional</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Método de Pago *</label>
+            <select id="cliPago" required>
+              <option value="Pago Móvil (Bs)">Pago Móvil (Bs)</option>
+              <option value="Efectivo USD ($)">Efectivo USD ($)</option>
+              <option value="Zelle / Divisas">Zelle / Divisas</option>
+              <option value="Binance / Zinli">Binance / Zinli</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width: 100%; padding: 12px;" type="submit" id="btnConfirmarPedido">
+          Reservar Stock y Enviar por WhatsApp
+        </button>
+        <div class="status-msg" id="msgPedido"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal PIN Admin -->
+  <div class="modal-backdrop" id="modalPin">
+    <div class="modal-box" style="max-width: 380px;">
+      <div class="modal-head">
+        <h3>Acceso Administradora</h3>
+        <button class="btn btn-soft" type="button" onclick="cerrarModal('modalPin')">✕</button>
+      </div>
+      <form onsubmit="loginAdmin(event)">
+        <div class="field">
+          <label>PIN de Seguridad</label>
+          <input type="password" id="adminPinInput" required placeholder="Ingresa tu PIN" />
+        </div>
+        <button class="btn btn-primary" style="width: 100%;" type="submit">Entrar al Panel</button>
+        <div class="status-msg" id="msgPin"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Panel Administrativo Completo -->
+  <div class="modal-backdrop" id="modalAdmin">
+    <div class="modal-box wide">
+      <div class="modal-head">
+        <h3>Panel Administrativo — Pao's World</h3>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-soft" type="button" onclick="toggleEstadoTiendaAdmin()" id="btnEstadoTienda">Estado: ACTIVO</button>
+          <button class="btn btn-danger" type="button" onclick="cerrarModal('modalAdmin')">Cerrar</button>
+        </div>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="btn btn-primary" type="button" onclick="cambiarTabAdmin('tabTasa', this)">Tasa BCV y Ajustes</button>
+        <button class="btn btn-soft" type="button" onclick="cambiarTabAdmin('tabProductos', this)">Productos (168+)</button>
+        <button class="btn btn-soft" type="button" onclick="cambiarTabAdmin('tabPedidos', this)">Pedidos</button>
+        <button class="btn btn-soft" type="button" onclick="cambiarTabAdmin('tabMovs', this)">Movimientos DEBE/HABER</button>
+      </div>
+
+      <!-- Tab 1: Tasa BCV Manual y Configuración -->
+      <div class="admin-panel active" id="tabTasa">
+        <div class="admin-grid-2">
+          <div class="field">
+            <label>Tasa BCV Manual (Bs por $1) *</label>
+            <input type="number" step="0.01" min="0.01" id="cfgTasaBcv" />
+            <small style="color: var(--texto-suave);" id="cfgUltimaAct"></small>
+          </div>
+          <div class="field">
+            <label>Horas expiración carrito</label>
+            <input type="number" step="0.5" min="0.5" id="cfgHorasExp" />
+          </div>
+          <div class="field">
+            <label>Nombre de la Tienda</label>
+            <input type="text" id="cfgNombreTienda" />
+          </div>
+          <div class="field">
+            <label>WhatsApp (ej. 584242855733)</label>
+            <input type="text" id="cfgWhatsapp" />
+          </div>
+          <div class="field">
+            <label>Subir Logo (se guarda en Google Drive)</label>
+            <input type="file" accept="image/*" onchange="subirArchivoConfig(this, 'logo_url')" />
+            <input type="text" id="cfgLogoUrl" placeholder="URL del logo" style="margin-top: 6px;" />
+          </div>
+          <div class="field">
+            <label>Subir Portada (se guarda en Google Drive)</label>
+            <input type="file" accept="image/*" onchange="subirArchivoConfig(this, 'portada_url')" />
+            <input type="text" id="cfgPortadaUrl" placeholder="URL de portada" style="margin-top: 6px;" />
+          </div>
+        </div>
+        <button class="btn btn-primary" type="button" onclick="guardarConfigAdmin()">Guardar Tasa y Configuración</button>
+        <div class="status-msg" id="msgAdminCfg"></div>
+      </div>
+
+      <!-- Tab 2: Productos -->
+      <div class="admin-panel" id="tabProductos">
+        <div class="admin-grid-2" style="margin-bottom: 14px; background: #FAF9FE; padding: 12px; border-radius: 12px; border: 1px solid var(--borde);">
+          <div class="field">
+            <label>ID (vacío para crear nuevo)</label>
+            <input type="text" id="prodId" placeholder="Ej. maquillaje1 o vacío" />
+          </div>
+          <div class="field">
+            <label>Categoría</label>
+            <select id="prodCategoria"></select>
+          </div>
+          <div class="field">
+            <label>Nombre del Producto *</label>
+            <input type="text" id="prodNombre" />
+          </div>
+          <div class="field">
+            <label>Detalle / Variante</label>
+            <input type="text" id="prodDetalle" />
+          </div>
+          <div class="field">
+            <label>Precio BCV (USD) *</label>
+            <input type="number" step="0.01" id="prodPrecioUsd" />
+          </div>
+          <div class="field">
+            <label>Precio Promo Divisas (opcional)</label>
+            <input type="number" step="0.01" id="prodPromoUsd" />
+          </div>
+          <div class="field">
+            <label>Stock</label>
+            <input type="number" step="1" id="prodStock" value="5" />
+          </div>
+          <div class="field">
+            <label>Foto del Producto (Drive)</label>
+            <input type="file" accept="image/*" onchange="subirFotoProducto(this)" />
+            <input type="text" id="prodImagenUrl" placeholder="URL de imagen" style="margin-top: 6px;" />
+          </div>
+          <div class="field">
+            <label>Activo</label>
+            <select id="prodActivo">
+              <option value="SI">SI</option>
+              <option value="NO">NO</option>
+            </select>
+          </div>
+          <div style="display: flex; align-items: flex-end; gap: 8px; margin-bottom: 12px;">
+            <button class="btn btn-primary" type="button" onclick="guardarProductoAdmin()">Guardar Producto</button>
+            <button class="btn btn-soft" type="button" onclick="limpiarFormProducto()">Limpiar</button>
+          </div>
+        </div>
+        <div class="status-msg" id="msgAdminProd"></div>
+
+        <div class="table-wrap" style="margin-top: 12px;">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Categoría</th>
+                <th>Nombre</th>
+                <th>USD</th>
+                <th>Stock</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="adminProdBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 3: Pedidos -->
+      <div class="admin-panel" id="tabPedidos">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Pedido</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Total USD / Bs</th>
+                <th>Detalle</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="adminPedidosBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 4: Movimientos DEBE / HABER -->
+      <div class="admin-panel" id="tabMovs">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Ref</th>
+                <th>Producto</th>
+                <th>Tipo</th>
+                <th>Cant.</th>
+                <th>Stock Ant. → Nuevo</th>
+                <th>Motivo</th>
+              </tr>
+            </thead>
+            <tbody id="adminMovsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbx47QO5P1K0gi_yW57KnAyg3vdd2BKCVrZNmwYkkPIXTFxHrODdVyXF01jXNkeHq1JT/exec";
+
+    let state = {
+      config: {
+        estado_servicio: "ACTIVO",
+        tasa_bcv: 890,
+        bcv_ultima_actualizacion: "",
+        horas_expiracion_carrito: 2,
+        nombre_tienda: "Pao's World",
+        subtitulo_tienda: "The World of Princess • Caracas, Venezuela",
+        whatsapp: "584242855733",
+        instagram: "@paos.world",
+        color_primario: "#A99BE8",
+        color_fondo: "#F4F2FC",
+        color_acento: "#8575D4",
+        logo_url: "",
+        portada_url: ""
+      },
+      categorias: [],
+      productos: [],
+      categoriaActiva: "TODAS",
+      carrito: [],
+      adminPin: "",
+      adminData: null
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      cargarCatalogo();
+    });
+
+    async function cargarCatalogo() {
+      try {
+        const res = await fetch(`${API_URL}?action=catalog`);
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || "Error al cargar catálogo");
+
+        state.config = Object.assign({}, state.config, data.config || {});
+        state.categorias = data.categorias || [];
+        state.productos = data.productos || [];
+
+        aplicarTemaYMarca();
+        renderCategorias();
+        renderCatalogo();
+        actualizarBadgeCarrito();
+      } catch (err) {
+        document.getElementById("gridProductos").innerHTML =
+          `<p style="color: var(--peligro);">No se pudo cargar el catálogo: ${escHtml(err.message)}</p>`;
+      }
+    }
+
+    function aplicarTemaYMarca() {
+      const c = state.config;
+      document.documentElement.style.setProperty("--primario", c.color_primario || "#A99BE8");
+      document.documentElement.style.setProperty("--fondo", c.color_fondo || "#F4F2FC");
+      document.documentElement.style.setProperty("--acento", c.color_acento || "#8575D4");
+
+      document.getElementById("brandTitle").textContent = c.nombre_tienda || "Pao's World";
+      document.getElementById("brandSub").textContent = c.subtitulo_tienda || "The World of Princess • Caracas, Venezuela";
+      document.title = `${c.nombre_tienda || "Pao's World"} — Catálogo Oficial`;
+
+      const waNum = String(c.whatsapp || "584242855733").replace(/\D/g, "") || "584242855733";
+      const fabWa = document.getElementById("fabWhatsApp");
+      if (fabWa) {
+        fabWa.href = `https://wa.me/${waNum}`;
+      }
+
+      const tasa = parseFloat(c.tasa_bcv) || 890;
+      document.getElementById("tasaPill").textContent = `BCV: Bs. ${tasa.toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+      document.getElementById("bannerPausa").style.display =
+        String(c.estado_servicio).toUpperCase() === "ACTIVO" ? "none" : "block";
+
+      const logoBox = document.getElementById("brandLogo");
+      if (c.logo_url) {
+        logoBox.innerHTML = `<img src="${escAttr(c.logo_url)}" alt="Logo Pao's World" />`;
+      } else {
+        logoBox.textContent = "PW";
+      }
+
+      const portadaBox = document.getElementById("portadaBox");
+      if (c.portada_url) {
+        document.getElementById("portadaImg").src = c.portada_url;
+        portadaBox.style.display = "block";
+      } else {
+        portadaBox.style.display = "none";
+      }
+    }
+
+    function renderCategorias() {
+      const row = document.getElementById("catsRow");
+      const chips = [`<button class="cat-chip ${state.categoriaActiva === "TODAS" ? "active" : ""}" onclick="seleccionarCategoria('TODAS')">Todas (${state.productos.length})</button>`];
+      state.categorias.forEach(cat => {
+        const active = state.categoriaActiva === cat.categoria ? "active" : "";
+        chips.push(`<button class="cat-chip ${active}" onclick="seleccionarCategoria('${escAttr(cat.categoria)}')">${escHtml(cat.categoria)}</button>`);
+      });
+      row.innerHTML = chips.join("");
+    }
+
+    function seleccionarCategoria(cat) {
+      state.categoriaActiva = cat;
+      renderCategorias();
+      renderCatalogo();
+    }
+
+    function renderCatalogo() {
+      const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+      const tasa = parseFloat(state.config.tasa_bcv) || 890;
+
+      const filtrados = state.productos.filter(p => {
+        const matchCat = state.categoriaActiva === "TODAS" || p.categoria === state.categoriaActiva;
+        const texto = `${p.nombre} ${p.detalle_variante} ${p.categoria}`.toLowerCase();
+        const matchQ = !q || texto.includes(q);
+        return matchCat && matchQ;
+      });
+
+      const grid = document.getElementById("gridProductos");
+      if (filtrados.length === 0) {
+        grid.innerHTML = `<p style="color: var(--texto-suave);">No se encontraron productos con ese filtro.</p>`;
+        return;
+      }
+
+      grid.innerHTML = filtrados.map(p => {
+        const precioUsd = Number(p.precio_bcv_usd) || 0;
+        const precioBs = precioUsd * tasa;
+        const stock = Number(p.stock) || 0;
+        const sinStock = stock <= 0;
+        const promoHtml = p.precio_promo_divisas
+          ? `<div class="price-promo">Promo divisas: $${Number(p.precio_promo_divisas).toFixed(2)}</div>`
+          : "";
+
+        const imgHtml = p.imagen_url
+          ? `<img src="${escAttr(p.imagen_url)}" alt="${escAttr(p.nombre)}" />`
+          : `<span style="font-size: 28px; font-weight: 800; color: var(--acento); opacity: 0.45;">${escHtml(p.categoria.slice(0, 2).toUpperCase())}</span>`;
+
+        return `
+          <article class="card">
+            <div class="card-img">
+              ${imgHtml}
+              <span class="card-badge">${escHtml(p.categoria)}</span>
+            </div>
+            <div class="card-body">
+              <div class="card-title">${escHtml(p.nombre)}</div>
+              <div class="card-var">${escHtml(p.detalle_variante || "")}</div>
+              <div class="price-box">
+                <div class="price-usd">$${precioUsd.toFixed(2)}</div>
+                <div class="price-bs">Bs. ${precioBs.toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                ${promoHtml}
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="stock-txt ${sinStock ? "stock-out" : ""}">
+                ${sinStock ? "Agotado por ahora" : `Disponible: ${stock} und.`}
+              </div>
+              <button
+                class="btn btn-primary"
+                style="width: 100%;"
+                type="button"
+                ${sinStock ? "disabled" : ""}
+                onclick="agregarAlCarrito('${escAttr(p.id)}')"
+              >
+                ${sinStock ? "Sin stock" : "Agregar al carrito"}
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function agregarAlCarrito(prodId) {
+      const prod = state.productos.find(x => x.id === prodId);
+      if (!prod || (Number(prod.stock) || 0) <= 0) return;
+
+      const existente = state.carrito.find(x => x.id === prodId);
+      if (existente) {
+        if (existente.cantidad + 1 > prod.stock) {
+          alert(`Solo quedan ${prod.stock} unidades disponibles de "${prod.nombre}".`);
+          return;
+        }
+        existente.cantidad += 1;
+      } else {
+        state.carrito.push({
+          id: prod.id,
+          nombre: prod.nombre,
+          precio_usd: Number(prod.precio_bcv_usd) || 0,
+          cantidad: 1,
+          maxStock: Number(prod.stock) || 0
+        });
+      }
+      actualizarBadgeCarrito();
+    }
+
+    function cambiarCantidadCarrito(prodId, delta) {
+      const idx = state.carrito.findIndex(x => x.id === prodId);
+      if (idx === -1) return;
+      const item = state.carrito[idx];
+      const nuevaCant = item.cantidad + delta;
+      if (nuevaCant <= 0) {
+        state.carrito.splice(idx, 1);
+      } else if (nuevaCant <= item.maxStock) {
+        item.cantidad = nuevaCant;
+      }
+      actualizarBadgeCarrito();
+      renderModalCarrito();
+    }
+
+    function actualizarBadgeCarrito() {
+      const totalUnidades = state.carrito.reduce((acc, it) => acc + it.cantidad, 0);
+      const totalUsd = state.carrito.reduce((acc, it) => acc + it.cantidad * it.precio_usd, 0);
+      document.getElementById("cartCountBadge").textContent = `(${totalUnidades})`;
+      document.getElementById("cartTotalUsdBadge").textContent = `$${totalUsd.toFixed(2)}`;
+    }
+
+    function abrirCarrito() {
+      renderModalCarrito();
+      document.getElementById("modalCarrito").classList.add("open");
+    }
+
+    function renderModalCarrito() {
+      const list = document.getElementById("cartItemsList");
+      const summary = document.getElementById("cartSummaryTotals");
+      const tasa = parseFloat(state.config.tasa_bcv) || 890;
+
+      if (state.carrito.length === 0) {
+        list.innerHTML = `<p style="color: var(--texto-suave); padding: 12px 0;">Tu carrito está vacío.</p>`;
+        summary.textContent = "";
+        return;
+      }
+
+      list.innerHTML = state.carrito.map(it => `
+        <div class="cart-item">
+          <div>
+            <div style="font-weight: 700;">${escHtml(it.nombre)}</div>
+            <div style="font-size: 12px; color: var(--texto-suave);">$${it.precio_usd.toFixed(2)} c/u</div>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" type="button" onclick="cambiarCantidadCarrito('${escAttr(it.id)}', -1)">-</button>
+            <span style="font-weight: 700; min-width: 20px; text-align: center;">${it.cantidad}</span>
+            <button class="qty-btn" type="button" onclick="cambiarCantidadCarrito('${escAttr(it.id)}', 1)">+</button>
+          </div>
+        </div>
+      `).join("");
+
+      const totalUsd = state.carrito.reduce((acc, it) => acc + it.cantidad * it.precio_usd, 0);
+      const totalBs = totalUsd * tasa;
+      summary.innerHTML = `Total: $${totalUsd.toFixed(2)} USD • Bs. ${totalBs.toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    async function enviarPedido(ev) {
+      ev.preventDefault();
+      const msg = document.getElementById("msgPedido");
+      msg.className = "status-msg";
+      msg.style.display = "none";
+
+      if (state.carrito.length === 0) {
+        mostrarMsg(msg, "Agrega al menos un producto al carrito.", false);
+        return;
+      }
+
+      const tasa = parseFloat(state.config.tasa_bcv) || 890;
+      const totalUsd = state.carrito.reduce((acc, it) => acc + it.cantidad * it.precio_usd, 0);
+      const totalBs = Number((totalUsd * tasa).toFixed(2));
+
+      const payload = {
+        action: "createOrder",
+        cliente: document.getElementById("cliNombre").value.trim(),
+        telefono: document.getElementById("cliTelefono").value.trim(),
+        modalidad_entrega: document.getElementById("cliEntrega").value,
+        metodo_pago: document.getElementById("cliPago").value,
+        total_usd: Number(totalUsd.toFixed(2)),
+        total_bs: totalBs,
+        items: state.carrito.map(it => ({
+          id: it.id,
+          nombre: it.nombre,
+          cantidad: it.cantidad,
+          precio_usd: it.precio_usd
+        }))
+      };
+
+      const btn = document.getElementById("btnConfirmarPedido");
+      btn.disabled = true;
+      btn.textContent = "Registrando pedido...";
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || "No se pudo registrar el pedido");
+
+        const textoWa = encodeURIComponent(
+          `Hola Paola, acabo de generar la orden número ${data.pedido_id} en ${state.config.nombre_tienda}.\n` +
+          `Cliente: ${payload.cliente}\n` +
+          `Teléfono: ${payload.telefono}\n` +
+          `Entrega: ${payload.modalidad_entrega}\n` +
+          `Total: $${payload.total_usd.toFixed(2)} (Bs. ${payload.total_bs.toFixed(2)})\n` +
+          `Productos: ${payload.items.map(i => `${i.nombre} x${i.cantidad}`).join(", ")}`
+        );
+
+        state.carrito = [];
+        actualizarBadgeCarrito();
+        await cargarCatalogo();
+        mostrarMsg(msg, `Pedido ${data.pedido_id} reservado con éxito. Redirigiendo a WhatsApp...`, true);
+
+        const waNum = String(state.config.whatsapp || "584242855733").replace(/\D/g, "") || "584242855733";
+        window.open(`https://wa.me/${waNum}?text=${textoWa}`, "_blank");
+      } catch (err) {
+        mostrarMsg(msg, err.message, false);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Reservar Stock y Enviar por WhatsApp";
+      }
+    }
+
+    function abrirModalPin() {
+      document.getElementById("adminPinInput").value = "";
+      document.getElementById("msgPin").style.display = "none";
+      document.getElementById("modalPin").classList.add("open");
+    }
+
+    async function loginAdmin(ev) {
+      ev.preventDefault();
+      const pin = document.getElementById("adminPinInput").value.trim();
+      const msg = document.getElementById("msgPin");
+
+      try {
+        const res = await fetch(`${API_URL}?action=adminData&pin=${encodeURIComponent(pin)}`);
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || "PIN incorrecto");
+
+        state.adminPin = pin;
+        state.adminData = data;
+        cerrarModal("modalPin");
+        poblarPanelAdmin();
+        document.getElementById("modalAdmin").classList.add("open");
+      } catch (err) {
+        mostrarMsg(msg, err.message, false);
+      }
+    }
+
+    async function refrescarAdminData() {
+      const res = await fetch(`${API_URL}?action=adminData&pin=${encodeURIComponent(state.adminPin)}`);
+      const data = await res.json();
+      if (data.ok) {
+        state.adminData = data;
+        poblarPanelAdmin();
+      }
+      await cargarCatalogo();
+    }
+
+    function poblarPanelAdmin() {
+      const d = state.adminData;
+      const cfg = d.config || {};
+      document.getElementById("cfgTasaBcv").value = cfg.tasa_bcv || "890";
+      document.getElementById("cfgUltimaAct").textContent = cfg.bcv_ultima_actualizacion
+        ? `Última actualización: ${cfg.bcv_ultima_actualizacion}`
+        : "Sin fecha registrada aún";
+      document.getElementById("cfgHorasExp").value = cfg.horas_expiracion_carrito || "2";
+      document.getElementById("cfgNombreTienda").value = cfg.nombre_tienda || "Pao's World";
+      document.getElementById("cfgWhatsapp").value = cfg.whatsapp || "";
+      document.getElementById("cfgLogoUrl").value = cfg.logo_url || "";
+      document.getElementById("cfgPortadaUrl").value = cfg.portada_url || "";
+
+      const est = String(cfg.estado_servicio || "ACTIVO").toUpperCase();
+      document.getElementById("btnEstadoTienda").textContent = `Estado: ${est}`;
+
+      const selCat = document.getElementById("prodCategoria");
+      selCat.innerHTML = (d.categorias || [])
+        .map(c => `<option value="${escAttr(c.categoria)}">${escHtml(c.categoria)}</option>`)
+        .join("");
+
+      const prodBody = document.getElementById("adminProdBody");
+      prodBody.innerHTML = (d.productos || []).map(p => `
+        <tr>
+          <td><b>${escHtml(p.id)}</b></td>
+          <td>${escHtml(p.categoria)}</td>
+          <td>${escHtml(p.nombre)}</td>
+          <td>$${Number(p.precio_bcv_usd || 0).toFixed(2)}</td>
+          <td>${Number(p.stock || 0)}</td>
+          <td>${escHtml(p.activo)}</td>
+          <td>
+            <button class="btn btn-soft" type="button" onclick='editarProductoForm(${JSON.stringify(p)})'>Editar</button>
+          </td>
+        </tr>
+      `).join("");
+
+      const pedBody = document.getElementById("adminPedidosBody");
+      pedBody.innerHTML = (d.pedidos || []).map(ped => `
+        <tr>
+          <td><b>${escHtml(ped.pedido_id)}</b></td>
+          <td>${escHtml(ped.fecha)}</td>
+          <td>${escHtml(ped.cliente)}<br><small>${escHtml(ped.telefono)}</small></td>
+          <td>$${Number(ped.total_usd || 0).toFixed(2)}<br><small>Bs. ${Number(ped.total_bs || 0).toFixed(2)}</small></td>
+          <td><small>${escHtml(ped.detalle_items)}</small></td>
+          <td>
+            <select onchange="cambiarEstadoPedido('${escAttr(ped.pedido_id)}', this.value)">
+              ${["EN_PROCESO", "APROBADO", "COMPLETADO", "CANCELADO", "VENCIDO_2H"].map(st =>
+                `<option value="${st}" ${ped.estado === st ? "selected" : ""}>${st}</option>`
+              ).join("")}
+            </select>
+          </td>
+        </tr>
+      `).join("");
+
+      const movBody = document.getElementById("adminMovsBody");
+      movBody.innerHTML = (d.movimientos || []).map(m => `
+        <tr>
+          <td>${escHtml(m.fecha)}</td>
+          <td>${escHtml(m.referencia)}</td>
+          <td><b>${escHtml(m.producto_id)}</b></td>
+          <td><b>${escHtml(m.tipo)}</b></td>
+          <td>${escHtml(m.cantidad)}</td>
+          <td>${escHtml(m.stock_anterior)} → ${escHtml(m.stock_nuevo)}</td>
+          <td>${escHtml(m.motivo)}</td>
+        </tr>
+      `).join("");
+    }
+
+    async function guardarConfigAdmin() {
+      const msg = document.getElementById("msgAdminCfg");
+      const patch = {
+        tasa_bcv: document.getElementById("cfgTasaBcv").value.trim(),
+        horas_expiracion_carrito: document.getElementById("cfgHorasExp").value.trim(),
+        nombre_tienda: document.getElementById("cfgNombreTienda").value.trim(),
+        whatsapp: document.getElementById("cfgWhatsapp").value.trim(),
+        logo_url: document.getElementById("cfgLogoUrl").value.trim(),
+        portada_url: document.getElementById("cfgPortadaUrl").value.trim()
+      };
+
+      const res = await fetch(API_URL, {
+        method: "POST<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pao's World — Catálogo Oficial</title>
+  <style>
+    :root {
+      --primario: #A99BE8;
+      --fondo: #F4F2FC;
+      --acento: #8575D4;
+      --texto: #231E33;
+      --texto-suave: #665E80;
+      --blanco: #FFFFFF;
+      --borde: #E2DCF5;
+      --exito: #1F8A5B;
+      --peligro: #C63D5A;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--fondo);
+      color: var(--texto);
+      min-height: 100vh;
+      padding-bottom: 140px;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, var(--primario), var(--acento));
+      color: var(--blanco);
       padding: 14px 18px;
       position: sticky;
       top: 0;
