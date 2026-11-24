@@ -100,17 +100,9 @@
       flex-wrap: wrap;
     }
 
-    .tasa-pill {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 7px 12px;
-      border-radius: 999px;
-      font-size: 12.5px;
-      font-weight: 700;
-    }
-
-    .ig-header-btn {
+    .tasa-pill,
+    .ig-header-btn,
+    .wa-header-btn {
       background: rgba(255, 255, 255, 0.22);
       backdrop-filter: blur(6px);
       border: 1px solid rgba(255, 255, 255, 0.45);
@@ -126,7 +118,8 @@
       transition: transform 0.12s ease, background 0.15s ease;
     }
 
-    .ig-header-btn:hover {
+    .ig-header-btn:hover,
+    .wa-header-btn:hover {
       background: rgba(255, 255, 255, 0.34);
       transform: scale(1.03);
     }
@@ -226,6 +219,57 @@
       object-fit: contain;
       display: block;
       margin: 0 auto;
+    }
+
+    .entregas-card {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(85, 68, 150, 0.05);
+    }
+
+    .entregas-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--acento);
+      margin-bottom: 6px;
+    }
+
+    .entregas-badge {
+      display: inline-block;
+      background: var(--acento);
+      color: var(--blanco);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      padding: 5px 14px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .entregas-linea {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--texto);
+      line-height: 1.45;
+    }
+
+    .entregas-acuerdo {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--texto-suave);
+      margin-top: 2px;
+    }
+
+    .entregas-horario {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--texto-suave);
+      margin-top: 6px;
     }
 
     .controls-bar {
@@ -396,22 +440,26 @@
       color: var(--peligro);
     }
 
-    .fab-instagram {
+    .fab-instagram,
+    .fab-whatsapp {
       position: fixed;
-      bottom: 146px;
       right: 20px;
       width: 54px;
       height: 54px;
       border-radius: 50%;
-      background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
       color: #FFFFFF;
       display: flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      box-shadow: 0 8px 20px rgba(129, 52, 175, 0.35);
       z-index: 45;
-      transition: transform 0.15s ease, filter 0.15s ease;
+      transition: transform 0.15s ease, filter 0.15s ease, background-color 0.15s ease;
+    }
+
+    .fab-instagram {
+      bottom: 146px;
+      background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF, #515BD4);
+      box-shadow: 0 8px 20px rgba(129, 52, 175, 0.35);
     }
 
     .fab-instagram:hover {
@@ -420,21 +468,9 @@
     }
 
     .fab-whatsapp {
-      position: fixed;
       bottom: 82px;
-      right: 20px;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
       background-color: #25D366;
-      color: #FFFFFF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
       box-shadow: 0 8px 20px rgba(37, 211, 102, 0.35);
-      z-index: 45;
-      transition: transform 0.15s ease, background-color 0.15s ease;
     }
 
     .fab-whatsapp:hover {
@@ -664,6 +700,18 @@
 </head>
 <body>
 
+  <!-- Íconos SVG compartidos -->
+  <svg width="0" height="0" style="position:absolute;visibility:hidden;" aria-hidden="true">
+    <symbol id="ico-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </symbol>
+    <symbol id="ico-wa" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M16 3C8.82 3 3 8.82 3 16c0 2.29.6 4.52 1.73 6.49L3.5 28.5l6.22-1.63A12.93 12.93 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm7.57 18.47c-.32.9-1.85 1.72-2.58 1.83-.67.1-1.52.14-2.45-.16-.56-.18-1.29-.42-2.22-.82-3.91-1.69-6.46-5.63-6.66-5.89-.2-.26-1.59-2.12-1.59-4.04 0-1.92 1.01-2.87 1.37-3.26.36-.39.78-.49 1.04-.49.26 0 .52 0 .75.01.24.01.56-.09.88.67.32.78 1.09 2.66 1.19 2.85.1.19.16.42.03.68-.13.26-.19.42-.39.65-.2.23-.41.51-.59.69-.2.2-.4.41-.17.8.23.39 1.02 1.68 2.19 2.72 1.5 1.34 2.77 1.75 3.16 1.95.39.2.62.16.85-.1.23-.26.98-1.14 1.24-1.53.26-.39.52-.32.88-.19.36.13 2.29 1.08 2.68 1.28.39.2.65.29.75.46.1.16.1.94-.22 1.84z"/>
+    </symbol>
+  </svg>
+
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
@@ -675,21 +723,13 @@
       </div>
 
       <div class="top-actions">
-        <a
-          id="headerInstagram"
-          class="ig-header-btn"
-          href="https://www.instagram.com/paos.world/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Visitar Instagram de Pao's World"
-          title="Síguenos en Instagram @paos.world"
-        >
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-          </svg>
+        <a id="headerInstagram" class="ig-header-btn" href="https://www.instagram.com/paos.world/" target="_blank" rel="noopener noreferrer" aria-label="Visitar Instagram de Pao's World" title="Síguenos en Instagram @paos.world">
+          <svg width="16" height="16" aria-hidden="true"><use href="#ico-ig"></use></svg>
           <span id="headerIgText">@paos.world</span>
+        </a>
+        <a id="headerWhatsApp" class="wa-header-btn" href="https://wa.me/584242855733" target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp a Pao's World" title="Escríbenos por WhatsApp">
+          <svg width="16" height="16" aria-hidden="true"><use href="#ico-wa"></use></svg>
+          <span id="headerWaText">+58 424-2855733</span>
         </a>
         <div class="tasa-pill" id="tasaPill">BCV: Bs. 890,00</div>
         <button class="btn btn-white" type="button" onclick="abrirModalPin()">Admin</button>
@@ -706,14 +746,23 @@
       <img id="portadaImg" src="" alt="Portada Pao's World" />
     </div>
 
+    <section class="entregas-card" aria-label="Información de entregas">
+      <div class="entregas-icon">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 9l1.5-5h15L21 9"></path>
+          <path d="M3 9v11h18V9"></path>
+          <path d="M9 20v-6h6v6"></path>
+          <path d="M3 9c0 1.66 1.34 3 3 3s3-1.34 3-3c0 1.66 1.34 3 3 3s3-1.34 3-3c0 1.66 1.34 3 3 3s3-1.34 3-3"></path>
+        </svg>
+      </div>
+      <div><span class="entregas-badge">ENTREGAS</span></div>
+      <div class="entregas-linea">Entrega en Candelaria — Panadería San Bernardino Bakery • Envío nacional</div>
+      <div class="entregas-acuerdo">-Previo acuerdo-</div>
+      <div class="entregas-horario">Lunes a Domingo, de 10:00 am a 7:00 pm.</div>
+    </section>
+
     <section class="controls-bar">
-      <input
-        type="text"
-        id="searchInput"
-        class="search-input"
-        placeholder="Buscar maquillaje, skincare, uñas, serums, papelería, navidad..."
-        oninput="renderCatalogo()"
-      />
+      <input type="text" id="searchInput" class="search-input" placeholder="Buscar maquillaje, skincare, uñas, serums, papelería, navidad..." oninput="renderCatalogo()" />
       <div class="cats-row" id="catsRow"></div>
     </section>
 
@@ -722,34 +771,12 @@
     </section>
   </main>
 
-  <a
-    id="fabInstagram"
-    class="fab-instagram"
-    href="https://www.instagram.com/paos.world/"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Visitar Instagram de Pao's World"
-    title="Visitar Instagram de Pao's World"
-  >
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-    </svg>
+  <a id="fabInstagram" class="fab-instagram" href="https://www.instagram.com/paos.world/" target="_blank" rel="noopener noreferrer" aria-label="Visitar Instagram de Pao's World" title="Visitar Instagram de Pao's World">
+    <svg width="26" height="26" aria-hidden="true"><use href="#ico-ig"></use></svg>
   </a>
 
-  <a
-    id="fabWhatsApp"
-    class="fab-whatsapp"
-    href="https://wa.me/584242855733"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Chatear por WhatsApp con Paola"
-    title="Chatear por WhatsApp con Paola"
-  >
-    <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true">
-      <path d="M16 3C8.82 3 3 8.82 3 16c0 2.29.6 4.52 1.73 6.49L3.5 28.5l6.22-1.63A12.93 12.93 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm7.57 18.47c-.32.9-1.85 1.72-2.58 1.83-.67.1-1.52.14-2.45-.16-.56-.18-1.29-.42-2.22-.82-3.91-1.69-6.46-5.63-6.66-5.89-.2-.26-1.59-2.12-1.59-4.04 0-1.92 1.01-2.87 1.37-3.26.36-.39.78-.49 1.04-.49.26 0 .52 0 .75.01.24.01.56-.09.88.67.32.78 1.09 2.66 1.19 2.85.1.19.16.42.03.68-.13.26-.19.42-.39.65-.2.23-.41.51-.59.69-.2.2-.4.41-.17.8.23.39 1.02 1.68 2.19 2.72 1.5 1.34 2.77 1.75 3.16 1.95.39.2.62.16.85-.1.23-.26.98-1.14 1.24-1.53.26-.39.52-.32.88-.19.36.13 2.29 1.08 2.68 1.28.39.2.65.29.75.46.1.16.1.94-.22 1.84z"/>
-    </svg>
+  <a id="fabWhatsApp" class="fab-whatsapp" href="https://wa.me/584242855733" target="_blank" rel="noopener noreferrer" aria-label="Chatear por WhatsApp con Paola" title="Chatear por WhatsApp con Paola">
+    <svg width="28" height="28" aria-hidden="true"><use href="#ico-wa"></use></svg>
   </a>
 
   <button class="fab-cart" type="button" onclick="abrirCarrito()">
@@ -800,59 +827,24 @@
         <div class="field">
           <label>Código de País y Número de WhatsApp *</label>
           <div class="phone-split">
-            <select id="cliCodigoPais" aria-label="Código de país">
-              <option value="58" selected>+58 (VE)</option>
-              <option value="57">+57 (CO)</option>
-              <option value="1">+1 (US/CA)</option>
-              <option value="34">+34 (ES)</option>
-              <option value="52">+52 (MX)</option>
-              <option value="54">+54 (AR)</option>
-              <option value="56">+56 (CL)</option>
-              <option value="51">+51 (PE)</option>
-              <option value="593">+593 (EC)</option>
-              <option value="507">+507 (PA)</option>
-              <option value="598">+598 (UY)</option>
-              <option value="595">+595 (PY)</option>
-              <option value="591">+591 (BO)</option>
-              <option value="506">+506 (CR)</option>
-              <option value="502">+502 (GT)</option>
-              <option value="503">+503 (SV)</option>
-              <option value="504">+504 (HN)</option>
-              <option value="505">+505 (NI)</option>
-              <option value="53">+53 (CU)</option>
-              <option value="1809">+1-809 (DO)</option>
-              <option value="44">+44 (UK)</option>
-              <option value="33">+33 (FR)</option>
-              <option value="49">+49 (DE)</option>
-              <option value="39">+39 (IT)</option>
-              <option value="351">+351 (PT)</option>
-              <option value="55">+55 (BR)</option>
-            </select>
-            <input
-              type="tel"
-              id="cliTelefono"
-              required
-              pattern="[0-9\s\-]{6,15}"
-              placeholder="Ej. 4241913036"
-            />
+            <select id="cliCodigoPais" aria-label="Código de país"></select>
+            <input type="tel" id="cliTelefono" required pattern="[0-9\s\-]{6,15}" placeholder="Ej. 4241913036" />
           </div>
         </div>
         <div class="admin-grid-2">
           <div class="field">
             <label>Modalidad de Entrega *</label>
             <select id="cliEntrega" required>
-              <option value="Delivery Caracas">Delivery Caracas</option>
-              <option value="Entrega personal / Punto acordado">Entrega personal / Punto acordado</option>
-              <option value="Envío nacional (MRW / Zoom / Tealca)">Envío nacional</option>
+              <option value="Entrega en Candelaria - Panadería San Bernardino Bakery">Entrega en Candelaria - Panadería San Bernardino Bakery</option>
+              <option value="Envío nacional">Envío nacional</option>
             </select>
           </div>
           <div class="field">
             <label>Método de Pago *</label>
             <select id="cliPago" required>
-              <option value="Pago Móvil (Bs)">Pago Móvil (Bs)</option>
-              <option value="Efectivo USD ($)">Efectivo USD ($)</option>
-              <option value="Zelle / Divisas">Zelle / Divisas</option>
-              <option value="Binance / Zinli">Binance / Zinli</option>
+              <option value="Pago Móvil">Pago Móvil</option>
+              <option value="Divisas">Divisas</option>
+              <option value="PayPal">PayPal</option>
             </select>
           </div>
         </div>
@@ -900,7 +892,6 @@
         <button class="btn btn-soft" type="button" onclick="cambiarTabAdmin('tabMovs', this)">Movimientos DEBE/HABER</button>
       </div>
 
-      <!-- Tab 1: Tasa BCV Manual y Configuración -->
       <div class="admin-panel active" id="tabTasa">
         <div class="admin-grid-2">
           <div class="field">
@@ -935,7 +926,6 @@
         <div class="status-msg" id="msgAdminCfg"></div>
       </div>
 
-      <!-- Tab 2: Productos -->
       <div class="admin-panel" id="tabProductos">
         <div class="admin-grid-2" style="margin-bottom: 14px; background: #FAF9FE; padding: 12px; border-radius: 12px; border: 1px solid var(--borde);">
           <div class="field">
@@ -1003,7 +993,6 @@
         </div>
       </div>
 
-      <!-- Tab 3: Pedidos -->
       <div class="admin-panel" id="tabPedidos">
         <div class="table-wrap">
           <table>
@@ -1022,7 +1011,6 @@
         </div>
       </div>
 
-      <!-- Tab 4: Movimientos DEBE / HABER -->
       <div class="admin-panel" id="tabMovs">
         <div class="table-wrap">
           <table>
@@ -1046,6 +1034,18 @@
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbx47QO5P1K0gi_yW57KnAyg3vdd2BKCVrZNmwYkkPIXTFxHrODdVyXF01jXNkeHq1JT/exec";
+
+    const PAISES = [
+      ["58", "+58 (VE)"], ["57", "+57 (CO)"], ["1", "+1 (US/CA)"],
+      ["34", "+34 (ES)"], ["52", "+52 (MX)"], ["54", "+54 (AR)"],
+      ["56", "+56 (CL)"], ["51", "+51 (PE)"], ["593", "+593 (EC)"],
+      ["507", "+507 (PA)"], ["598", "+598 (UY)"], ["595", "+595 (PY)"],
+      ["591", "+591 (BO)"], ["506", "+506 (CR)"], ["502", "+502 (GT)"],
+      ["503", "+503 (SV)"], ["504", "+504 (HN)"], ["505", "+505 (NI)"],
+      ["53", "+53 (CU)"], ["1809", "+1-809 (DO)"], ["44", "+44 (UK)"],
+      ["33", "+33 (FR)"], ["49", "+49 (DE)"], ["39", "+39 (IT)"],
+      ["351", "+351 (PT)"], ["55", "+55 (BR)"]
+    ];
 
     let state = {
       config: {
@@ -1072,12 +1072,23 @@
     };
 
     document.addEventListener("DOMContentLoaded", () => {
+      poblarPaises();
       cargarCatalogo();
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          cerrarModal("modalLightbox");
-        }
+        if (e.key === "Escape") cerrarModal("modalLightbox");
       });
+    });
+
+    function poblarPaises() {
+      const sel = document.getElementById("cliCodigoPais");
+      sel.innerHTML = PAISES.map(([cod, label]) =>
+        `<option value="${cod}" ${cod === "58" ? "selected" : ""}>${label}</option>`
+      ).join("");
+    }
+
+    const fmtBs = (val) => (Number(val) || 0).toLocaleString("es-VE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
     });
 
     async function cargarCatalogo() {
@@ -1086,7 +1097,7 @@
         const data = await res.json();
         if (!data.ok) throw new Error(data.error || "Error al cargar catálogo");
 
-        state.config = Object.assign({}, state.config, data.config || {});
+        Object.assign(state.config, data.config || {});
         state.categorias = data.categorias || [];
         state.productos = data.productos || [];
 
@@ -1100,11 +1111,21 @@
       }
     }
 
+    function formatearTelefonoVisible(raw) {
+      const digits = String(raw || "").replace(/\D/g, "");
+      if (!digits) return "+58 424-2855733";
+      if (digits.startsWith("58") && digits.length >= 12) {
+        return `+${digits.slice(0, 2)} ${digits.slice(2, 5)}-${digits.slice(5)}`;
+      }
+      return `+${digits}`;
+    }
+
     function aplicarTemaYMarca() {
       const c = state.config;
-      document.documentElement.style.setProperty("--primario", c.color_primario || "#A99BE8");
-      document.documentElement.style.setProperty("--fondo", c.color_fondo || "#F4F2FC");
-      document.documentElement.style.setProperty("--acento", c.color_acento || "#8575D4");
+      const root = document.documentElement.style;
+      root.setProperty("--primario", c.color_primario || "#A99BE8");
+      root.setProperty("--fondo", c.color_fondo || "#F4F2FC");
+      root.setProperty("--acento", c.color_acento || "#8575D4");
 
       document.getElementById("brandTitle").textContent = c.nombre_tienda || "Pao's World";
       document.getElementById("brandSub").textContent = c.subtitulo_tienda || "The World of Princess • Caracas, Venezuela";
@@ -1113,37 +1134,24 @@
       const igHandle = String(c.instagram || "@paos.world").trim();
       const igUser = igHandle.replace(/^@/, "") || "paos.world";
       const igUrl = `https://www.instagram.com/${encodeURIComponent(igUser)}/`;
-      const headerIg = document.getElementById("headerInstagram");
-      const headerIgText = document.getElementById("headerIgText");
-      const fabIg = document.getElementById("fabInstagram");
-      if (headerIg) {
-        headerIg.href = igUrl;
-      }
-      if (headerIgText) {
-        headerIgText.textContent = igHandle.startsWith("@") ? igHandle : `@${igHandle}`;
-      }
-      if (fabIg) {
-        fabIg.href = igUrl;
-      }
+      document.getElementById("headerInstagram").href = igUrl;
+      document.getElementById("fabInstagram").href = igUrl;
+      document.getElementById("headerIgText").textContent = igHandle.startsWith("@") ? igHandle : `@${igHandle}`;
 
       const waNum = String(c.whatsapp || "584242855733").replace(/\D/g, "") || "584242855733";
-      const fabWa = document.getElementById("fabWhatsApp");
-      if (fabWa) {
-        fabWa.href = `https://wa.me/${waNum}`;
-      }
+      const waUrl = `https://wa.me/${waNum}`;
+      document.getElementById("headerWhatsApp").href = waUrl;
+      document.getElementById("fabWhatsApp").href = waUrl;
+      document.getElementById("headerWaText").textContent = formatearTelefonoVisible(waNum);
 
-      const tasa = parseFloat(c.tasa_bcv) || 890;
-      document.getElementById("tasaPill").textContent = `BCV: Bs. ${tasa.toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-
+      document.getElementById("tasaPill").textContent = `BCV: Bs. ${fmtBs(c.tasa_bcv || 890)}`;
       document.getElementById("bannerPausa").style.display =
         String(c.estado_servicio).toUpperCase() === "ACTIVO" ? "none" : "block";
 
       const logoBox = document.getElementById("brandLogo");
-      if (c.logo_url) {
-        logoBox.innerHTML = `<img src="${escAttr(c.logo_url)}" alt="Logo Pao's World" />`;
-      } else {
-        logoBox.textContent = "PW";
-      }
+      logoBox.innerHTML = c.logo_url
+        ? `<img src="${escAttr(c.logo_url)}" alt="Logo Pao's World" />`
+        : "PW";
 
       const portadaBox = document.getElementById("portadaBox");
       if (c.portada_url) {
@@ -1157,10 +1165,10 @@
     function renderCategorias() {
       const row = document.getElementById("catsRow");
       const chips = [`<button class="cat-chip ${state.categoriaActiva === "TODAS" ? "active" : ""}" onclick="seleccionarCategoria('TODAS')">Todas (${state.productos.length})</button>`];
-      state.categorias.forEach(cat => {
+      for (const cat of state.categorias) {
         const active = state.categoriaActiva === cat.categoria ? "active" : "";
         chips.push(`<button class="cat-chip ${active}" onclick="seleccionarCategoria('${escAttr(cat.categoria)}')">${escHtml(cat.categoria)}</button>`);
-      });
+      }
       row.innerHTML = chips.join("");
     }
 
@@ -1176,20 +1184,18 @@
 
       const filtrados = state.productos.filter(p => {
         const matchCat = state.categoriaActiva === "TODAS" || p.categoria === state.categoriaActiva;
-        const texto = `${p.nombre} ${p.detalle_variante} ${p.categoria}`.toLowerCase();
-        const matchQ = !q || texto.includes(q);
+        const matchQ = !q || `${p.nombre} ${p.detalle_variante} ${p.categoria}`.toLowerCase().includes(q);
         return matchCat && matchQ;
       });
 
       const grid = document.getElementById("gridProductos");
-      if (filtrados.length === 0) {
+      if (!filtrados.length) {
         grid.innerHTML = `<p style="color: var(--texto-suave);">No se encontraron productos con ese filtro.</p>`;
         return;
       }
 
       grid.innerHTML = filtrados.map(p => {
         const precioUsd = Number(p.precio_bcv_usd) || 0;
-        const precioBs = precioUsd * tasa;
         const stock = Number(p.stock) || 0;
         const sinStock = stock <= 0;
         const promoHtml = p.precio_promo_divisas
@@ -1198,7 +1204,7 @@
 
         const tieneFoto = Boolean(p.imagen_url);
         const imgHtml = tieneFoto
-          ? `<img src="${escAttr(p.imagen_url)}" alt="${escAttr(p.nombre)}" />`
+          ? `<img src="${escAttr(p.imagen_url)}" alt="${escAttr(p.nombre)}" loading="lazy" decoding="async" />`
           : `<span style="font-size: 28px; font-weight: 800; color: var(--acento); opacity: 0.45;">${escHtml(p.categoria.slice(0, 2).toUpperCase())}</span>`;
 
         const clickAttrs = tieneFoto
@@ -1216,7 +1222,7 @@
               <div class="card-var">${escHtml(p.detalle_variante || "")}</div>
               <div class="price-box">
                 <div class="price-usd">$${precioUsd.toFixed(2)}</div>
-                <div class="price-bs">Bs. ${precioBs.toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                <div class="price-bs">Bs. ${fmtBs(precioUsd * tasa)}</div>
                 ${promoHtml}
               </div>
             </div>
@@ -1224,13 +1230,7 @@
               <div class="stock-txt ${sinStock ? "stock-out" : ""}">
                 ${sinStock ? "Agotado por ahora" : `Disponible: ${stock} und.`}
               </div>
-              <button
-                class="btn btn-primary"
-                style="width: 100%;"
-                type="button"
-                ${sinStock ? "disabled" : ""}
-                onclick="agregarAlCarrito('${escAttr(p.id)}')"
-              >
+              <button class="btn btn-primary" style="width: 100%;" type="button" ${sinStock ? "disabled" : ""} onclick="agregarAlCarrito('${escAttr(p.id)}')">
                 ${sinStock ? "Sin stock" : "Agregar al carrito"}
               </button>
             </div>
@@ -1245,19 +1245,16 @@
 
       const tasa = parseFloat(state.config.tasa_bcv) || 890;
       const precioUsd = Number(prod.precio_bcv_usd) || 0;
-      const precioBs = precioUsd * tasa;
       const stock = Number(prod.stock) || 0;
 
       document.getElementById("lbTitulo").textContent = prod.nombre || "";
-      document.getElementById("lbDetalle").textContent =
-        [prod.categoria, prod.detalle_variante].filter(Boolean).join(" • ");
+      document.getElementById("lbDetalle").textContent = [prod.categoria, prod.detalle_variante].filter(Boolean).join(" • ");
       const lbImg = document.getElementById("lbImg");
       lbImg.src = prod.imagen_url;
       lbImg.alt = prod.nombre || "Producto";
 
       document.getElementById("lbPrecioUsd").textContent = `$${precioUsd.toFixed(2)}`;
-      document.getElementById("lbPrecioBs").textContent =
-        `Bs. ${precioBs.toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById("lbPrecioBs").textContent = `Bs. ${fmtBs(precioUsd * tasa)}`;
 
       const btnAdd = document.getElementById("lbBtnAgregar");
       btnAdd.disabled = stock <= 0;
@@ -1271,19 +1268,18 @@
     }
 
     function cerrarLightboxBackdrop(ev) {
-      if (ev.target && ev.target.id === "modalLightbox") {
-        cerrarModal("modalLightbox");
-      }
+      if (ev.target && ev.target.id === "modalLightbox") cerrarModal("modalLightbox");
     }
 
     function agregarAlCarrito(prodId) {
       const prod = state.productos.find(x => x.id === prodId);
-      if (!prod || (Number(prod.stock) || 0) <= 0) return;
+      const stock = Number(prod?.stock) || 0;
+      if (!prod || stock <= 0) return;
 
       const existente = state.carrito.find(x => x.id === prodId);
       if (existente) {
-        if (existente.cantidad + 1 > prod.stock) {
-          alert(`Solo quedan ${prod.stock} unidades disponibles de "${prod.nombre}".`);
+        if (existente.cantidad + 1 > stock) {
+          alert(`Solo quedan ${stock} unidades disponibles de "${prod.nombre}".`);
           return;
         }
         existente.cantidad += 1;
@@ -1293,7 +1289,7 @@
           nombre: prod.nombre,
           precio_usd: Number(prod.precio_bcv_usd) || 0,
           cantidad: 1,
-          maxStock: Number(prod.stock) || 0
+          maxStock: stock
         });
       }
       actualizarBadgeCarrito();
@@ -1304,11 +1300,8 @@
       if (idx === -1) return;
       const item = state.carrito[idx];
       const nuevaCant = item.cantidad + delta;
-      if (nuevaCant <= 0) {
-        state.carrito.splice(idx, 1);
-      } else if (nuevaCant <= item.maxStock) {
-        item.cantidad = nuevaCant;
-      }
+      if (nuevaCant <= 0) state.carrito.splice(idx, 1);
+      else if (nuevaCant <= item.maxStock) item.cantidad = nuevaCant;
       actualizarBadgeCarrito();
       renderModalCarrito();
     }
@@ -1330,7 +1323,7 @@
       const summary = document.getElementById("cartSummaryTotals");
       const tasa = parseFloat(state.config.tasa_bcv) || 890;
 
-      if (state.carrito.length === 0) {
+      if (!state.carrito.length) {
         list.innerHTML = `<p style="color: var(--texto-suave); padding: 12px 0;">Tu carrito está vacío.</p>`;
         summary.textContent = "";
         return;
@@ -1351,17 +1344,14 @@
       `).join("");
 
       const totalUsd = state.carrito.reduce((acc, it) => acc + it.cantidad * it.precio_usd, 0);
-      const totalBs = totalUsd * tasa;
-      summary.innerHTML = `Total: $${totalUsd.toFixed(2)} USD • Bs. ${totalBs.toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      summary.innerHTML = `Total: $${totalUsd.toFixed(2)} USD • Bs. ${fmtBs(totalUsd * tasa)}`;
     }
 
     function construirTelefonoCompleto(codigoPais, numeroLocal) {
       const cod = String(codigoPais || "").replace(/\D/g, "");
       let num = String(numeroLocal || "").replace(/\D/g, "");
       if (!num) return "";
-      if (cod === "58" && num.startsWith("0")) {
-        num = num.slice(1);
-      }
+      if (cod === "58" && num.startsWith("0")) num = num.slice(1);
       return `${cod}${num}`;
     }
 
@@ -1371,15 +1361,15 @@
       msg.className = "status-msg";
       msg.style.display = "none";
 
-      if (state.carrito.length === 0) {
+      if (!state.carrito.length) {
         mostrarMsg(msg, "Agrega al menos un producto al carrito.", false);
         return;
       }
 
-      const codigoPais = document.getElementById("cliCodigoPais").value;
-      const numeroLocal = document.getElementById("cliTelefono").value.trim();
-      const telefonoCompleto = construirTelefonoCompleto(codigoPais, numeroLocal);
-
+      const telefonoCompleto = construirTelefonoCompleto(
+        document.getElementById("cliCodigoPais").value,
+        document.getElementById("cliTelefono").value.trim()
+      );
       if (!telefonoCompleto || telefonoCompleto.length < 8) {
         mostrarMsg(msg, "Ingresa un número de WhatsApp válido.", false);
         return;
@@ -1387,7 +1377,6 @@
 
       const tasa = parseFloat(state.config.tasa_bcv) || 890;
       const totalUsd = state.carrito.reduce((acc, it) => acc + it.cantidad * it.precio_usd, 0);
-      const totalBs = Number((totalUsd * tasa).toFixed(2));
 
       const payload = {
         action: "createOrder",
@@ -1396,7 +1385,7 @@
         modalidad_entrega: document.getElementById("cliEntrega").value,
         metodo_pago: document.getElementById("cliPago").value,
         total_usd: Number(totalUsd.toFixed(2)),
-        total_bs: totalBs,
+        total_bs: Number((totalUsd * tasa).toFixed(2)),
         items: state.carrito.map(it => ({
           id: it.id,
           nombre: it.nombre,
@@ -1410,10 +1399,7 @@
       btn.textContent = "Registrando pedido...";
 
       try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          body: JSON.stringify(payload)
-        });
+        const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
         const data = await res.json();
         if (!data.ok) throw new Error(data.error || "No se pudo registrar el pedido");
 
@@ -1423,11 +1409,7 @@
         document.getElementById("formPedido").reset();
         document.getElementById("cliCodigoPais").value = "58";
         await cargarCatalogo();
-        mostrarMsg(
-          msg,
-          `¡Listo! Tu pedido ${data.pedido_id} fue reservado con éxito. Paola lo revisará desde el panel.`,
-          true
-        );
+        mostrarMsg(msg, `¡Listo! Tu pedido ${data.pedido_id} fue reservado con éxito. Paola lo revisará desde el panel.`, true);
       } catch (err) {
         mostrarMsg(msg, err.message, false);
       } finally {
@@ -1436,9 +1418,7 @@
       }
     }
 
-    function normalizarWhatsAppAdmin(tel) {
-      return String(tel || "").replace(/\D/g, "");
-    }
+    const normalizarWhatsAppAdmin = (tel) => String(tel || "").replace(/\D/g, "");
 
     function abrirModalPin() {
       document.getElementById("adminPinInput").value = "";
@@ -1492,13 +1472,11 @@
       const est = String(cfg.estado_servicio || "ACTIVO").toUpperCase();
       document.getElementById("btnEstadoTienda").textContent = `Estado: ${est}`;
 
-      const selCat = document.getElementById("prodCategoria");
-      selCat.innerHTML = (d.categorias || [])
+      document.getElementById("prodCategoria").innerHTML = (d.categorias || [])
         .map(c => `<option value="${escAttr(c.categoria)}">${escHtml(c.categoria)}</option>`)
         .join("");
 
-      const prodBody = document.getElementById("adminProdBody");
-      prodBody.innerHTML = (d.productos || []).map(p => `
+      document.getElementById("adminProdBody").innerHTML = (d.productos || []).map(p => `
         <tr>
           <td><b>${escHtml(p.id)}</b></td>
           <td>${escHtml(p.categoria)}</td>
@@ -1506,32 +1484,41 @@
           <td>$${Number(p.precio_bcv_usd || 0).toFixed(2)}</td>
           <td>${Number(p.stock || 0)}</td>
           <td>${escHtml(p.activo)}</td>
-          <td>
-            <button class="btn btn-soft" type="button" onclick='editarProductoForm(${JSON.stringify(p)})'>Editar</button>
-          </td>
+          <td><button class="btn btn-soft" type="button" onclick="editarProductoPorId('${escAttr(p.id)}')">Editar</button></td>
         </tr>
       `).join("");
 
-      const pedBody = document.getElementById("adminPedidosBody");
-      pedBody.innerHTML = (d.pedidos || []).map(ped => {
+      const tasaActual = parseFloat(cfg.tasa_bcv) || 890;
+      const tasaFmt = fmtBs(tasaActual);
+
+      document.getElementById("adminPedidosBody").innerHTML = (d.pedidos || []).map(ped => {
         const waCliente = normalizarWhatsAppAdmin(ped.telefono);
-        const msgCliente = encodeURIComponent(
-          `Hola ${ped.cliente}, te escribimos de ${cfg.nombre_tienda || "Pao's World"} respecto a tu orden ${ped.pedido_id} por $${Number(ped.total_usd || 0).toFixed(2)}.`
-        );
+        const totalUsdNum = Number(ped.total_usd || 0);
+        const montoHoyBsFmt = fmtBs(totalUsdNum * tasaActual);
+        const metodoPagoStr = String(ped.metodo_pago || "").trim();
+        const esPagoMovil = /m[oó]vil/i.test(metodoPagoStr);
+
+        const lineaMonto = esPagoMovil
+          ? `Total: $${totalUsdNum.toFixed(2)} — el monto al día de hoy para Pago Móvil es Bs. ${montoHoyBsFmt} (Tasa BCV: Bs. ${tasaFmt}).`
+          : `Total: $${totalUsdNum.toFixed(2)} (referencia al día de hoy: Bs. ${montoHoyBsFmt} a tasa BCV Bs. ${tasaFmt}).`;
+
+        const textoCliente = [
+          `Hola ${ped.cliente}, te escribimos de ${cfg.nombre_tienda || "Pao's World"} respecto a tu orden ${ped.pedido_id}.`,
+          lineaMonto,
+          metodoPagoStr ? `Método de pago: ${metodoPagoStr}.` : "",
+          ped.modalidad_entrega ? `Entrega: ${ped.modalidad_entrega}.` : ""
+        ].filter(Boolean).join("\n");
+
         const linkWaHtml = waCliente
-          ? `<br><a class="btn-wa-mini" href="https://wa.me/${waCliente}?text=${msgCliente}" target="_blank" rel="noopener noreferrer">WhatsApp (+${waCliente})</a>`
+          ? `<br><a class="btn-wa-mini" href="https://wa.me/${waCliente}?text=${encodeURIComponent(textoCliente)}" target="_blank" rel="noopener noreferrer">WhatsApp (+${waCliente})</a>`
           : "";
 
         return `
           <tr>
             <td><b>${escHtml(ped.pedido_id)}</b></td>
             <td>${escHtml(ped.fecha)}</td>
-            <td>
-              <b>${escHtml(ped.cliente)}</b><br>
-              <small>${escHtml(ped.telefono)}</small>
-              ${linkWaHtml}
-            </td>
-            <td>$${Number(ped.total_usd || 0).toFixed(2)}<br><small>Bs. ${Number(ped.total_bs || 0).toFixed(2)}</small></td>
+            <td><b>${escHtml(ped.cliente)}</b><br><small>${escHtml(ped.telefono)}</small>${linkWaHtml}</td>
+            <td>$${totalUsdNum.toFixed(2)}<br><small>Bs. ${Number(ped.total_bs || 0).toFixed(2)}</small></td>
             <td><small>${escHtml(ped.detalle_items)}</small></td>
             <td>
               <select onchange="cambiarEstadoPedido('${escAttr(ped.pedido_id)}', this.value)">
@@ -1544,8 +1531,7 @@
         `;
       }).join("");
 
-      const movBody = document.getElementById("adminMovsBody");
-      movBody.innerHTML = (d.movimientos || []).map(m => `
+      document.getElementById("adminMovsBody").innerHTML = (d.movimientos || []).map(m => `
         <tr>
           <td>${escHtml(m.fecha)}</td>
           <td>${escHtml(m.referencia)}</td>
@@ -1558,22 +1544,27 @@
       `).join("");
     }
 
-    async function guardarConfigAdmin() {
-      const msg = document.getElementById("msgAdminCfg");
-      const patch = {
-        tasa_bcv: document.getElementById("cfgTasaBcv").value.trim(),
-        horas_expiracion_carrito: document.getElementById("cfgHorasExp").value.trim(),
-        nombre_tienda: document.getElementById("cfgNombreTienda").value.trim(),
-        whatsapp: document.getElementById("cfgWhatsapp").value.trim(),
-        logo_url: document.getElementById("cfgLogoUrl").value.trim(),
-        portada_url: document.getElementById("cfgPortadaUrl").value.trim()
-      };
-
+    async function postAdmin(payload) {
       const res = await fetch(API_URL, {
         method: "POST",
-        body: JSON.stringify({ action: "updateConfig", pin: state.adminPin, patch })
+        body: JSON.stringify(Object.assign({ pin: state.adminPin }, payload))
       });
-      const data = await res.json();
+      return res.json();
+    }
+
+    async function guardarConfigAdmin() {
+      const msg = document.getElementById("msgAdminCfg");
+      const data = await postAdmin({
+        action: "updateConfig",
+        patch: {
+          tasa_bcv: document.getElementById("cfgTasaBcv").value.trim(),
+          horas_expiracion_carrito: document.getElementById("cfgHorasExp").value.trim(),
+          nombre_tienda: document.getElementById("cfgNombreTienda").value.trim(),
+          whatsapp: document.getElementById("cfgWhatsapp").value.trim(),
+          logo_url: document.getElementById("cfgLogoUrl").value.trim(),
+          portada_url: document.getElementById("cfgPortadaUrl").value.trim()
+        }
+      });
       if (data.ok) {
         mostrarMsg(msg, "Configuración y tasa BCV guardadas.", true);
         await refrescarAdminData();
@@ -1584,16 +1575,16 @@
 
     async function toggleEstadoTiendaAdmin() {
       const actual = String(state.adminData?.config?.estado_servicio || "ACTIVO").toUpperCase();
-      const nuevo = actual === "ACTIVO" ? "PAUSADO" : "ACTIVO";
-      const res = await fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "toggleService", pin: state.adminPin, estado: nuevo })
+      const data = await postAdmin({
+        action: "toggleService",
+        estado: actual === "ACTIVO" ? "PAUSADO" : "ACTIVO"
       });
-      const data = await res.json();
       if (data.ok) await refrescarAdminData();
     }
 
-    function editarProductoForm(p) {
+    function editarProductoPorId(prodId) {
+      const p = (state.adminData?.productos || []).find(x => String(x.id) === String(prodId));
+      if (!p) return;
       document.getElementById("prodId").value = p.id || "";
       document.getElementById("prodCategoria").value = p.categoria || "Otros";
       document.getElementById("prodNombre").value = p.nombre || "";
@@ -1606,35 +1597,29 @@
     }
 
     function limpiarFormProducto() {
-      document.getElementById("prodId").value = "";
-      document.getElementById("prodNombre").value = "";
-      document.getElementById("prodDetalle").value = "";
-      document.getElementById("prodPrecioUsd").value = "";
-      document.getElementById("prodPromoUsd").value = "";
+      ["prodId", "prodNombre", "prodDetalle", "prodPrecioUsd", "prodPromoUsd", "prodImagenUrl"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
       document.getElementById("prodStock").value = "5";
-      document.getElementById("prodImagenUrl").value = "";
       document.getElementById("prodActivo").value = "SI";
     }
 
     async function guardarProductoAdmin() {
       const msg = document.getElementById("msgAdminProd");
-      const product = {
-        id: document.getElementById("prodId").value.trim(),
-        categoria: document.getElementById("prodCategoria").value,
-        nombre: document.getElementById("prodNombre").value.trim(),
-        detalle_variante: document.getElementById("prodDetalle").value.trim(),
-        precio_bcv_usd: parseFloat(document.getElementById("prodPrecioUsd").value) || 0,
-        precio_promo_divisas: document.getElementById("prodPromoUsd").value.trim(),
-        stock: parseInt(document.getElementById("prodStock").value, 10) || 0,
-        imagen_url: document.getElementById("prodImagenUrl").value.trim(),
-        activo: document.getElementById("prodActivo").value
-      };
-
-      const res = await fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "saveProduct", pin: state.adminPin, product })
+      const data = await postAdmin({
+        action: "saveProduct",
+        product: {
+          id: document.getElementById("prodId").value.trim(),
+          categoria: document.getElementById("prodCategoria").value,
+          nombre: document.getElementById("prodNombre").value.trim(),
+          detalle_variante: document.getElementById("prodDetalle").value.trim(),
+          precio_bcv_usd: parseFloat(document.getElementById("prodPrecioUsd").value) || 0,
+          precio_promo_divisas: document.getElementById("prodPromoUsd").value.trim(),
+          stock: parseInt(document.getElementById("prodStock").value, 10) || 0,
+          imagen_url: document.getElementById("prodImagenUrl").value.trim(),
+          activo: document.getElementById("prodActivo").value
+        }
       });
-      const data = await res.json();
       if (data.ok) {
         mostrarMsg(msg, `Producto guardado (${data.id}).`, true);
         limpiarFormProducto();
@@ -1645,21 +1630,12 @@
     }
 
     async function cambiarEstadoPedido(pedidoId, nuevoEstado) {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({
-          action: "updateOrderStatus",
-          pin: state.adminPin,
-          pedido_id: pedidoId,
-          estado: nuevoEstado
-        })
-      });
-      const data = await res.json();
+      const data = await postAdmin({ action: "updateOrderStatus", pedido_id: pedidoId, estado: nuevoEstado });
       if (data.ok) await refrescarAdminData();
     }
 
     async function subirArchivoConfig(input, campoDestino) {
-      const file = input.files && input.files[0];
+      const file = input.files?.[0];
       if (!file) return;
       const url = await subirBase64Drive(file);
       if (url) {
@@ -1668,12 +1644,10 @@
     }
 
     async function subirFotoProducto(input) {
-      const file = input.files && input.files[0];
+      const file = input.files?.[0];
       if (!file) return;
       const url = await subirBase64Drive(file);
-      if (url) {
-        document.getElementById("prodImagenUrl").value = url;
-      }
+      if (url) document.getElementById("prodImagenUrl").value = url;
     }
 
     function subirBase64Drive(file) {
@@ -1681,17 +1655,12 @@
         const reader = new FileReader();
         reader.onload = async () => {
           const base64 = String(reader.result).split(",")[1] || "";
-          const res = await fetch(API_URL, {
-            method: "POST",
-            body: JSON.stringify({
-              action: "uploadMedia",
-              pin: state.adminPin,
-              fileName: file.name,
-              mimeType: file.type || "image/jpeg",
-              base64
-            })
+          const data = await postAdmin({
+            action: "uploadMedia",
+            fileName: file.name,
+            mimeType: file.type || "image/jpeg",
+            base64
           });
-          const data = await res.json();
           resolve(data.ok ? data.url : "");
         };
         reader.readAsDataURL(file);
@@ -1729,9 +1698,7 @@
         .replace(/"/g, "&quot;");
     }
 
-    function escAttr(s) {
-      return escHtml(s).replace(/'/g, "&#39;");
-    }
+    const escAttr = (s) => escHtml(s).replace(/'/g, "&#39;");
   </script>
 </body>
 </html>
