@@ -476,6 +476,22 @@
       background: #FAF9FE;
     }
 
+    .phone-split {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .phone-split select {
+      width: 148px;
+      flex-shrink: 0;
+    }
+
+    .phone-split input {
+      flex: 1;
+      min-width: 0;
+    }
+
     .cart-item {
       display: flex;
       justify-content: space-between;
@@ -650,8 +666,44 @@
           <input type="text" id="cliNombre" required placeholder="Ej. Valentina Pérez" />
         </div>
         <div class="field">
-          <label>Teléfono / WhatsApp *</label>
-          <input type="tel" id="cliTelefono" required placeholder="Ej. 0412-0000000" />
+          <label>Código de País y Número de WhatsApp *</label>
+          <div class="phone-split">
+            <select id="cliCodigoPais" aria-label="Código de país">
+              <option value="58" selected>+58 (VE)</option>
+              <option value="57">+57 (CO)</option>
+              <option value="1">+1 (US/CA)</option>
+              <option value="34">+34 (ES)</option>
+              <option value="52">+52 (MX)</option>
+              <option value="54">+54 (AR)</option>
+              <option value="56">+56 (CL)</option>
+              <option value="51">+51 (PE)</option>
+              <option value="593">+593 (EC)</option>
+              <option value="507">+507 (PA)</option>
+              <option value="598">+598 (UY)</option>
+              <option value="595">+595 (PY)</option>
+              <option value="591">+591 (BO)</option>
+              <option value="506">+506 (CR)</option>
+              <option value="502">+502 (GT)</option>
+              <option value="503">+503 (SV)</option>
+              <option value="504">+504 (HN)</option>
+              <option value="505">+505 (NI)</option>
+              <option value="53">+53 (CU)</option>
+              <option value="1809">+1-809 (DO)</option>
+              <option value="44">+44 (UK)</option>
+              <option value="33">+33 (FR)</option>
+              <option value="49">+49 (DE)</option>
+              <option value="39">+39 (IT)</option>
+              <option value="351">+351 (PT)</option>
+              <option value="55">+55 (BR)</option>
+            </select>
+            <input
+              type="tel"
+              id="cliTelefono"
+              required
+              pattern="[0-9\s\-]{6,15}"
+              placeholder="Ej. 4241913036"
+            />
+          </div>
         </div>
         <div class="admin-grid-2">
           <div class="field">
@@ -1108,6 +1160,16 @@
       summary.innerHTML = `Total: $${totalUsd.toFixed(2)} USD • Bs. ${totalBs.toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     }
 
+    function construirTelefonoCompleto(codigoPais, numeroLocal) {
+      const cod = String(codigoPais || "").replace(/\D/g, "");
+      let num = String(numeroLocal || "").replace(/\D/g, "");
+      if (!num) return "";
+      if (cod === "58" && num.startsWith("0")) {
+        num = num.slice(1);
+      }
+      return `${cod}${num}`;
+    }
+
     async function enviarPedido(ev) {
       ev.preventDefault();
       const msg = document.getElementById("msgPedido");
@@ -1119,6 +1181,15 @@
         return;
       }
 
+      const codigoPais = document.getElementById("cliCodigoPais").value;
+      const numeroLocal = document.getElementById("cliTelefono").value.trim();
+      const telefonoCompleto = construirTelefonoCompleto(codigoPais, numeroLocal);
+
+      if (!telefonoCompleto || telefonoCompleto.length < 8) {
+        mostrarMsg(msg, "Ingresa un número de WhatsApp válido.", false);
+        return;
+      }
+
       const tasa = parseFloat(state.config.tasa_bcv) || 890;
       const totalUsd = state.carrito.reduce((acc, it) => acc + it.cantidad * it.precio_usd, 0);
       const totalBs = Number((totalUsd * tasa).toFixed(2));
@@ -1126,7 +1197,7 @@
       const payload = {
         action: "createOrder",
         cliente: document.getElementById("cliNombre").value.trim(),
-        telefono: document.getElementById("cliTelefono").value.trim(),
+        telefono: `+${telefonoCompleto}`,
         modalidad_entrega: document.getElementById("cliEntrega").value,
         metodo_pago: document.getElementById("cliPago").value,
         total_usd: Number(totalUsd.toFixed(2)),
@@ -1155,6 +1226,7 @@
         actualizarBadgeCarrito();
         renderModalCarrito();
         document.getElementById("formPedido").reset();
+        document.getElementById("cliCodigoPais").value = "58";
         await cargarCatalogo();
         mostrarMsg(
           msg,
@@ -1169,15 +1241,8 @@
       }
     }
 
-    function formatearTelefonoVenezuela(tel) {
-      let limpio = String(tel || "").replace(/\D/g, "");
-      if (!limpio) return "";
-      if (limpio.startsWith("0")) {
-        limpio = "58" + limpio.slice(1);
-      } else if (!limpio.startsWith("58") && limpio.length === 10) {
-        limpio = "58" + limpio;
-      }
-      return limpio;
+    function normalizarWhatsAppAdmin(tel) {
+      return String(tel || "").replace(/\D/g, "");
     }
 
     function abrirModalPin() {
@@ -1254,12 +1319,12 @@
 
       const pedBody = document.getElementById("adminPedidosBody");
       pedBody.innerHTML = (d.pedidos || []).map(ped => {
-        const waCliente = formatearTelefonoVenezuela(ped.telefono);
+        const waCliente = normalizarWhatsAppAdmin(ped.telefono);
         const msgCliente = encodeURIComponent(
           `Hola ${ped.cliente}, te escribimos de ${cfg.nombre_tienda || "Pao's World"} respecto a tu orden ${ped.pedido_id} por $${Number(ped.total_usd || 0).toFixed(2)}.`
         );
         const linkWaHtml = waCliente
-          ? `<br><a class="btn-wa-mini" href="https://wa.me/${waCliente}?text=${msgCliente}" target="_blank" rel="noopener noreferrer">Escribir (+${waCliente})</a>`
+          ? `<br><a class="btn-wa-mini" href="https://wa.me/${waCliente}?text=${msgCliente}" target="_blank" rel="noopener noreferrer">WhatsApp (+${waCliente})</a>`
           : "";
 
         return `
