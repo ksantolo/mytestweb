@@ -1174,61 +1174,7 @@
             <button class="btn btn-soft btn-sm" type="button" onclick="restaurarColoresDefault()">Restaurar paleta JC</button>
           </div>
 
-          <div class="color-hex-grid">
-            <div class="color-hex-card">
-              <label style="font-size:12px;font-weight:700;color:#0F1111;">Color Principal / Oscuro</label>
-              <div class="color-hex-row">
-                <input type="color" id="pickerColorPrimario" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_primario', this.value)" />
-                <input type="text" id="cfgColorPrimario" class="color-hex-input" maxlength="9" placeholder="#1A1A1A" oninput="sincronizarColorDesdeHex('color_primario', this.value)" />
-              </div>
-              <div class="color-hex-swatch" id="swatchColorPrimario">Primario</div>
-            </div>
-
-            <div class="color-hex-card">
-              <label style="font-size:12px;font-weight:700;color:#0F1111;">Color de Acento (Botones / Detalles)</label>
-              <div class="color-hex-row">
-                <input type="color" id="pickerColorAcento" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_acento', this.value)" />
-                <input type="text" id="cfgColorAcento" class="color-hex-input" maxlength="9" placeholder="#C5A059" oninput="sincronizarColorDesdeHex('color_acento', this.value)" />
-              </div>
-              <div class="color-hex-swatch" id="swatchColorAcento">Acento</div>
-            </div>
-
-            <div class="color-hex-card">
-              <label style="font-size:12px;font-weight:700;color:#0F1111;">Fondo General de Página</label>
-              <div class="color-hex-row">
-                <input type="color" id="pickerColorFondo" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_fondo', this.value)" />
-                <input type="text" id="cfgColorFondo" class="color-hex-input" maxlength="9" placeholder="#FAF8F3" oninput="sincronizarColorDesdeHex('color_fondo', this.value)" />
-              </div>
-              <div class="color-hex-swatch" id="swatchColorFondo">Fondo</div>
-            </div>
-
-            <div class="color-hex-card">
-              <label style="font-size:12px;font-weight:700;color:#0F1111;">Superficie (Tarjetas / Cabecera)</label>
-              <div class="color-hex-row">
-                <input type="color" id="pickerColorSuperficie" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_superficie', this.value)" />
-                <input type="text" id="cfgColorSuperficie" class="color-hex-input" maxlength="9" placeholder="#FFFFFF" oninput="sincronizarColorDesdeHex('color_superficie', this.value)" />
-              </div>
-              <div class="color-hex-swatch" id="swatchColorSuperficie">Superficie</div>
-            </div>
-
-            <div class="color-hex-card">
-              <label style="font-size:12px;font-weight:700;color:#0F1111;">Color de Texto Principal</label>
-              <div class="color-hex-row">
-                <input type="color" id="pickerColorTexto" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_texto', this.value)" />
-                <input type="text" id="cfgColorTexto" class="color-hex-input" maxlength="9" placeholder="#0F1111" oninput="sincronizarColorDesdeHex('color_texto', this.value)" />
-              </div>
-              <div class="color-hex-swatch" id="swatchColorTexto">Texto principal</div>
-            </div>
-
-            <div class="color-hex-card">
-              <label style="font-size:12px;font-weight:700;color:#0F1111;">Color de Texto Secundario</label>
-              <div class="color-hex-row">
-                <input type="color" id="pickerColorTextoSuave" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_texto_suave', this.value)" />
-                <input type="text" id="cfgColorTextoSuave" class="color-hex-input" maxlength="9" placeholder="#565959" oninput="sincronizarColorDesdeHex('color_texto_suave', this.value)" />
-              </div>
-              <div class="color-hex-swatch" id="swatchColorTextoSuave">Texto suave</div>
-            </div>
-          </div>
+          <div class="color-hex-grid" id="colorHexGrid"></div>
         </div>
 
         <!-- Sección de Tipografía y Tamaños -->
@@ -1428,12 +1374,12 @@
     };
 
     const MAPA_CAMPOS_COLOR = [
-      { key: "color_primario", inputId: "cfgColorPrimario", pickerId: "pickerColorPrimario", swatchId: "swatchColorPrimario", cssVar: "--primario" },
-      { key: "color_acento", inputId: "cfgColorAcento", pickerId: "pickerColorAcento", swatchId: "swatchColorAcento", cssVar: "--acento" },
-      { key: "color_fondo", inputId: "cfgColorFondo", pickerId: "pickerColorFondo", swatchId: "swatchColorFondo", cssVar: "--fondo" },
-      { key: "color_superficie", inputId: "cfgColorSuperficie", pickerId: "pickerColorSuperficie", swatchId: "swatchColorSuperficie", cssVar: "--superficie" },
-      { key: "color_texto", inputId: "cfgColorTexto", pickerId: "pickerColorTexto", swatchId: "swatchColorTexto", cssVar: "--texto" },
-      { key: "color_texto_suave", inputId: "cfgColorTextoSuave", pickerId: "pickerColorTextoSuave", swatchId: "swatchColorTextoSuave", cssVar: "--texto-suave" }
+      { key: "color_primario", label: "Color Principal / Oscuro", placeholder: "#1A1A1A", sample: "Primario", inputId: "cfgColorPrimario", pickerId: "pickerColorPrimario", swatchId: "swatchColorPrimario" },
+      { key: "color_acento", label: "Color de Acento (Botones / Detalles)", placeholder: "#C5A059", sample: "Acento", inputId: "cfgColorAcento", pickerId: "pickerColorAcento", swatchId: "swatchColorAcento" },
+      { key: "color_fondo", label: "Fondo General de Página", placeholder: "#FAF8F3", sample: "Fondo", inputId: "cfgColorFondo", pickerId: "pickerColorFondo", swatchId: "swatchColorFondo" },
+      { key: "color_superficie", label: "Superficie (Tarjetas / Cabecera)", placeholder: "#FFFFFF", sample: "Superficie", inputId: "cfgColorSuperficie", pickerId: "pickerColorSuperficie", swatchId: "swatchColorSuperficie" },
+      { key: "color_texto", label: "Color de Texto Principal", placeholder: "#0F1111", sample: "Texto principal", inputId: "cfgColorTexto", pickerId: "pickerColorTexto", swatchId: "swatchColorTexto" },
+      { key: "color_texto_suave", label: "Color de Texto Secundario", placeholder: "#565959", sample: "Texto suave", inputId: "cfgColorTextoSuave", pickerId: "pickerColorTextoSuave", swatchId: "swatchColorTextoSuave" }
     ];
 
     const FUENTES_DISPONIBLES = [
@@ -1452,7 +1398,7 @@
       ["56","+56 (CL)"],["51","+51 (PE)"],["593","+593 (EC)"],["507","+507 (PA)"],["598","+598 (UY)"],["595","+595 (PY)"],
       ["591","+591 (BO)"],["506","+506 (CR)"],["502","+502 (GT)"],["503","+503 (SV)"],["504","+504 (HN)"],["505","+505 (NI)"],
       ["53","+53 (CU)"],["1809","+1-809 (DO)"],["44","+44 (UK)"],["33","+33 (FR)"],["49","+49 (DE)"],["39","+39 (IT)"],
-      ["351","+55 (PT)"],["55","+55 (BR)"]
+      ["351","+351 (PT)"],["55","+55 (BR)"]
     ];
 
     const PROD_FIELDS = [
@@ -1462,18 +1408,19 @@
       ["prodStock","stock",0],["prodImagenUrl","imagen_url",""],["prodDescripcion","descripcion",""]
     ];
 
+    const TYPO_CONFIGS = [
+      { fontId: "cfgFontTitulos", sizeId: "cfgSizeTitulos", previewId: "previewTypoTitulos", fontKey: "font_titulos", sizeKey: "size_titulos", defFont: "AMAZON", defSize: 16, min: 12, max: 32, prevMin: 12, prevMax: 28 },
+      { fontId: "cfgFontDesc", sizeId: "cfgSizeDesc", previewId: "previewTypoDesc", fontKey: "font_desc", sizeKey: "size_desc", defFont: "AMAZON", defSize: 13, min: 10, max: 22, prevMin: 10, prevMax: 20 },
+      { fontId: "cfgFontCat", sizeId: "cfgSizeCat", previewId: "previewTypoCat", fontKey: "font_cat", sizeKey: "size_cat", defFont: "AMAZON", defSize: 12.5, min: 10, max: 20, prevMin: 10, prevMax: 19 }
+    ];
+
     const state = {
       config: {
         estado_servicio: "ACTIVO", horas_expiracion_carrito: 2,
         nombre_tienda: "JC", subtitulo_tienda: "Relojes, correas y accesorios • Entregas y envíos",
         whatsapp: "", instagram: "", metodos_pago: "Zelle",
         paypal_comision_pct: 5.4, paypal_comision_fija: 0.30,
-        color_primario: COLORES_DEFAULT.color_primario,
-        color_acento: COLORES_DEFAULT.color_acento,
-        color_fondo: COLORES_DEFAULT.color_fondo,
-        color_superficie: COLORES_DEFAULT.color_superficie,
-        color_texto: COLORES_DEFAULT.color_texto,
-        color_texto_suave: COLORES_DEFAULT.color_texto_suave,
+        ...COLORES_DEFAULT,
         logo_url: "", portada_url: "",
         font_titulos: "AMAZON", size_titulos: 16,
         font_desc: "AMAZON", size_desc: 13,
@@ -1489,48 +1436,55 @@
     const escHtml = (s) => String(s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
     const escAttr = (s) => escHtml(s).replace(/'/g,"&#39;");
     const cerrarModal = (id) => $(id)?.classList.remove("open");
-    const cerrarBackdrop = (ev, id) => { if (ev.target && ev.target.id === id) cerrarModal(id); };
-    const mostrarMsg = (el, txt, ok) => { if (!el) return; el.textContent = txt; el.className = `status-msg ${ok ? "ok" : "err"}`; el.style.display = "block"; };
+    const cerrarBackdrop = (ev, id) => { if (ev.target?.id === id) cerrarModal(id); };
+    const mostrarMsg = (el, txt, ok) => {
+      if (!el) return;
+      el.textContent = txt;
+      el.className = `status-msg ${ok ? "ok" : "err"}`;
+      el.style.display = "block";
+    };
 
-    function parseImagenesProducto(raw) {
-      if (Array.isArray(raw)) {
-        return raw.map(s => String(s || "").trim()).filter(Boolean);
-      }
-      return String(raw || "")
-        .split(/\s*\|\s*|\s*,\s*(?=https?:\/\/)/i)
-        .map(s => s.trim())
-        .filter(Boolean);
-    }
+    const parseImagenesProducto = (raw) => Array.isArray(raw)
+      ? raw.map(s => String(s || "").trim()).filter(Boolean)
+      : String(raw || "").split(/\s*\|\s*|\s*,\s*(?=https?:\/\/)/i).map(s => s.trim()).filter(Boolean);
+
+    const parseColoresReloj = (raw) => String(raw || "").split(/[,|/;]+/).map(s => s.trim()).filter(Boolean);
 
     function normalizarHex(val, fallback) {
       let s = String(val || "").trim();
       if (!s) return fallback;
       if (!s.startsWith("#")) s = "#" + s;
-      if (/^#[0-9a-fA-F]{3}$/.test(s)) {
-        s = "#" + s[1] + s[1] + s[2] + s[2] + s[3] + s[3];
-      }
-      if (/^#[0-9a-fA-F]{6}$/.test(s) || /^#[0-9a-fA-F]{8}$/.test(s)) {
-        return s.toUpperCase();
-      }
-      return fallback;
+      if (/^#[0-9a-fA-F]{3}$/.test(s)) s = "#" + [...s.slice(1)].map(ch => ch + ch).join("");
+      return (/^#[0-9a-fA-F]{6}$/.test(s) || /^#[0-9a-fA-F]{8}$/.test(s)) ? s.toUpperCase() : fallback;
     }
 
     function oscurecerHex(hex, factor = 0.82) {
       const clean = normalizarHex(hex, "#C5A059").replace("#", "");
       if (clean.length < 6) return "#A3803D";
-      const r = Math.max(0, Math.min(255, Math.round(parseInt(clean.slice(0, 2), 16) * factor)));
-      const g = Math.max(0, Math.min(255, Math.round(parseInt(clean.slice(2, 4), 16) * factor)));
-      const b = Math.max(0, Math.min(255, Math.round(parseInt(clean.slice(4, 6), 16) * factor)));
-      return "#" + [r, g, b].map(n => n.toString(16).padStart(2, "0")).join("").toUpperCase();
+      const rgb = [0, 2, 4].map(i => Math.max(0, Math.min(255, Math.round(parseInt(clean.slice(i, i + 2), 16) * factor))));
+      return "#" + rgb.map(n => n.toString(16).padStart(2, "0")).join("").toUpperCase();
     }
 
     function esColorClaroHex(hex) {
       const clean = normalizarHex(hex, "#FFFFFF").replace("#", "");
       if (clean.length < 6) return true;
-      const r = parseInt(clean.slice(0, 2), 16);
-      const g = parseInt(clean.slice(2, 4), 16);
-      const b = parseInt(clean.slice(4, 6), 16);
+      const [r, g, b] = [0, 2, 4].map(i => parseInt(clean.slice(i, i + 2), 16));
       return (0.299 * r + 0.587 * g + 0.114 * b) > 155;
+    }
+
+    function renderizarTarjetasColorHex() {
+      const grid = $("colorHexGrid");
+      if (!grid) return;
+      grid.innerHTML = MAPA_CAMPOS_COLOR.map(item => `
+        <div class="color-hex-card">
+          <label style="font-size:12px;font-weight:700;color:#0F1111;">${escHtml(item.label)}</label>
+          <div class="color-hex-row">
+            <input type="color" id="${item.pickerId}" class="color-picker-native" oninput="sincronizarColorDesdePicker('${item.key}', this.value)" />
+            <input type="text" id="${item.inputId}" class="color-hex-input" maxlength="9" placeholder="${item.placeholder}" oninput="sincronizarColorDesdeHex('${item.key}', this.value)" />
+          </div>
+          <div class="color-hex-swatch" id="${item.swatchId}">${escHtml(item.sample)}</div>
+        </div>
+      `).join("");
     }
 
     function aplicarColoresDesdeCfg(cfg) {
@@ -1553,12 +1507,10 @@
     }
 
     function actualizarControlesColorAdmin(cfg) {
-      const merged = Object.assign({}, COLORES_DEFAULT, cfg || {});
+      const merged = { ...COLORES_DEFAULT, ...(cfg || {}) };
       MAPA_CAMPOS_COLOR.forEach(item => {
         const hex = normalizarHex(merged[item.key], COLORES_DEFAULT[item.key]);
-        const inp = $(item.inputId);
-        const picker = $(item.pickerId);
-        const swatch = $(item.swatchId);
+        const inp = $(item.inputId), picker = $(item.pickerId), swatch = $(item.swatchId);
         if (inp && document.activeElement !== inp) inp.value = hex;
         if (picker && /^#[0-9A-F]{6}$/.test(hex)) picker.value = hex;
         if (swatch) {
@@ -1624,103 +1576,65 @@
     }
 
     function aplicarTipografiaGlobal(override) {
-      const cfg = Object.assign({}, state.config, override || {});
+      const cfg = { ...state.config, ...(override || {}) };
       const root = document.documentElement.style;
-
-      const fontTit = resolverCssFuente(cfg.font_titulos);
       const sizeCard = Math.min(32, Math.max(12, parseFloat(cfg.size_titulos) || 16));
-      const sizeTienda = Math.round(sizeCard * 1.62);
-      const sizeSeccion = Math.round(sizeCard * 1.25);
-
-      const fontDesc = resolverCssFuente(cfg.font_desc);
       const sizeDesc = Math.min(22, Math.max(10, parseFloat(cfg.size_desc) || 13));
-
-      const fontCat = resolverCssFuente(cfg.font_cat);
       const sizeCat = Math.min(20, Math.max(10, parseFloat(cfg.size_cat) || 12.5));
 
-      root.setProperty("--font-titulos", fontTit);
+      root.setProperty("--font-titulos", resolverCssFuente(cfg.font_titulos));
       root.setProperty("--size-titulo-card", `${sizeCard}px`);
-      root.setProperty("--size-titulo-tienda", `${sizeTienda}px`);
-      root.setProperty("--size-titulo-seccion", `${sizeSeccion}px`);
-
-      root.setProperty("--font-desc", fontDesc);
+      root.setProperty("--size-titulo-tienda", `${Math.round(sizeCard * 1.62)}px`);
+      root.setProperty("--size-titulo-seccion", `${Math.round(sizeCard * 1.25)}px`);
+      root.setProperty("--font-desc", resolverCssFuente(cfg.font_desc));
       root.setProperty("--size-desc", `${sizeDesc}px`);
-
-      root.setProperty("--font-cat", fontCat);
+      root.setProperty("--font-cat", resolverCssFuente(cfg.font_cat));
       root.setProperty("--size-cat", `${sizeCat}px`);
     }
 
     function poblarSelectoresTipografiaAdmin() {
       const optionsHtml = FUENTES_DISPONIBLES.map(f => `<option value="${escAttr(f.key)}">${escHtml(f.label)}</option>`).join("");
-      ["cfgFontTitulos", "cfgFontDesc", "cfgFontCat"].forEach(id => {
-        const el = $(id);
+      TYPO_CONFIGS.forEach(({ fontId }) => {
+        const el = $(fontId);
         if (el) el.innerHTML = optionsHtml;
       });
     }
 
     function previsualizarTipografiaAdmin() {
-      const fTit = $("cfgFontTitulos")?.value || "AMAZON";
-      const sTit = parseFloat($("cfgSizeTitulos")?.value) || 16;
-      const fDesc = $("cfgFontDesc")?.value || "AMAZON";
-      const sDesc = parseFloat($("cfgSizeDesc")?.value) || 13;
-      const fCat = $("cfgFontCat")?.value || "AMAZON";
-      const sCat = parseFloat($("cfgSizeCat")?.value) || 12.5;
-
-      const pTit = $("previewTypoTitulos");
-      if (pTit) {
-        pTit.style.fontFamily = resolverCssFuente(fTit);
-        pTit.style.fontSize = `${Math.min(28, Math.max(12, sTit))}px`;
-      }
-      const pDesc = $("previewTypoDesc");
-      if (pDesc) {
-        pDesc.style.fontFamily = resolverCssFuente(fDesc);
-        pDesc.style.fontSize = `${Math.min(20, Math.max(10, sDesc))}px`;
-      }
-      const pCat = $("previewTypoCat");
-      if (pCat) {
-        pCat.style.fontFamily = resolverCssFuente(fCat);
-        pCat.style.fontSize = `${Math.min(19, Math.max(10, sCat))}px`;
-      }
-
-      aplicarTipografiaGlobal({
-        font_titulos: fTit, size_titulos: sTit,
-        font_desc: fDesc, size_desc: sDesc,
-        font_cat: fCat, size_cat: sCat
+      const patch = {};
+      TYPO_CONFIGS.forEach(({ fontId, sizeId, previewId, fontKey, sizeKey, defFont, defSize, prevMin, prevMax }) => {
+        const f = $(fontId)?.value || defFont;
+        const s = parseFloat($(sizeId)?.value) || defSize;
+        patch[fontKey] = f;
+        patch[sizeKey] = s;
+        const prev = $(previewId);
+        if (prev) {
+          prev.style.fontFamily = resolverCssFuente(f);
+          prev.style.fontSize = `${Math.min(prevMax, Math.max(prevMin, s))}px`;
+        }
       });
+      aplicarTipografiaGlobal(patch);
     }
 
     function restaurarTipografiaDefault() {
-      if ($("cfgFontTitulos")) $("cfgFontTitulos").value = "AMAZON";
-      if ($("cfgSizeTitulos")) $("cfgSizeTitulos").value = "16";
-      if ($("cfgFontDesc")) $("cfgFontDesc").value = "AMAZON";
-      if ($("cfgSizeDesc")) $("cfgSizeDesc").value = "13";
-      if ($("cfgFontCat")) $("cfgFontCat").value = "AMAZON";
-      if ($("cfgSizeCat")) $("cfgSizeCat").value = "12.5";
+      TYPO_CONFIGS.forEach(({ fontId, sizeId, defFont, defSize }) => {
+        if ($(fontId)) $(fontId).value = defFont;
+        if ($(sizeId)) $(sizeId).value = defSize;
+      });
       previsualizarTipografiaAdmin();
     }
 
     function deduplicarBloquesPrincipales() {
       ["header.topbar", "main.container", ".dev-watermark", ".fab-cart"].forEach(sel => {
-        document.querySelectorAll(sel).forEach((el, idx) => {
-          if (idx > 0) el.remove();
-        });
+        document.querySelectorAll(sel).forEach((el, idx) => { if (idx > 0) el.remove(); });
       });
     }
 
     function limpiarDatosLocalesViejos() {
       try {
-        Object.keys(localStorage).forEach(k => {
-          if (/samurai|paos_world/i.test(k)) localStorage.removeItem(k);
-        });
+        Object.keys(localStorage).forEach(k => { if (/samurai|paos_world/i.test(k)) localStorage.removeItem(k); });
         sessionStorage.clear();
       } catch (_) {}
-    }
-
-    function parseColoresReloj(raw) {
-      return String(raw || "")
-        .split(/[,|/;]+/)
-        .map(s => s.trim())
-        .filter(Boolean);
     }
 
     function detectarTipoArticulo(p) {
@@ -1728,35 +1642,22 @@
       if (explicit === "ACCESORIO" || explicit === "CORREA") return "ACCESORIO";
       if (explicit === "RELOJ") return "RELOJ";
       const txt = `${p?.categoria || ""} ${p?.nombre || ""} ${p?.detalle_variante || ""}`.toLowerCase();
-      if (/\b(correa|correas|extensible|pulso|brazalete|accesorio|accesorios|repuesto|repuestos|hebilla|pasador|eslab[oó]n|estuche|caja|herramienta|pila|bater[ií]a)\b/.test(txt)) {
-        return "ACCESORIO";
-      }
-      return "RELOJ";
+      return /\b(correa|correas|extensible|pulso|brazalete|accesorio|accesorios|repuesto|repuestos|hebilla|pasador|eslab[oó]n|estuche|caja|herramienta|pila|bater[ií]a)\b/.test(txt) ? "ACCESORIO" : "RELOJ";
     }
 
-    function obtenerImagenCategoria(catObj) {
-      if (!catObj) return "";
-      return String(
-        catObj.imagen_url ?? catObj.imagen ?? catObj.foto_url ?? catObj.foto ?? catObj.url_imagen ?? ""
-      ).trim();
-    }
+    const obtenerImagenCategoria = (catObj) => catObj ? String(catObj.imagen_url ?? catObj.imagen ?? catObj.foto_url ?? catObj.foto ?? catObj.url_imagen ?? "").trim() : "";
 
     function normalizarCategoriaSheet(c) {
       if (!c) return c;
       const url = obtenerImagenCategoria(c);
-      return Object.assign({}, c, {
-        categoria: String(c.categoria ?? c.nombre ?? "").trim(),
-        imagen_url: url,
-        imagen: url,
-        oculta: String(c.oculta || "NO").trim().toUpperCase()
-      });
+      return { ...c, categoria: String(c.categoria ?? c.nombre ?? "").trim(), imagen_url: url, imagen: url, oculta: String(c.oculta || "NO").trim().toUpperCase() };
     }
 
     function normalizarRelojSheet(p) {
       if (!p) return p;
       const precioUsd = Number(p.precio_usd ?? p.precio_bcv_usd) || 0;
       const rawPromo = p.precio_promo !== undefined ? p.precio_promo : p.precio_promo_divisas;
-      const promoVal = rawPromo === "" || rawPromo === undefined ? "" : Number(rawPromo) || "";
+      const promoVal = rawPromo === "" || rawPromo === undefined ? "" : (Number(rawPromo) || "");
       const marca = String(p.marca ?? p.editorial ?? "").trim();
       let colores = String(p.colores ?? p.colores_disponibles ?? "").trim();
       let detalle = String(p.detalle_variante ?? p.caracteristicas ?? "").trim();
@@ -1767,24 +1668,17 @@
         if (!tipoArt) tipoArt = /accesorio|correa/i.test(matchTipo[1]) ? "ACCESORIO" : "RELOJ";
         detalle = detalle.replace(/(?:^|\|\s*)Tipo:\s*[^|]+/i, "").replace(/^\s*\|\s*|\s*\|\s*$/g, "").trim();
       }
-
       const matchCol = detalle.match(/(?:^|\|\s*)Colores:\s*([^|]+)/i);
       if (matchCol) {
         if (!colores) colores = matchCol[1].trim();
         detalle = detalle.replace(/(?:^|\|\s*)Colores:\s*[^|]+/i, "").replace(/^\s*\|\s*|\s*\|\s*$/g, "").trim();
       }
 
-      const rawFotos = [
-        p.imagen_url,
-        p.imagen,
-        p.foto_url,
-        p.imagenes,
-        p.fotos,
-        p.galeria
-      ].filter(Boolean).join("|");
+      const rawFotos = [p.imagen_url, p.imagen, p.foto_url, p.imagenes, p.fotos, p.galeria].filter(Boolean).join("|");
       const fotos = parseImagenesProducto(rawFotos);
 
-      const norm = Object.assign({}, p, {
+      const norm = {
+        ...p,
         precio_usd: precioUsd,
         precio_promo: promoVal,
         marca,
@@ -1794,16 +1688,13 @@
         descripcion: String(p.descripcion ?? "").trim(),
         fotos,
         imagen_url: fotos[0] || ""
-      });
+      };
       norm.tipo_articulo = tipoArt || detectarTipoArticulo(norm);
       return norm;
     }
 
     const isOffFlag = (v) => ["NO","DESACTIVADA","OFF","FALSE","0","SIEMPRE"].includes(String(v ?? "").trim().toUpperCase());
-
-    function esCantidadDesactivadaCategoria(catObj) {
-      return isOffFlag(catObj?.control_cantidad ?? catObj?.cantidad_activa);
-    }
+    const esCantidadDesactivadaCategoria = (catObj) => isOffFlag(catObj?.control_cantidad ?? catObj?.cantidad_activa);
 
     function esCantidadDesactivadaProducto(prodObj, cats) {
       const vp = String(prodObj?.control_cantidad ?? prodObj?.cantidad_activa ?? "").trim();
@@ -1816,6 +1707,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       deduplicarBloquesPrincipales();
       limpiarDatosLocalesViejos();
+      renderizarTarjetasColorHex();
       poblarSelectoresTipografiaAdmin();
       aplicarColoresDesdeCfg(state.config);
       actualizarControlesColorAdmin(state.config);
@@ -1826,7 +1718,9 @@
       actualizarPreviewLibro();
       actualizarEtiquetasFormAdmin();
       cargarCatalogo();
-      document.addEventListener("keydown", (e) => { if (e.key === "Escape") { cerrarModal("modalLightbox"); cerrarModal("modalPin"); } });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") { cerrarModal("modalLightbox"); cerrarModal("modalPin"); }
+      });
     });
 
     function actualizarEtiquetasFormAdmin() {
@@ -1844,16 +1738,12 @@
     function renderListaFotosAdmin(urls) {
       const box = $("adminFotosLista");
       if (!box) return;
-      if (!urls.length) {
-        box.innerHTML = "";
-        return;
-      }
-      box.innerHTML = urls.map((u, idx) => `
+      box.innerHTML = urls.length ? urls.map((u, idx) => `
         <div class="admin-photo-chip" title="Foto ${idx + 1}">
           <img src="${escAttr(u)}" alt="Foto ${idx + 1}" />
           <button type="button" class="admin-photo-del" title="Quitar foto" onclick="quitarFotoAdmin(${idx})">✕</button>
         </div>
-      `).join("");
+      `).join("") : "";
     }
 
     function quitarFotoAdmin(idx) {
@@ -1864,8 +1754,7 @@
     }
 
     function actualizarPreviewLibro() {
-      const raw = String($("prodImagenUrl")?.value || "").trim();
-      const urls = parseImagenesProducto(raw);
+      const urls = parseImagenesProducto($("prodImagenUrl")?.value || "");
       const img = $("prodPreviewImg"), ph = $("prodPreviewPlaceholder");
       renderListaFotosAdmin(urls);
       if (!img || !ph) return;
@@ -1968,10 +1857,7 @@
       if (!d) return "";
       return (d.length === 10) ? `+1 (${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}` : `+${d}`;
     }
-    function normalizarHandleInstagram(raw) {
-      const l = String(raw || "").trim().replace(/^@+/, "");
-      return l ? `@${l}` : "";
-    }
+    const normalizarHandleInstagram = (raw) => { const l = String(raw || "").trim().replace(/^@+/, ""); return l ? `@${l}` : ""; };
 
     function aplicarTemaYMarca() {
       const c = state.config;
@@ -1986,8 +1872,7 @@
       $("brandSub").textContent = subtituloTienda;
       document.title = `${nombreTienda} — Relojes, Correas y Accesorios`;
 
-      const igHandle = normalizarHandleInstagram(c.instagram);
-      const igClean = igHandle.replace(/^@+/, "");
+      const igHandle = normalizarHandleInstagram(c.instagram), igClean = igHandle.replace(/^@+/, "");
       if (igClean) {
         const igUrl = `https://www.instagram.com/${encodeURIComponent(igClean)}/`;
         $("headerInstagram").href = igUrl; $("headerInstagram").style.display = "inline-flex";
@@ -2000,8 +1885,7 @@
 
       const waNum = String(c.whatsapp || "").replace(/\D/g, "");
       if (waNum) {
-        const waVisible = formatearTelefonoVisible(waNum);
-        const waUrl = `https://wa.me/${waNum}`;
+        const waVisible = formatearTelefonoVisible(waNum), waUrl = `https://wa.me/${waNum}`;
         $("headerWhatsApp").href = waUrl; $("headerWhatsApp").style.display = "inline-flex";
         $("headerWhatsApp").title = `WhatsApp oficial: ${waVisible}`;
         $("fabWhatsApp").href = waUrl; $("fabWhatsApp").style.display = "flex";
@@ -2014,9 +1898,7 @@
 
       $("bannerPausa").style.display = String(c.estado_servicio).toUpperCase() === "ACTIVO" ? "none" : "block";
 
-      const logoUrl = String(c.logo_url || "").trim();
-      const logoWrap = $("brandLogoWrap");
-      const logoBox = $("brandLogo");
+      const logoUrl = String(c.logo_url || "").trim(), logoWrap = $("brandLogoWrap"), logoBox = $("brandLogo");
       if (logoUrl) {
         logoBox.innerHTML = `<img src="${escAttr(logoUrl)}" alt="Logo ${escAttr(nombreTienda)}" />`;
         logoWrap?.classList.add("has-logo");
@@ -2033,10 +1915,7 @@
 
     function seleccionarTipoArticulo(tipo) {
       state.tipoActivo = tipo;
-      ["TODOS", "RELOJ", "ACCESORIO"].forEach(t => {
-        const btn = $(`typeBtn${t}`);
-        if (btn) btn.classList.toggle("active", t === tipo);
-      });
+      ["TODOS", "RELOJ", "ACCESORIO"].forEach(t => $(`typeBtn${t}`)?.classList.toggle("active", t === tipo));
       renderCatalogo();
     }
 
@@ -2084,22 +1963,14 @@
         const esAcc = (p.tipo_articulo || detectarTipoArticulo(p)) === "ACCESORIO";
         const usd = Number(p.precio_usd) || 0, promo = parseFloat(p.precio_promo), tienePromo = !isNaN(promo) && promo > 0;
         const stock = Number(p.stock) || 0, stockSiempre = esCantidadDesactivadaProducto(p, state.categorias), sinStock = !stockSiempre && stock <= 0;
-        const stockTxt = stockSiempre
-          ? (esAcc ? "Stock permanente • Repuesto disponible" : "Disponible • Stock permanente")
-          : (sinStock ? "Agotado por ahora" : `Disponible: ${stock} und.`);
-        const coloresArr = parseColoresReloj(p.colores);
-        const tieneVariosColores = coloresArr.length > 1;
-        const fotosArr = p.fotos && p.fotos.length ? p.fotos : parseImagenesProducto(p.imagen_url);
-        const imgPrincipal = fotosArr[0] || "";
+        const stockTxt = stockSiempre ? (esAcc ? "Stock permanente • Repuesto disponible" : "Disponible • Stock permanente") : (sinStock ? "Agotado por ahora" : `Disponible: ${stock} und.`);
+        const coloresArr = parseColoresReloj(p.colores), tieneVariosColores = coloresArr.length > 1;
+        const fotosArr = p.fotos?.length ? p.fotos : parseImagenesProducto(p.imagen_url), imgPrincipal = fotosArr[0] || "";
         const imgHtml = imgPrincipal
           ? `<img src="${escAttr(imgPrincipal)}" alt="${escAttr(p.nombre)}" loading="lazy" decoding="async" />`
           : `<span style="font-family:var(--font-titulos);font-size:24px;font-weight:700;color:var(--acento);opacity:0.65;">${escHtml(p.categoria.slice(0,2).toUpperCase())}</span>`;
-        const btnTexto = sinStock
-          ? "Sin stock"
-          : (tieneVariosColores ? (esAcc ? "Elegir color / medida" : "Elegir color / Agregar") : "Agregar al carrito");
-        const btnAction = tieneVariosColores
-          ? `abrirLightbox('${escAttr(p.id)}')`
-          : `agregarAlCarrito('${escAttr(p.id)}', 1, '${escAttr(coloresArr[0] || "")}')`;
+        const btnTexto = sinStock ? "Sin stock" : (tieneVariosColores ? (esAcc ? "Elegir color / medida" : "Elegir color / Agregar") : "Agregar al carrito");
+        const btnAction = tieneVariosColores ? `abrirLightbox('${escAttr(p.id)}')` : `agregarAlCarrito('${escAttr(p.id)}', 1, '${escAttr(coloresArr[0] || "")}')`;
 
         return `
           <article class="card">
@@ -2124,39 +1995,24 @@
 
     function cambiarLadoGaleria(side) {
       state.gallerySide = side === "right" ? "right" : "left";
-      const body = $("lbSheetBody");
-      if (body) body.classList.toggle("gallery-right", state.gallerySide === "right");
+      $("lbSheetBody")?.classList.toggle("gallery-right", state.gallerySide === "right");
       $("btnGalleryLeft")?.classList.toggle("active", state.gallerySide === "left");
       $("btnGalleryRight")?.classList.toggle("active", state.gallerySide === "right");
     }
 
     function renderGaleriaLightbox() {
-      const fotos = state.lightboxFotos || [];
-      const imgEl = $("lbImg");
-      const prevBtn = $("btnGalleryPrev");
-      const nextBtn = $("btnGalleryNext");
-      const strip = $("lbThumbsStrip");
-
+      const fotos = state.lightboxFotos || [], imgEl = $("lbImg"), prevBtn = $("btnGalleryPrev"), nextBtn = $("btnGalleryNext"), strip = $("lbThumbsStrip");
       if (!fotos.length) {
         if (imgEl) { imgEl.src = ""; imgEl.style.display = "none"; }
-        prevBtn?.classList.remove("visible");
-        nextBtn?.classList.remove("visible");
+        prevBtn?.classList.remove("visible"); nextBtn?.classList.remove("visible");
         if (strip) strip.innerHTML = "";
         return;
       }
-
       const idx = Math.max(0, Math.min(fotos.length - 1, state.lightboxFotoIdx || 0));
       state.lightboxFotoIdx = idx;
-      if (imgEl) {
-        imgEl.src = fotos[idx];
-        imgEl.alt = `${$("lbTitulo")?.textContent || "Artículo"} — Foto ${idx + 1}`;
-        imgEl.style.display = "block";
-      }
-
+      if (imgEl) { imgEl.src = fotos[idx]; imgEl.alt = `${$("lbTitulo")?.textContent || "Artículo"} — Foto ${idx + 1}`; imgEl.style.display = "block"; }
       const multi = fotos.length > 1;
-      prevBtn?.classList.toggle("visible", multi);
-      nextBtn?.classList.toggle("visible", multi);
-
+      prevBtn?.classList.toggle("visible", multi); nextBtn?.classList.toggle("visible", multi);
       if (strip) {
         strip.innerHTML = multi ? fotos.map((u, i) => `
           <button type="button" class="gallery-thumb-btn ${i === idx ? "active" : ""}" onclick="seleccionarFotoLightbox(${i})" title="Ver foto ${i + 1}">
@@ -2172,15 +2028,11 @@
       renderGaleriaLightbox();
     }
 
-    function navegarFotoLightbox(delta) {
-      seleccionarFotoLightbox((state.lightboxFotoIdx || 0) + delta);
-    }
+    const navegarFotoLightbox = (delta) => seleccionarFotoLightbox((state.lightboxFotoIdx || 0) + delta);
 
     function seleccionarColorLightbox(color) {
       state.lightboxColor = String(color || "").trim();
-      document.querySelectorAll("#lbColorsOptions .color-choice-btn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.color === state.lightboxColor);
-      });
+      document.querySelectorAll("#lbColorsOptions .color-choice-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.color === state.lightboxColor));
     }
 
     function abrirLightbox(prodId) {
@@ -2191,11 +2043,11 @@
       state.lightboxQty = 1;
       const coloresArr = parseColoresReloj(prod.colores);
       state.lightboxColor = coloresArr.length === 1 ? coloresArr[0] : "";
-      state.lightboxFotos = prod.fotos && prod.fotos.length ? prod.fotos.slice() : parseImagenesProducto(prod.imagen_url);
+      state.lightboxFotos = prod.fotos?.length ? prod.fotos.slice() : parseImagenesProducto(prod.imagen_url);
       state.lightboxFotoIdx = 0;
 
-      const usd = Number(prod.precio_usd) || 0;
-      const stock = Number(prod.stock) || 0, stockSiempre = esCantidadDesactivadaProducto(prod, state.categorias), sinStock = !stockSiempre && stock <= 0;
+      const usd = Number(prod.precio_usd) || 0, stock = Number(prod.stock) || 0;
+      const stockSiempre = esCantidadDesactivadaProducto(prod, state.categorias), sinStock = !stockSiempre && stock <= 0;
 
       $("lbTitulo").textContent = prod.nombre || "";
       $("lbDetalle").textContent = [esAcc ? "Correa / Accesorio de repuesto" : "Reloj", prod.categoria, prod.marca].filter(Boolean).join(" • ");
@@ -2206,12 +2058,8 @@
       $("lbMarca").textContent = prod.marca || (esAcc ? "Universal / Varios modelos" : "Edición disponible");
 
       const specsEl = $("lbCaracteristicas");
-      if (prod.detalle_variante) {
-        specsEl.textContent = `Características: ${prod.detalle_variante}`;
-        specsEl.style.display = "block";
-      } else {
-        specsEl.style.display = "none";
-      }
+      if (prod.detalle_variante) { specsEl.textContent = `Características: ${prod.detalle_variante}`; specsEl.style.display = "block"; }
+      else specsEl.style.display = "none";
 
       $("lbDescripcion").textContent = prod.descripcion || prod.detalle_variante || (esAcc ? "Repuesto de correa / accesorio disponible para reemplazo inmediato." : "Consulta especificaciones y disponibilidad de este reloj con nosotros.");
 
@@ -2219,21 +2067,13 @@
       $("lbColorsLabel").textContent = esAcc ? "Selecciona el color / medida *" : "Selecciona el color del reloj *";
       if (coloresArr.length) {
         colorsBox.style.display = "flex";
-        colorsOpts.innerHTML = coloresArr.map(c =>
-          `<button type="button" class="color-choice-btn ${state.lightboxColor === c ? "active" : ""}" data-color="${escAttr(c)}" onclick="seleccionarColorLightbox('${escAttr(c)}')">${escHtml(c)}</button>`
-        ).join("");
-      } else {
-        colorsBox.style.display = "none";
-        colorsOpts.innerHTML = "";
-      }
+        colorsOpts.innerHTML = coloresArr.map(c => `<button type="button" class="color-choice-btn ${state.lightboxColor === c ? "active" : ""}" data-color="${escAttr(c)}" onclick="seleccionarColorLightbox('${escAttr(c)}')">${escHtml(c)}</button>`).join("");
+      } else { colorsBox.style.display = "none"; colorsOpts.innerHTML = ""; }
 
       $("lbPrecioUsd").textContent = `$${usd.toFixed(2)}`; $("lbQtyValue").textContent = "1";
-
       const stockEl = $("lbStockTxt");
       stockEl.className = `stock-txt ${stockSiempre ? "stock-siempre" : (sinStock ? "stock-out" : "")}`;
-      stockEl.textContent = stockSiempre
-        ? "Stock permanente • Disponible siempre para entrega o envío"
-        : (sinStock ? "Agotado por ahora" : `Inventario disponible: ${stock} unidades`);
+      stockEl.textContent = stockSiempre ? "Stock permanente • Disponible siempre para entrega o envío" : (sinStock ? "Agotado por ahora" : `Inventario disponible: ${stock} unidades`);
 
       const btnAdd = $("lbBtnAgregar"), btnBuy = $("lbBtnComprar");
       btnAdd.disabled = btnBuy.disabled = sinStock;
@@ -2242,11 +2082,9 @@
 
       const validarYAgregar = (irAlCarrito) => {
         if (coloresArr.length > 0 && !state.lightboxColor) {
-          alert(esAcc ? "Por favor selecciona el color o medida antes de continuar." : "Por favor selecciona el color del reloj antes de continuar.");
-          return;
+          return alert(esAcc ? "Por favor selecciona el color o medida antes de continuar." : "Por favor selecciona el color del reloj antes de continuar.");
         }
-        const ok = agregarAlCarrito(prod.id, state.lightboxQty, state.lightboxColor);
-        if (ok) {
+        if (agregarAlCarrito(prod.id, state.lightboxQty, state.lightboxColor)) {
           cerrarModal("modalLightbox");
           if (irAlCarrito) abrirCarrito();
         }
@@ -2289,16 +2127,12 @@
 
     function agregarAlCarrito(prodId, cantidadSolicitada = 1, colorElegido = "") {
       const prod = state.prodMap.get(String(prodId));
-      const stock = Number(prod?.stock) || 0;
-      const stockSiempre = prod ? esCantidadDesactivadaProducto(prod, state.categorias) : false;
+      const stock = Number(prod?.stock) || 0, stockSiempre = prod ? esCantidadDesactivadaProducto(prod, state.categorias) : false;
       if (!prod || (!stockSiempre && stock <= 0)) return false;
 
-      const color = String(colorElegido || "").trim();
-      const cartKey = `${prod.id}::${color.toLowerCase()}`;
+      const color = String(colorElegido || "").trim(), cartKey = `${prod.id}::${color.toLowerCase()}`;
       const cant = Math.max(1, parseInt(cantidadSolicitada, 10) || 1);
-      const totalMismoProd = state.carrito
-        .filter(x => String(x.id) === String(prod.id))
-        .reduce((acc, x) => acc + x.cantidad, 0);
+      const totalMismoProd = state.carrito.filter(x => String(x.id) === String(prod.id)).reduce((acc, x) => acc + x.cantidad, 0);
 
       if (!stockSiempre && totalMismoProd + cant > stock) {
         alert(`Solo quedan ${stock} unidades disponibles de "${prod.nombre}".`);
@@ -2307,22 +2141,14 @@
 
       const ex = state.carrito.find(x => x.cartKey === cartKey);
       if (ex) {
-        ex.qtySinControl = stockSiempre;
-        ex.maxStock = stockSiempre ? Infinity : stock;
-        ex.cantidad += cant;
+        ex.qtySinControl = stockSiempre; ex.maxStock = stockSiempre ? Infinity : stock; ex.cantidad += cant;
       } else {
         const promo = parseFloat(prod.precio_promo);
         const nombreEtiqueta = [prod.marca, prod.nombre].filter(Boolean).join(" ") + (color ? ` (${color})` : "");
         state.carrito.push({
-          cartKey,
-          id: prod.id,
-          nombre: nombreEtiqueta,
-          color,
-          precio_usd: Number(prod.precio_usd) || 0,
-          promo_divisas: (!isNaN(promo) && promo > 0) ? promo : null,
-          cantidad: cant,
-          qtySinControl: stockSiempre,
-          maxStock: stockSiempre ? Infinity : stock
+          cartKey, id: prod.id, nombre: nombreEtiqueta, color,
+          precio_usd: Number(prod.precio_usd) || 0, promo_divisas: (!isNaN(promo) && promo > 0) ? promo : null,
+          cantidad: cant, qtySinControl: stockSiempre, maxStock: stockSiempre ? Infinity : stock
         });
       }
       actualizarBadgeCarrito();
@@ -2333,16 +2159,11 @@
       const idx = state.carrito.findIndex(x => x.cartKey === cartKey);
       if (idx === -1) return;
       const item = state.carrito[idx], next = item.cantidad + delta;
-      if (next <= 0) {
-        state.carrito.splice(idx, 1);
-      } else if (delta > 0 && !item.qtySinControl) {
-        const totalMismoProd = state.carrito
-          .filter(x => String(x.id) === String(item.id))
-          .reduce((acc, x) => acc + x.cantidad, 0);
+      if (next <= 0) state.carrito.splice(idx, 1);
+      else if (delta > 0 && !item.qtySinControl) {
+        const totalMismoProd = state.carrito.filter(x => String(x.id) === String(item.id)).reduce((acc, x) => acc + x.cantidad, 0);
         if (totalMismoProd + delta <= item.maxStock) item.cantidad = next;
-      } else {
-        item.cantidad = next;
-      }
+      } else item.cantidad = next;
       actualizarBadgeCarrito(); renderModalCarrito();
     }
 
@@ -2398,12 +2219,8 @@
       const metodoPago = $("cliPago").value;
       const { totalUsd, comisionPayPalUsd, usaPayPal } = calcularTotalesCarrito(metodoPago);
       const items = state.carrito.map(it => ({
-        id: it.id,
-        nombre: it.nombre,
-        color: it.color || "",
-        cantidad: it.cantidad,
-        precio_usd: Number(precioUnitarioSegunPago(it, metodoPago).toFixed(2)),
-        sin_control_cantidad: Boolean(it.qtySinControl)
+        id: it.id, nombre: it.nombre, color: it.color || "", cantidad: it.cantidad,
+        precio_usd: Number(precioUnitarioSegunPago(it, metodoPago).toFixed(2)), sin_control_cantidad: Boolean(it.qtySinControl)
       }));
       if (usaPayPal && comisionPayPalUsd > 0) items.push({ id: "COM-PAYPAL", nombre: `Comisión PayPal (${state.config.paypal_comision_pct || 5.4}% + $${Number(state.config.paypal_comision_fija || 0.30).toFixed(2)})`, cantidad: 1, precio_usd: Number(comisionPayPalUsd.toFixed(2)) });
 
@@ -2412,14 +2229,9 @@
         const data = await (await fetch(API_URL, {
           method: "POST",
           body: JSON.stringify({
-            action: "createOrder",
-            cliente: $("cliNombre").value.trim(),
-            telefono: `+${tel}`,
-            modalidad_entrega: `${$("cliEntrega").value} • Dirección: ${direccion}`,
-            direccion_entrega: direccion,
-            metodo_pago: metodoPago,
-            total_usd: Number(totalUsd.toFixed(2)),
-            items
+            action: "createOrder", cliente: $("cliNombre").value.trim(), telefono: `+${tel}`,
+            modalidad_entrega: `${$("cliEntrega").value} • Dirección: ${direccion}`, direccion_entrega: direccion,
+            metodo_pago: metodoPago, total_usd: Number(totalUsd.toFixed(2)), items
           })
         })).json();
         if (!data.ok) throw new Error(data.error || "No se pudo registrar el pedido");
@@ -2431,7 +2243,15 @@
     }
 
     const normalizarWhatsAppAdmin = (t) => String(t || "").replace(/\D/g, "");
-    const construirDatosAdminLocales = () => ({ config: Object.assign({}, state.config), categorias: state.categorias.slice().map(normalizarCategoriaSheet), productos: state.productos.slice().map(normalizarRelojSheet), pedidos: state.adminData?.pedidos || [], movimientos: state.adminData?.movimientos || [] });
+    const construirDatosAdminLocales = () => ({ config: { ...state.config }, categorias: state.categorias.map(normalizarCategoriaSheet), productos: state.productos.map(normalizarRelojSheet), pedidos: state.adminData?.pedidos || [], movimientos: state.adminData?.movimientos || [] });
+
+    function aplicarDatosAdmin(data, pin) {
+      data.categorias = (data.categorias || []).map(normalizarCategoriaSheet);
+      data.productos = (data.productos || []).map(normalizarRelojSheet);
+      state.adminPin = pin;
+      state.adminData = data;
+      poblarPanelAdmin();
+    }
 
     async function abrirModalPin() {
       $("msgPin").style.display = "none"; $("msgPin").className = "status-msg";
@@ -2447,12 +2267,14 @@
         const res = await fetch(`${API_URL}?action=adminData&pin=${encodeURIComponent(pin)}&_t=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         if (!data?.ok) throw new Error(data?.error || "PIN incorrecto");
-        data.categorias = (data.categorias || []).map(normalizarCategoriaSheet);
-        data.productos = (data.productos || []).map(normalizarRelojSheet);
-        state.adminPin = pin; state.adminData = data; cerrarModal("modalPin"); poblarPanelAdmin(); $("modalAdmin").classList.add("open");
+        aplicarDatosAdmin(data, pin);
+        cerrarModal("modalPin");
+        $("modalAdmin").classList.add("open");
       } catch (err) {
         if (pin === ADMIN_PIN_PRUEBAS && (silencioso || !state.adminData)) {
-          state.adminPin = pin; state.adminData = construirDatosAdminLocales(); cerrarModal("modalPin"); poblarPanelAdmin(); $("modalAdmin").classList.add("open");
+          aplicarDatosAdmin(construirDatosAdminLocales(), pin);
+          cerrarModal("modalPin");
+          $("modalAdmin").classList.add("open");
         } else if (!silencioso) mostrarMsg($("msgPin"), err.message || "PIN incorrecto", false);
       } finally { if (btn) { btn.disabled = false; btn.textContent = "Entrar"; } }
     }
@@ -2461,12 +2283,7 @@
       try {
         const res = await fetch(`${API_URL}?action=adminData&pin=${encodeURIComponent(state.adminPin)}&_t=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
-        if (data?.ok) {
-          data.categorias = (data.categorias || []).map(normalizarCategoriaSheet);
-          data.productos = (data.productos || []).map(normalizarRelojSheet);
-          state.adminData = data;
-          poblarPanelAdmin();
-        }
+        if (data?.ok) aplicarDatosAdmin(data, state.adminPin);
       } catch (_) {}
       await cargarCatalogo();
     }
@@ -2541,9 +2358,7 @@
         if (data && data.ok === false) return mostrarMsg(msg, data.error || "No se pudo renombrar la categoría en la Sheet.", false);
         mostrarMsg(msg, `Categoría actualizada en Sheet: "${actual}" → "${nuevo}".`, true);
         await refrescarAdminData();
-      } catch (err) {
-        mostrarMsg(msg, `Error al guardar en Sheet: ${err.message}`, false);
-      }
+      } catch (err) { mostrarMsg(msg, `Error al guardar en Sheet: ${err.message}`, false); }
     }
 
     function abrirEditorImagenCategoria(categoria) {
@@ -2558,10 +2373,7 @@
       $("catMediaUrlInput")?.focus();
     }
 
-    function cerrarEditorImagenCategoria() {
-      state.catEditandoNombre = "";
-      $("catMediaEditor").style.display = "none";
-    }
+    function cerrarEditorImagenCategoria() { state.catEditandoNombre = ""; $("catMediaEditor").style.display = "none"; }
 
     function actualizarPreviewCategoriaAdmin() {
       const box = $("catMediaPreview"); if (!box) return;
@@ -2575,9 +2387,7 @@
       mostrarMsg(msg, `Subiendo foto de "${cat}" a Google Drive...`, true);
       const subida = await subirBase64Drive(file);
       input.value = "";
-      if (!subida.url) {
-        return mostrarMsg(msg, `No se pudo subir a Drive${subida.error ? `: ${subida.error}` : ""}.`, false);
-      }
+      if (!subida.url) return mostrarMsg(msg, `No se pudo subir a Drive${subida.error ? `: ${subida.error}` : ""}.`, false);
       $("catMediaUrlInput").value = subida.url;
       actualizarPreviewCategoriaAdmin();
       await aplicarYGuardarImagenCategoria(cat, subida.url, true);
@@ -2587,23 +2397,11 @@
       const msg = $("msgAdminCat"), limpio = String(url || "").trim();
       mostrarMsg(msg, `Guardando foto de "${categoria}" en Google Sheets...`, true);
       try {
-        const data = await postAdmin({
-          action: "updateCategoryImage",
-          categoria,
-          imagen_url: limpio,
-          imagen: limpio,
-          foto_url: limpio
-        });
-        if (data && data.ok === false) {
-          return mostrarMsg(msg, `No se guardó en la Sheet (${data.error || "revisa tu Apps Script"}).`, false);
-        }
+        const data = await postAdmin({ action: "updateCategoryImage", categoria, imagen_url: limpio, imagen: limpio, foto_url: limpio });
+        if (data && data.ok === false) return mostrarMsg(msg, `No se guardó en la Sheet (${data.error || "revisa tu Apps Script"}).`, false);
         await refrescarAdminData();
-        mostrarMsg(msg, limpio
-          ? (desdeAdjunto ? `Foto subida a Drive y guardada en la Sheet para "${categoria}".` : `Imagen guardada en la Sheet para "${categoria}".`)
-          : `Foto eliminada de la Sheet para "${categoria}".`, true);
-      } catch (err) {
-        mostrarMsg(msg, `Error al guardar en Sheet: ${err.message}`, false);
-      }
+        mostrarMsg(msg, limpio ? (desdeAdjunto ? `Foto subida a Drive y guardada en la Sheet para "${categoria}".` : `Imagen guardada en la Sheet para "${categoria}".`) : `Foto eliminada de la Sheet para "${categoria}".`, true);
+      } catch (err) { mostrarMsg(msg, `Error al guardar en Sheet: ${err.message}`, false); }
     }
 
     const guardarImagenCategoriaAdmin = () => state.catEditandoNombre && aplicarYGuardarImagenCategoria(state.catEditandoNombre, String($("catMediaUrlInput")?.value || "").trim(), false);
@@ -2655,7 +2453,7 @@
         const idx = todos.findIndex(x => String(x.id) === String(p.id)), oculto = String(p.activo || "SI").toUpperCase() !== "SI";
         const esAcc = (p.tipo_articulo || detectarTipoArticulo(p)) === "ACCESORIO";
         const stockSiempre = esCantidadDesactivadaProducto(p, catsRef), promo = parseFloat(p.precio_promo);
-        const nFotos = (p.fotos && p.fotos.length) ? p.fotos.length : parseImagenesProducto(p.imagen_url).length;
+        const nFotos = p.fotos?.length ? p.fotos.length : parseImagenesProducto(p.imagen_url).length;
         return `
           <tr class="${oculto ? "prod-row-hidden" : ""}">
             <td><b>${escHtml(p.id)}</b></td>
@@ -2688,9 +2486,7 @@
         if (data && data.ok === false) return mostrarMsg(msg, data.error || "No se pudo guardar en Sheet.", false);
         mostrarMsg(msg, activarStockSiempre ? `Stock permanente (siempre disponible) activado en "${target}".` : `Stock limitado por unidades activado en "${target}".`, true);
         await refrescarAdminData();
-      } catch (err) {
-        mostrarMsg(msg, `Error al guardar en Sheet: ${err.message}`, false);
-      }
+      } catch (err) { mostrarMsg(msg, `Error al guardar en Sheet: ${err.message}`, false); }
     }
 
     async function crearCategoriaAdmin() {
@@ -2751,13 +2547,10 @@
       $("btnEstadoTienda").textContent = `Estado: ${String(cfg.estado_servicio || "ACTIVO").toUpperCase()}`;
 
       actualizarControlesColorAdmin(cfg);
-
-      if ($("cfgFontTitulos")) $("cfgFontTitulos").value = normalizarKeyFuente(cfg.font_titulos || state.config.font_titulos);
-      if ($("cfgSizeTitulos")) $("cfgSizeTitulos").value = cfg.size_titulos ?? state.config.size_titulos ?? 16;
-      if ($("cfgFontDesc")) $("cfgFontDesc").value = normalizarKeyFuente(cfg.font_desc || state.config.font_desc);
-      if ($("cfgSizeDesc")) $("cfgSizeDesc").value = cfg.size_desc ?? state.config.size_desc ?? 13;
-      if ($("cfgFontCat")) $("cfgFontCat").value = normalizarKeyFuente(cfg.font_cat || state.config.font_cat);
-      if ($("cfgSizeCat")) $("cfgSizeCat").value = cfg.size_cat ?? state.config.size_cat ?? 12.5;
+      TYPO_CONFIGS.forEach(({ fontId, sizeId, fontKey, sizeKey, defSize }) => {
+        if ($(fontId)) $(fontId).value = normalizarKeyFuente(cfg[fontKey] || state.config[fontKey]);
+        if ($(sizeId)) $(sizeId).value = cfg[sizeKey] ?? state.config[sizeKey] ?? defSize;
+      });
       previsualizarTipografiaAdmin();
 
       renderListaCategoriasAdmin((d.categorias || []).map(normalizarCategoriaSheet));
@@ -2767,17 +2560,15 @@
     }
 
     const postAdmin = async (payload) => {
-      const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(Object.assign({ pin: state.adminPin }, payload)) });
+      const res = await fetch(API_URL, { method: "POST", body: JSON.stringify({ pin: state.adminPin, ...payload }) });
       return res.json();
     };
 
     async function guardarConfigAdmin() {
-      const cPrimario = normalizarHex($("cfgColorPrimario")?.value, COLORES_DEFAULT.color_primario);
-      const cAcento = normalizarHex($("cfgColorAcento")?.value, COLORES_DEFAULT.color_acento);
-      const cFondo = normalizarHex($("cfgColorFondo")?.value, COLORES_DEFAULT.color_fondo);
-      const cSuperficie = normalizarHex($("cfgColorSuperficie")?.value, COLORES_DEFAULT.color_superficie);
-      const cTexto = normalizarHex($("cfgColorTexto")?.value, COLORES_DEFAULT.color_texto);
-      const cTextoSuave = normalizarHex($("cfgColorTextoSuave")?.value, COLORES_DEFAULT.color_texto_suave);
+      const coloresHex = {};
+      MAPA_CAMPOS_COLOR.forEach(item => {
+        coloresHex[item.key] = normalizarHex($(item.inputId)?.value, COLORES_DEFAULT[item.key]);
+      });
 
       const patch = {
         horas_expiracion_carrito: $("cfgHorasExp").value.trim(),
@@ -2790,12 +2581,7 @@
         logo_url: $("cfgLogoUrl").value.trim(),
         portada_url: $("cfgPortadaUrl").value.trim(),
         metodos_pago: $("cfgMetodosPago")?.value || "Zelle",
-        color_primario: cPrimario,
-        color_acento: cAcento,
-        color_fondo: cFondo,
-        color_superficie: cSuperficie,
-        color_texto: cTexto,
-        color_texto_suave: cTextoSuave,
+        ...coloresHex,
         font_titulos: $("cfgFontTitulos")?.value || "AMAZON",
         size_titulos: String(parseFloat($("cfgSizeTitulos")?.value) || 16),
         font_desc: $("cfgFontDesc")?.value || "AMAZON",
@@ -2826,17 +2612,14 @@
       const p = normalizarRelojSheet((state.adminData?.productos || []).find(x => String(x.id) === String(prodId)));
       if (!p) return;
       for (const [elId, prop, def] of PROD_FIELDS) {
-        if (prop === "imagen_url") {
-          $(elId).value = (p.fotos && p.fotos.length) ? p.fotos.join(" | ") : (p[prop] ?? def);
-        } else {
-          $(elId).value = p[prop] ?? def;
-        }
+        $(elId).value = prop === "imagen_url" ? (p.fotos?.length ? p.fotos.join(" | ") : (p[prop] ?? def)) : (p[prop] ?? def);
       }
       if ($("prodStockSiempre")) $("prodStockSiempre").checked = isOffFlag(p.control_cantidad ?? p.cantidad_activa);
       if ($("prodFotoFile")) $("prodFotoFile").value = "";
       actualizarEtiquetasFormAdmin();
       actualizarPreviewLibro();
     }
+
     function limpiarFormProducto() {
       for (const [elId, , def] of PROD_FIELDS) $(elId).value = def;
       if ($("prodStockSiempre")) $("prodStockSiempre").checked = false;
@@ -2847,81 +2630,48 @@
     }
 
     async function guardarProductoAdmin() {
-      const msg = $("msgAdminProd");
-      const idActual = $("prodId").value.trim();
-      const tipoVal = $("prodTipo")?.value || "RELOJ";
-      const marcaVal = $("prodMarca")?.value.trim() || "";
-      const nombreVal = $("prodNombre")?.value.trim() || "";
-      const coloresVal = $("prodColores")?.value.trim() || "";
-      const detalleBase = $("prodDetalle")?.value.trim() || "";
-      const descVal = $("prodDescripcion")?.value.trim() || "";
-      const precioNum = parseFloat($("prodPrecioUsd").value);
+      const msg = $("msgAdminProd"), idActual = $("prodId").value.trim(), tipoVal = $("prodTipo")?.value || "RELOJ";
+      const marcaVal = $("prodMarca")?.value.trim() || "", nombreVal = $("prodNombre")?.value.trim() || "";
+      const coloresVal = $("prodColores")?.value.trim() || "", detalleBase = $("prodDetalle")?.value.trim() || "";
+      const descVal = $("prodDescripcion")?.value.trim() || "", precioNum = parseFloat($("prodPrecioUsd").value);
       const stockSiempre = Boolean($("prodStockSiempre")?.checked);
-      const fotosArr = parseImagenesProducto($("prodImagenUrl").value);
-      const imagenSerializada = fotosArr.join(" | ");
+      const fotosArr = parseImagenesProducto($("prodImagenUrl").value), imagenSerializada = fotosArr.join(" | ");
 
-      if (!nombreVal) {
-        $("prodNombre")?.focus();
-        return mostrarMsg(msg, "Completa el campo Nombre / Modelo antes de guardar.", false);
-      }
-      if (!marcaVal) {
-        $("prodMarca")?.focus();
-        return mostrarMsg(msg, "Completa el campo Marca antes de guardar.", false);
-      }
-      if (isNaN(precioNum) || precioNum <= 0) {
-        $("prodPrecioUsd")?.focus();
-        return mostrarMsg(msg, "Ingresa un Precio (USD) mayor a 0.", false);
-      }
+      if (!nombreVal) { $("prodNombre")?.focus(); return mostrarMsg(msg, "Completa el campo Nombre / Modelo antes de guardar.", false); }
+      if (!marcaVal) { $("prodMarca")?.focus(); return mostrarMsg(msg, "Completa el campo Marca antes de guardar.", false); }
+      if (isNaN(precioNum) || precioNum <= 0) { $("prodPrecioUsd")?.focus(); return mostrarMsg(msg, "Ingresa un Precio (USD) mayor a 0.", false); }
 
-      const detalleCombinado = [
-        tipoVal === "ACCESORIO" ? "Tipo: Accesorio" : "",
-        detalleBase,
-        coloresVal ? `Colores: ${coloresVal}` : ""
-      ].filter(Boolean).join(" | ");
+      const detalleCombinado = [tipoVal === "ACCESORIO" ? "Tipo: Accesorio" : "", detalleBase, coloresVal ? `Colores: ${coloresVal}` : ""].filter(Boolean).join(" | ");
       const ex = idActual ? (state.adminData?.productos || []).find(x => String(x.id) === idActual) : null;
 
       const data = await postAdmin({
         action: "saveProduct",
         product: {
-          id: idActual,
-          tipo_articulo: tipoVal,
-          categoria: $("prodCategoria").value,
-          nombre: nombreVal,
-          marca: marcaVal,
-          editorial: marcaVal,
-          colores: coloresVal,
-          descripcion: descVal,
-          detalle_variante: detalleCombinado,
-          precio_usd: precioNum,
-          precio_promo: $("prodPromoUsd").value.trim(),
-          stock: parseInt($("prodStock").value, 10) || 0,
-          control_cantidad: stockSiempre ? "NO" : "SI",
-          imagen_url: imagenSerializada,
-          imagenes: imagenSerializada,
-          activo: ex ? String(ex.activo || "SI") : "SI"
+          id: idActual, tipo_articulo: tipoVal, categoria: $("prodCategoria").value,
+          nombre: nombreVal, marca: marcaVal, editorial: marcaVal, colores: coloresVal,
+          descripcion: descVal, detalle_variante: detalleCombinado, precio_usd: precioNum,
+          precio_promo: $("prodPromoUsd").value.trim(), stock: parseInt($("prodStock").value, 10) || 0,
+          control_cantidad: stockSiempre ? "NO" : "SI", imagen_url: imagenSerializada,
+          imagenes: imagenSerializada, activo: ex ? String(ex.activo || "SI") : "SI"
         }
       });
       if (data.ok) {
         const savedId = data.id || idActual;
-        if (savedId) {
-          await postAdmin({ action: "toggleProductQtyControl", id: savedId, control_cantidad: stockSiempre ? "NO" : "SI", desactivar_cantidad: stockSiempre }).catch(() => {});
-        }
+        if (savedId) await postAdmin({ action: "toggleProductQtyControl", id: savedId, control_cantidad: stockSiempre ? "NO" : "SI", desactivar_cantidad: stockSiempre }).catch(() => {});
         mostrarMsg(msg, `${tipoVal === "ACCESORIO" ? "Correa / Accesorio" : "Reloj"} guardado en la Sheet (${savedId || "OK"}) con ${fotosArr.length} foto(s).`, true);
         limpiarFormProducto(); await refrescarAdminData();
       } else mostrarMsg(msg, data.error || "Error al guardar artículo", false);
     }
 
     async function cambiarEstadoPedido(pedidoId, estado) { const d = await postAdmin({ action: "updateOrderStatus", pedido_id: pedidoId, estado }); if (d.ok) await refrescarAdminData(); }
+
     async function subirArchivoConfig(inp, dest) {
       const f = inp.files?.[0]; if (!f) return;
       const r = await subirBase64Drive(f);
       if (r.url) {
         const targetEl = $(dest === "logo_url" ? "cfgLogoUrl" : "cfgPortadaUrl");
         if (targetEl) targetEl.value = r.url;
-        if (dest === "logo_url") {
-          state.config.logo_url = r.url;
-          aplicarTemaYMarca();
-        }
+        if (dest === "logo_url") { state.config.logo_url = r.url; aplicarTemaYMarca(); }
       }
     }
 
@@ -2935,20 +2685,13 @@
 
       for (const f of files) {
         const r = await subirBase64Drive(f);
-        if (r.url && !actuales.includes(r.url)) {
-          actuales.push(r.url);
-          agregadas++;
-        }
+        if (r.url && !actuales.includes(r.url)) { actuales.push(r.url); agregadas++; }
       }
 
       inp.value = "";
       if ($("prodImagenUrl")) $("prodImagenUrl").value = actuales.join(" | ");
       actualizarPreviewLibro();
-      if (agregadas > 0) {
-        mostrarMsg(msg, `${agregadas} foto(s) agregada(s) al modelo (${actuales.length} en total). No olvides pulsar "Guardar Artículo".`, true);
-      } else {
-        mostrarMsg(msg, "No se pudieron subir las fotos a Drive.", false);
-      }
+      mostrarMsg(msg, agregadas > 0 ? `${agregadas} foto(s) agregada(s) al modelo (${actuales.length} en total). No olvides pulsar "Guardar Artículo".` : "No se pudieron subir las fotos a Drive.", agregadas > 0);
     }
 
     function prepararImagenParaSubida(file, maxDim = 950, quality = 0.75) {
