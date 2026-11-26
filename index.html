@@ -431,6 +431,18 @@
       border-radius: 4px;
       pointer-events: none;
     }
+    .card-gallery-count {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(26, 26, 26, 0.78);
+      color: var(--blanco);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      pointer-events: none;
+    }
     .card-body { padding: 14px 15px 10px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
     .card-brand {
       font-family: var(--font-desc);
@@ -536,7 +548,7 @@
     }
     .fab-cart:hover { background: var(--acento-oscuro); border-color: var(--acento-oscuro); }
 
-    /* Modales y Ficha de Reloj */
+    /* Modales y Ficha de Reloj con Galería Movible Izquierda / Derecha */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(20, 18, 16, 0.56); display: none; align-items: center; justify-content: center; padding: 14px; z-index: 60; overflow-y: auto; }
     .modal-backdrop.open { display: flex; }
     .modal-box {
@@ -556,11 +568,42 @@
       .modal-box.wide { width: 92vw; max-width: 92vw; padding: 14px; }
     }
 
-    .lightbox-box { max-width: 780px; text-align: left; }
-    .book-sheet-body { display: grid; grid-template-columns: 235px 1fr; gap: 20px; align-items: start; }
+    .lightbox-box { max-width: 820px; text-align: left; }
+    .gallery-side-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--fondo);
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      padding: 3px;
+    }
+    .gallery-side-btn {
+      border: none;
+      background: transparent;
+      color: var(--texto-suave);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .gallery-side-btn.active {
+      background: var(--acento);
+      color: var(--blanco);
+    }
+
+    .book-sheet-body { display: grid; grid-template-columns: 270px 1fr; gap: 20px; align-items: start; }
+    .book-sheet-body.gallery-right { grid-template-columns: 1fr 270px; }
+    .book-sheet-body.gallery-right .gallery-column { order: 2; }
+    .book-sheet-body.gallery-right .book-sheet-info { order: 1; }
+
+    .gallery-column { display: flex; flex-direction: column; gap: 10px; }
     .lightbox-img-wrap {
       width: 100%;
-      padding: 16px;
+      min-height: 250px;
+      padding: 14px;
       background: var(--blanco);
       border-radius: 8px;
       overflow: hidden;
@@ -568,8 +611,59 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
     }
-    .lightbox-img-wrap img { max-width: 100%; max-height: 280px; object-fit: contain; display: block; }
+    .lightbox-img-wrap img { max-width: 100%; max-height: 270px; object-fit: contain; display: block; }
+    .gallery-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--borde);
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--primario);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .gallery-nav-btn.visible { display: flex; }
+    .gallery-nav-prev { left: 8px; }
+    .gallery-nav-next { right: 8px; }
+
+    .gallery-thumbs-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: thin;
+    }
+    .gallery-thumb-btn {
+      width: 54px;
+      height: 54px;
+      padding: 3px;
+      border-radius: 6px;
+      border: 1.5px solid var(--borde);
+      background: var(--blanco);
+      cursor: pointer;
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .gallery-thumb-btn.active {
+      border-color: var(--acento);
+      box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.25);
+    }
+    .gallery-thumb-btn img { width: 100%; height: 100%; object-fit: contain; display: block; border-radius: 4px; }
+
     .book-sheet-info { display: flex; flex-direction: column; gap: 12px; }
     .lb-meta-below { display: flex; flex-direction: column; gap: 7px; padding: 12px 14px; background: var(--fondo); border: 1px solid var(--borde); border-radius: 8px; }
     .lb-editorial-row { font-size: 13px; font-weight: 600; color: var(--primario); }
@@ -602,14 +696,16 @@
     .lb-qty-box { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--borde); border-radius: 8px; padding: 4px 10px; background: var(--fondo); }
     .lb-qty-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--borde); background: var(--blanco); color: var(--texto); font-weight: 700; font-size: 15px; cursor: pointer; }
     .lb-actions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 640px) {
-      .book-sheet-body { grid-template-columns: 1fr; gap: 12px; }
-      .lightbox-img-wrap { padding: 10px; }
+    @media (max-width: 680px) {
+      .book-sheet-body, .book-sheet-body.gallery-right { grid-template-columns: 1fr; gap: 12px; }
+      .book-sheet-body.gallery-right .gallery-column { order: 1; }
+      .book-sheet-body.gallery-right .book-sheet-info { order: 2; }
+      .lightbox-img-wrap { min-height: 195px; padding: 10px; }
       .lightbox-img-wrap img { max-height: 195px; }
     }
     @media (max-width: 480px) { .lb-actions-row { grid-template-columns: 1fr; } }
 
-    .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--borde); gap: 10px; text-align: left; }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--borde); gap: 10px; text-align: left; flex-wrap: wrap; }
     .modal-head h3 { font-family: var(--font-titulos); font-size: 20px; font-weight: 700; color: #0F1111; }
     .field { margin-bottom: 12px; }
     .field label { display: block; font-size: 12.5px; font-weight: 700; margin-bottom: 5px; color: var(--texto); }
@@ -765,11 +861,38 @@
       font-weight: 600;
     }
 
-    .book-form-card { background: var(--fondo); padding: 14px; border-radius: 8px; border: 1px solid var(--borde); margin-bottom: 14px; display: grid; grid-template-columns: minmax(155px, 190px) 1fr; gap: 16px; align-items: start; }
+    .book-form-card { background: var(--fondo); padding: 14px; border-radius: 8px; border: 1px solid var(--borde); margin-bottom: 14px; display: grid; grid-template-columns: minmax(190px, 235px) 1fr; gap: 16px; align-items: start; }
     @media (max-width: 720px) { .book-form-card { grid-template-columns: 1fr; } }
     .book-photo-panel { display: flex; flex-direction: column; gap: 8px; background: var(--blanco); border: 1px solid var(--borde); border-radius: 8px; padding: 10px; }
-    .book-photo-preview { width: 100%; aspect-ratio: 2 / 3; border-radius: 6px; background: var(--fondo); border: 1px dashed var(--borde); display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; padding: 6px; color: #0F1111; font-size: 12px; font-weight: 500; }
+    .book-photo-preview { width: 100%; aspect-ratio: 4 / 3; border-radius: 6px; background: var(--fondo); border: 1px dashed var(--borde); display: flex; align-items: center; justify-content: center; overflow: hidden; text-align: center; padding: 6px; color: #0F1111; font-size: 12px; font-weight: 500; }
     .book-photo-preview img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .admin-photos-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .admin-photo-chip {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      border-radius: 6px;
+      border: 1px solid var(--borde);
+      overflow: hidden;
+      background: var(--fondo);
+    }
+    .admin-photo-chip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .admin-photo-del {
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      width: 17px;
+      height: 17px;
+      border: none;
+      border-radius: 4px;
+      background: rgba(177, 39, 4, 0.9);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1;
+    }
+
     .book-fields-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
     .check-inline { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: #0F1111; background: var(--blanco); border: 1px solid var(--borde); padding: 9px 11px; border-radius: 8px; cursor: pointer; }
     .check-inline input { width: 16px; height: 16px; accent-color: var(--acento); cursor: pointer; }
@@ -891,10 +1014,23 @@
     <div class="modal-box lightbox-box">
       <div class="modal-head">
         <div><h3 id="lbTitulo"></h3><small style="color:var(--texto-suave);" id="lbDetalle"></small></div>
-        <button class="btn btn-soft" type="button" onclick="cerrarModal('modalLightbox')">✕</button>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <div class="gallery-side-switcher" role="group" aria-label="Posición de galería">
+            <button type="button" class="gallery-side-btn active" id="btnGalleryLeft" onclick="cambiarLadoGaleria('left')">Galería Izquierda</button>
+            <button type="button" class="gallery-side-btn" id="btnGalleryRight" onclick="cambiarLadoGaleria('right')">Galería Derecha</button>
+          </div>
+          <button class="btn btn-soft" type="button" onclick="cerrarModal('modalLightbox')">✕</button>
+        </div>
       </div>
-      <div class="book-sheet-body">
-        <div class="lightbox-img-wrap"><img id="lbImg" src="" alt="" /></div>
+      <div class="book-sheet-body" id="lbSheetBody">
+        <div class="gallery-column">
+          <div class="lightbox-img-wrap">
+            <button type="button" class="gallery-nav-btn gallery-nav-prev" id="btnGalleryPrev" onclick="navegarFotoLightbox(-1)" aria-label="Foto anterior">‹</button>
+            <img id="lbImg" src="" alt="" />
+            <button type="button" class="gallery-nav-btn gallery-nav-next" id="btnGalleryNext" onclick="navegarFotoLightbox(1)" aria-label="Foto siguiente">›</button>
+          </div>
+          <div class="gallery-thumbs-strip" id="lbThumbsStrip"></div>
+        </div>
         <div class="book-sheet-info">
           <div class="lb-meta-below">
             <div class="lb-editorial-row"><span id="lbMarcaLbl" style="color:var(--primario);">Marca:</span> <span id="lbMarca"></span></div>
@@ -1160,7 +1296,7 @@
       <div class="admin-panel" id="tabProductos">
         <div class="admin-quick-search">
           <svg width="18" height="18" style="color:#0F1111;flex-shrink:0;" aria-hidden="true"><use href="#ico-search"></use></svg>
-          <input type="search" id="adminSearchInput" placeholder="Buscar rápido categoría, reloj, correa o accesorio (marca, modelo, color, ID)..." oninput="filtrarAdminCatalogo()" />
+          <input type="search" id="adminSearchInput" placeholder="Buscar rápido categoría, reloj, correa o accesorio (marca, nombre, modelo, color, ID)..." oninput="filtrarAdminCatalogo()" />
           <button class="btn btn-soft btn-sm" type="button" id="btnLimpiarAdminSearch" onclick="limpiarBusquedaAdmin()" style="display:none;">Limpiar</button>
         </div>
 
@@ -1196,11 +1332,18 @@
         <div class="book-form-card">
           <div class="book-photo-panel">
             <div class="book-photo-preview" id="prodPreviewBox">
-              <span id="prodPreviewPlaceholder">Foto del artículo</span>
+              <span id="prodPreviewPlaceholder">Foto principal del modelo</span>
               <img id="prodPreviewImg" src="" alt="Vista previa del artículo" style="display:none;" />
             </div>
-            <div class="field" style="margin-bottom:0;"><label for="prodFotoFile">Subir foto (Drive)</label><input id="prodFotoFile" type="file" accept="image/*" onchange="subirFotoProducto(this)" style="padding:6px;font-size:12px;" /></div>
-            <div class="field" style="margin-bottom:0;"><label for="prodImagenUrl">URL de imagen</label><input type="text" id="prodImagenUrl" placeholder="https://..." oninput="actualizarPreviewLibro()" style="padding:7px 9px;font-size:12px;" /></div>
+            <div class="field" style="margin-bottom:0;">
+              <label for="prodFotoFile">Subir varias fotos (Drive)</label>
+              <input id="prodFotoFile" type="file" accept="image/*" multiple onchange="subirFotoProducto(this)" style="padding:6px;font-size:12px;" />
+            </div>
+            <div id="adminFotosLista" class="admin-photos-list"></div>
+            <div class="field" style="margin-bottom:0;">
+              <label for="prodImagenUrl">URLs de fotos (separadas por | o coma)</label>
+              <textarea id="prodImagenUrl" rows="2" placeholder="https://foto1.jpg | https://foto2.jpg" oninput="actualizarPreviewLibro()" style="padding:7px 9px;font-size:11.5px;"></textarea>
+            </div>
           </div>
 
           <div>
@@ -1214,11 +1357,11 @@
                 </select>
               </div>
               <div class="field"><label>Categoría</label><select id="prodCategoria"></select></div>
-              <div class="field"><label id="lblProdMarca">Marca *</label><input type="text" id="prodMarca" placeholder="Ej. Seiko, Tissot, Casio..." /></div>
-              <div class="field"><label id="lblProdNombre">Modelo *</label><input type="text" id="prodNombre" placeholder="Ej. PRX Powermatic 80" /></div>
-              <div class="field"><label id="lblProdColores">Colores disponibles (separados por coma) *</label><input type="text" id="prodColores" placeholder="Ej. Negro, Plateado, Dorado, Azul" /></div>
+              <div class="field"><label id="lblProdMarca">Marca *</label><input type="text" id="prodMarca" placeholder="Ej. Rolex, Seiko, Tissot, Casio..." /></div>
+              <div class="field"><label id="lblProdNombre">Nombre / Modelo *</label><input type="text" id="prodNombre" placeholder="Ej. Datejust 41 / PRX Powermatic 80" /></div>
+              <div class="field"><label id="lblProdColores">Colores disponibles (separados por coma)</label><input type="text" id="prodColores" placeholder="Ej. Negro, Plateado, Dorado, Azul" /></div>
               <div class="field"><label id="lblProdDetalle">Características principales</label><input type="text" id="prodDetalle" placeholder="Ej. 40mm • Acero 316L • Automático • 100m WR" /></div>
-              <div class="field"><label>Precio (USD) *</label><input type="number" step="0.01" id="prodPrecioUsd" /></div>
+              <div class="field"><label>Precio (USD) *</label><input type="number" step="0.01" id="prodPrecioUsd" placeholder="Ej. 120.00" /></div>
               <div class="field"><label>Precio Promo (opcional USD)</label><input type="number" step="0.01" id="prodPromoUsd" /></div>
               <div class="field"><label>Stock (unidades)</label><input type="number" step="1" id="prodStock" value="5" /></div>
               <div class="field" style="display:flex;align-items:flex-end;">
@@ -1239,7 +1382,7 @@
 
         <div class="table-wrap" style="margin-top:12px;">
           <table>
-            <thead><tr><th>ID</th><th>Tipo / Cat.</th><th>Marca / Artículo</th><th>Colores / Medidas</th><th>USD</th><th>Promo</th><th>Stock</th><th>Acciones</th></tr></thead>
+            <thead><tr><th>ID</th><th>Tipo / Cat.</th><th>Marca / Nombre</th><th>Colores / Medidas</th><th>USD</th><th>Promo</th><th>Stock</th><th>Acciones</th></tr></thead>
             <tbody id="adminProdBody"></tbody>
           </table>
         </div>
@@ -1338,6 +1481,7 @@
       },
       categorias: [], productos: [], prodMap: new Map(), categoriaActiva: "TODAS", tipoActivo: "TODOS",
       carrito: [], lightboxProdId: null, lightboxQty: 1, lightboxColor: "",
+      lightboxFotos: [], lightboxFotoIdx: 0, gallerySide: "left",
       catEditandoNombre: "", adminPin: "", adminData: null
     };
 
@@ -1347,6 +1491,16 @@
     const cerrarModal = (id) => $(id)?.classList.remove("open");
     const cerrarBackdrop = (ev, id) => { if (ev.target && ev.target.id === id) cerrarModal(id); };
     const mostrarMsg = (el, txt, ok) => { if (!el) return; el.textContent = txt; el.className = `status-msg ${ok ? "ok" : "err"}`; el.style.display = "block"; };
+
+    function parseImagenesProducto(raw) {
+      if (Array.isArray(raw)) {
+        return raw.map(s => String(s || "").trim()).filter(Boolean);
+      }
+      return String(raw || "")
+        .split(/\s*\|\s*|\s*,\s*(?=https?:\/\/)/i)
+        .map(s => s.trim())
+        .filter(Boolean);
+    }
 
     function normalizarHex(val, fallback) {
       let s = String(val || "").trim();
@@ -1620,6 +1774,16 @@
         detalle = detalle.replace(/(?:^|\|\s*)Colores:\s*[^|]+/i, "").replace(/^\s*\|\s*|\s*\|\s*$/g, "").trim();
       }
 
+      const rawFotos = [
+        p.imagen_url,
+        p.imagen,
+        p.foto_url,
+        p.imagenes,
+        p.fotos,
+        p.galeria
+      ].filter(Boolean).join("|");
+      const fotos = parseImagenesProducto(rawFotos);
+
       const norm = Object.assign({}, p, {
         precio_usd: precioUsd,
         precio_promo: promoVal,
@@ -1628,7 +1792,8 @@
         colores,
         detalle_variante: detalle,
         descripcion: String(p.descripcion ?? "").trim(),
-        imagen_url: String(p.imagen_url ?? p.imagen ?? p.foto_url ?? "").trim()
+        fotos,
+        imagen_url: fotos[0] || ""
       });
       norm.tipo_articulo = tipoArt || detectarTipoArticulo(norm);
       return norm;
@@ -1667,19 +1832,48 @@
     function actualizarEtiquetasFormAdmin() {
       const esAcc = $("prodTipo")?.value === "ACCESORIO";
       if ($("lblProdMarca")) $("lblProdMarca").textContent = esAcc ? "Marca compatible / Fabricante *" : "Marca *";
-      if ($("prodMarca")) $("prodMarca").placeholder = esAcc ? "Ej. Universal, Casio, Seiko, Rolex..." : "Ej. Seiko, Tissot, Casio...";
-      if ($("lblProdNombre")) $("lblProdNombre").textContent = esAcc ? "Nombre de la correa o accesorio *" : "Modelo *";
-      if ($("prodNombre")) $("prodNombre").placeholder = esAcc ? "Ej. Correa de Silicona 20mm / Brazalete Acero" : "Ej. PRX Powermatic 80";
-      if ($("lblProdColores")) $("lblProdColores").textContent = esAcc ? "Colores / Medidas disponibles *" : "Colores disponibles (separados por coma) *";
+      if ($("prodMarca")) $("prodMarca").placeholder = esAcc ? "Ej. Universal, Casio, Seiko, Rolex..." : "Ej. Rolex, Seiko, Tissot, Casio...";
+      if ($("lblProdNombre")) $("lblProdNombre").textContent = esAcc ? "Nombre de la correa o accesorio *" : "Nombre / Modelo *";
+      if ($("prodNombre")) $("prodNombre").placeholder = esAcc ? "Ej. Correa de Silicona 20mm / Brazalete Acero" : "Ej. Datejust 41 / PRX Powermatic 80";
+      if ($("lblProdColores")) $("lblProdColores").textContent = esAcc ? "Colores / Medidas disponibles" : "Colores disponibles (separados por coma)";
       if ($("prodColores")) $("prodColores").placeholder = esAcc ? "Ej. 20mm Negro, 22mm Negro, 20mm Azul, Marrón" : "Ej. Negro, Plateado, Dorado, Azul";
       if ($("lblProdDetalle")) $("lblProdDetalle").textContent = esAcc ? "Material / Características del repuesto" : "Características principales";
       if ($("prodDetalle")) $("prodDetalle").placeholder = esAcc ? "Ej. Silicona FKM • Hebilla acero • Liberación rápida" : "Ej. 40mm • Acero 316L • Automático • 100m WR";
     }
 
+    function renderListaFotosAdmin(urls) {
+      const box = $("adminFotosLista");
+      if (!box) return;
+      if (!urls.length) {
+        box.innerHTML = "";
+        return;
+      }
+      box.innerHTML = urls.map((u, idx) => `
+        <div class="admin-photo-chip" title="Foto ${idx + 1}">
+          <img src="${escAttr(u)}" alt="Foto ${idx + 1}" />
+          <button type="button" class="admin-photo-del" title="Quitar foto" onclick="quitarFotoAdmin(${idx})">✕</button>
+        </div>
+      `).join("");
+    }
+
+    function quitarFotoAdmin(idx) {
+      const urls = parseImagenesProducto($("prodImagenUrl")?.value || "");
+      urls.splice(idx, 1);
+      if ($("prodImagenUrl")) $("prodImagenUrl").value = urls.join(" | ");
+      actualizarPreviewLibro();
+    }
+
     function actualizarPreviewLibro() {
-      const url = String($("prodImagenUrl")?.value || "").trim(), img = $("prodPreviewImg"), ph = $("prodPreviewPlaceholder");
+      const raw = String($("prodImagenUrl")?.value || "").trim();
+      const urls = parseImagenesProducto(raw);
+      const img = $("prodPreviewImg"), ph = $("prodPreviewPlaceholder");
+      renderListaFotosAdmin(urls);
       if (!img || !ph) return;
-      img.src = url; img.style.display = url ? "block" : "none"; ph.style.display = url ? "none" : "block";
+      const first = urls[0] || "";
+      img.src = first;
+      img.style.display = first ? "block" : "none";
+      ph.style.display = first ? "none" : "block";
+      ph.textContent = first ? "" : "Fotos del modelo";
     }
 
     function iniciarSecuenciaMarcaAgua() {
@@ -1895,8 +2089,10 @@
           : (sinStock ? "Agotado por ahora" : `Disponible: ${stock} und.`);
         const coloresArr = parseColoresReloj(p.colores);
         const tieneVariosColores = coloresArr.length > 1;
-        const imgHtml = p.imagen_url
-          ? `<img src="${escAttr(p.imagen_url)}" alt="${escAttr(p.nombre)}" loading="lazy" decoding="async" />`
+        const fotosArr = p.fotos && p.fotos.length ? p.fotos : parseImagenesProducto(p.imagen_url);
+        const imgPrincipal = fotosArr[0] || "";
+        const imgHtml = imgPrincipal
+          ? `<img src="${escAttr(imgPrincipal)}" alt="${escAttr(p.nombre)}" loading="lazy" decoding="async" />`
           : `<span style="font-family:var(--font-titulos);font-size:24px;font-weight:700;color:var(--acento);opacity:0.65;">${escHtml(p.categoria.slice(0,2).toUpperCase())}</span>`;
         const btnTexto = sinStock
           ? "Sin stock"
@@ -1907,7 +2103,7 @@
 
         return `
           <article class="card">
-            <div class="card-img clickable" onclick="abrirLightbox('${escAttr(p.id)}')" title="Ver ficha y opciones">${imgHtml}<span class="card-badge">${escHtml(p.categoria)}</span>${esAcc ? `<span class="card-type-badge">Correa / Repuesto</span>` : ""}</div>
+            <div class="card-img clickable" onclick="abrirLightbox('${escAttr(p.id)}')" title="Ver galería y opciones">${imgHtml}<span class="card-badge">${escHtml(p.categoria)}</span>${esAcc ? `<span class="card-type-badge">Correa / Repuesto</span>` : ""}${fotosArr.length > 1 ? `<span class="card-gallery-count">${fotosArr.length} fotos</span>` : ""}</div>
             <div class="card-body">
               ${p.marca ? `<div class="card-brand">${escHtml(p.marca)}</div>` : ""}
               <div class="card-title">${escHtml(p.nombre)}</div>
@@ -1926,6 +2122,60 @@
       }).join("");
     }
 
+    function cambiarLadoGaleria(side) {
+      state.gallerySide = side === "right" ? "right" : "left";
+      const body = $("lbSheetBody");
+      if (body) body.classList.toggle("gallery-right", state.gallerySide === "right");
+      $("btnGalleryLeft")?.classList.toggle("active", state.gallerySide === "left");
+      $("btnGalleryRight")?.classList.toggle("active", state.gallerySide === "right");
+    }
+
+    function renderGaleriaLightbox() {
+      const fotos = state.lightboxFotos || [];
+      const imgEl = $("lbImg");
+      const prevBtn = $("btnGalleryPrev");
+      const nextBtn = $("btnGalleryNext");
+      const strip = $("lbThumbsStrip");
+
+      if (!fotos.length) {
+        if (imgEl) { imgEl.src = ""; imgEl.style.display = "none"; }
+        prevBtn?.classList.remove("visible");
+        nextBtn?.classList.remove("visible");
+        if (strip) strip.innerHTML = "";
+        return;
+      }
+
+      const idx = Math.max(0, Math.min(fotos.length - 1, state.lightboxFotoIdx || 0));
+      state.lightboxFotoIdx = idx;
+      if (imgEl) {
+        imgEl.src = fotos[idx];
+        imgEl.alt = `${$("lbTitulo")?.textContent || "Artículo"} — Foto ${idx + 1}`;
+        imgEl.style.display = "block";
+      }
+
+      const multi = fotos.length > 1;
+      prevBtn?.classList.toggle("visible", multi);
+      nextBtn?.classList.toggle("visible", multi);
+
+      if (strip) {
+        strip.innerHTML = multi ? fotos.map((u, i) => `
+          <button type="button" class="gallery-thumb-btn ${i === idx ? "active" : ""}" onclick="seleccionarFotoLightbox(${i})" title="Ver foto ${i + 1}">
+            <img src="${escAttr(u)}" alt="Miniatura ${i + 1}" />
+          </button>
+        `).join("") : "";
+      }
+    }
+
+    function seleccionarFotoLightbox(idx) {
+      if (!state.lightboxFotos.length) return;
+      state.lightboxFotoIdx = (idx + state.lightboxFotos.length) % state.lightboxFotos.length;
+      renderGaleriaLightbox();
+    }
+
+    function navegarFotoLightbox(delta) {
+      seleccionarFotoLightbox((state.lightboxFotoIdx || 0) + delta);
+    }
+
     function seleccionarColorLightbox(color) {
       state.lightboxColor = String(color || "").trim();
       document.querySelectorAll("#lbColorsOptions .color-choice-btn").forEach(btn => {
@@ -1941,14 +2191,17 @@
       state.lightboxQty = 1;
       const coloresArr = parseColoresReloj(prod.colores);
       state.lightboxColor = coloresArr.length === 1 ? coloresArr[0] : "";
+      state.lightboxFotos = prod.fotos && prod.fotos.length ? prod.fotos.slice() : parseImagenesProducto(prod.imagen_url);
+      state.lightboxFotoIdx = 0;
 
       const usd = Number(prod.precio_usd) || 0;
       const stock = Number(prod.stock) || 0, stockSiempre = esCantidadDesactivadaProducto(prod, state.categorias), sinStock = !stockSiempre && stock <= 0;
 
       $("lbTitulo").textContent = prod.nombre || "";
       $("lbDetalle").textContent = [esAcc ? "Correa / Accesorio de repuesto" : "Reloj", prod.categoria, prod.marca].filter(Boolean).join(" • ");
-      const imgEl = $("lbImg");
-      imgEl.src = prod.imagen_url || ""; imgEl.alt = prod.imagen_url ? (prod.nombre || "Artículo") : ""; imgEl.style.display = prod.imagen_url ? "block" : "none";
+      cambiarLadoGaleria(state.gallerySide);
+      renderGaleriaLightbox();
+
       $("lbMarcaLbl").textContent = esAcc ? "Compatibilidad / Marca:" : "Marca:";
       $("lbMarca").textContent = prod.marca || (esAcc ? "Universal / Varios modelos" : "Edición disponible");
 
@@ -2402,11 +2655,12 @@
         const idx = todos.findIndex(x => String(x.id) === String(p.id)), oculto = String(p.activo || "SI").toUpperCase() !== "SI";
         const esAcc = (p.tipo_articulo || detectarTipoArticulo(p)) === "ACCESORIO";
         const stockSiempre = esCantidadDesactivadaProducto(p, catsRef), promo = parseFloat(p.precio_promo);
+        const nFotos = (p.fotos && p.fotos.length) ? p.fotos.length : parseImagenesProducto(p.imagen_url).length;
         return `
           <tr class="${oculto ? "prod-row-hidden" : ""}">
             <td><b>${escHtml(p.id)}</b></td>
             <td>${esAcc ? `<span class="badge-tag cat-badge-acc">CORREA/ACC</span> ` : ""}${escHtml(p.categoria)}</td>
-            <td>${p.marca ? `<b>${escHtml(p.marca)}</b> — ` : ""}${escHtml(p.nombre)}${stockSiempre ? ` <span class="badge-tag cat-badge-qty-off">STOCK ∞</span>` : ""}${oculto ? ` <span class="badge-tag cat-badge-hidden">OCULTO</span>` : ""}</td>
+            <td>${p.marca ? `<b>${escHtml(p.marca)}</b> — ` : ""}${escHtml(p.nombre)}${nFotos > 1 ? ` <span class="badge-tag cat-badge-img">${nFotos} FOTOS</span>` : ""}${stockSiempre ? ` <span class="badge-tag cat-badge-qty-off">STOCK ∞</span>` : ""}${oculto ? ` <span class="badge-tag cat-badge-hidden">OCULTO</span>` : ""}</td>
             <td><small>${escHtml(p.colores || "-")}</small></td>
             <td>$${Number(p.precio_usd || 0).toFixed(2)}</td>
             <td>${(!isNaN(promo) && promo > 0) ? `$${promo.toFixed(2)}` : "-"}</td>
@@ -2571,7 +2825,13 @@
     function editarProductoPorId(prodId) {
       const p = normalizarRelojSheet((state.adminData?.productos || []).find(x => String(x.id) === String(prodId)));
       if (!p) return;
-      for (const [elId, prop, def] of PROD_FIELDS) $(elId).value = p[prop] ?? def;
+      for (const [elId, prop, def] of PROD_FIELDS) {
+        if (prop === "imagen_url") {
+          $(elId).value = (p.fotos && p.fotos.length) ? p.fotos.join(" | ") : (p[prop] ?? def);
+        } else {
+          $(elId).value = p[prop] ?? def;
+        }
+      }
       if ($("prodStockSiempre")) $("prodStockSiempre").checked = isOffFlag(p.control_cantidad ?? p.cantidad_activa);
       if ($("prodFotoFile")) $("prodFotoFile").value = "";
       actualizarEtiquetasFormAdmin();
@@ -2587,13 +2847,32 @@
     }
 
     async function guardarProductoAdmin() {
+      const msg = $("msgAdminProd");
       const idActual = $("prodId").value.trim();
       const tipoVal = $("prodTipo")?.value || "RELOJ";
       const marcaVal = $("prodMarca")?.value.trim() || "";
+      const nombreVal = $("prodNombre")?.value.trim() || "";
       const coloresVal = $("prodColores")?.value.trim() || "";
       const detalleBase = $("prodDetalle")?.value.trim() || "";
       const descVal = $("prodDescripcion")?.value.trim() || "";
+      const precioNum = parseFloat($("prodPrecioUsd").value);
       const stockSiempre = Boolean($("prodStockSiempre")?.checked);
+      const fotosArr = parseImagenesProducto($("prodImagenUrl").value);
+      const imagenSerializada = fotosArr.join(" | ");
+
+      if (!nombreVal) {
+        $("prodNombre")?.focus();
+        return mostrarMsg(msg, "Completa el campo Nombre / Modelo antes de guardar.", false);
+      }
+      if (!marcaVal) {
+        $("prodMarca")?.focus();
+        return mostrarMsg(msg, "Completa el campo Marca antes de guardar.", false);
+      }
+      if (isNaN(precioNum) || precioNum <= 0) {
+        $("prodPrecioUsd")?.focus();
+        return mostrarMsg(msg, "Ingresa un Precio (USD) mayor a 0.", false);
+      }
+
       const detalleCombinado = [
         tipoVal === "ACCESORIO" ? "Tipo: Accesorio" : "",
         detalleBase,
@@ -2607,17 +2886,18 @@
           id: idActual,
           tipo_articulo: tipoVal,
           categoria: $("prodCategoria").value,
-          nombre: $("prodNombre").value.trim(),
+          nombre: nombreVal,
           marca: marcaVal,
           editorial: marcaVal,
           colores: coloresVal,
           descripcion: descVal,
           detalle_variante: detalleCombinado,
-          precio_usd: parseFloat($("prodPrecioUsd").value) || 0,
+          precio_usd: precioNum,
           precio_promo: $("prodPromoUsd").value.trim(),
           stock: parseInt($("prodStock").value, 10) || 0,
           control_cantidad: stockSiempre ? "NO" : "SI",
-          imagen_url: $("prodImagenUrl").value.trim(),
+          imagen_url: imagenSerializada,
+          imagenes: imagenSerializada,
           activo: ex ? String(ex.activo || "SI") : "SI"
         }
       });
@@ -2626,9 +2906,9 @@
         if (savedId) {
           await postAdmin({ action: "toggleProductQtyControl", id: savedId, control_cantidad: stockSiempre ? "NO" : "SI", desactivar_cantidad: stockSiempre }).catch(() => {});
         }
-        mostrarMsg($("msgAdminProd"), `${tipoVal === "ACCESORIO" ? "Correa / Accesorio" : "Reloj"} guardado en la Sheet (${savedId || "OK"}).`, true);
+        mostrarMsg(msg, `${tipoVal === "ACCESORIO" ? "Correa / Accesorio" : "Reloj"} guardado en la Sheet (${savedId || "OK"}) con ${fotosArr.length} foto(s).`, true);
         limpiarFormProducto(); await refrescarAdminData();
-      } else mostrarMsg($("msgAdminProd"), data.error || "Error al guardar artículo", false);
+      } else mostrarMsg(msg, data.error || "Error al guardar artículo", false);
     }
 
     async function cambiarEstadoPedido(pedidoId, estado) { const d = await postAdmin({ action: "updateOrderStatus", pedido_id: pedidoId, estado }); if (d.ok) await refrescarAdminData(); }
@@ -2644,7 +2924,32 @@
         }
       }
     }
-    async function subirFotoProducto(inp) { const f = inp.files?.[0]; if (!f) return; const r = await subirBase64Drive(f); if (r.url) { $("prodImagenUrl").value = r.url; actualizarPreviewLibro(); } }
+
+    async function subirFotoProducto(inp) {
+      const files = Array.from(inp.files || []);
+      if (!files.length) return;
+      const msg = $("msgAdminProd");
+      mostrarMsg(msg, `Subiendo ${files.length} foto(s) a Google Drive...`, true);
+      const actuales = parseImagenesProducto($("prodImagenUrl")?.value || "");
+      let agregadas = 0;
+
+      for (const f of files) {
+        const r = await subirBase64Drive(f);
+        if (r.url && !actuales.includes(r.url)) {
+          actuales.push(r.url);
+          agregadas++;
+        }
+      }
+
+      inp.value = "";
+      if ($("prodImagenUrl")) $("prodImagenUrl").value = actuales.join(" | ");
+      actualizarPreviewLibro();
+      if (agregadas > 0) {
+        mostrarMsg(msg, `${agregadas} foto(s) agregada(s) al modelo (${actuales.length} en total). No olvides pulsar "Guardar Artículo".`, true);
+      } else {
+        mostrarMsg(msg, "No se pudieron subir las fotos a Drive.", false);
+      }
+    }
 
     function prepararImagenParaSubida(file, maxDim = 950, quality = 0.75) {
       return new Promise(resolve => {
