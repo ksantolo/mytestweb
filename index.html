@@ -1106,7 +1106,7 @@
           <div class="field">
             <label>Adjuntar Portada (se sube a Google Drive y guarda en Sheet)</label>
             <input type="file" accept="image/*" onchange="subirArchivoConfig(this,'portada_url')" />
-            <input type="text" id="cfgPortadaUrl" placeholder="URL de portada" style="margin-top:6px;" />
+            <input type="text" id="cfgPortadaUrl" placeholder="URL de portada" style="margin-top:6px;" oninput="aplicarTemaYMarca()" />
           </div>
           <div class="field" style="grid-column:1 / -1;">
             <label>Métodos de Pago (Añadir o Quitar — base: Zelle)</label>
@@ -1400,17 +1400,31 @@
       el.style.display = "block";
     };
 
+    function deduplicarUrls(lista) {
+      const seen = new Set();
+      const out = [];
+      for (const item of (Array.isArray(lista) ? lista : [])) {
+        const clean = String(item || "").trim();
+        if (!clean) continue;
+        if (!seen.has(clean)) {
+          seen.add(clean);
+          out.push(clean);
+        }
+      }
+      return out;
+    }
+
     function parseImagenesProducto(raw) {
       if (Array.isArray(raw)) {
-        return raw.map(s => String(s || "").trim()).filter(Boolean);
+        return deduplicarUrls(raw);
       }
       const str = String(raw || "").trim();
       if (!str) return [];
       const matches = str.match(/(?:https?:\/\/|data:image\/[^;\s]+;base64,)[^\s|,]+/gi);
       if (matches && matches.length) {
-        return matches.map(s => s.replace(/[|,]+$/g, "").trim()).filter(Boolean);
+        return deduplicarUrls(matches.map(s => s.replace(/[|,]+$/g, "").trim()));
       }
-      return str.split(/\s*\|\s*|\s*,\s*/).map(s => s.trim()).filter(Boolean);
+      return deduplicarUrls(str.split(/\s*\|\s*|\s*,\s*/));
     }
 
     const parseColoresReloj = (raw) => String(raw || "").split(/[,|/;]+/).map(s => s.trim()).filter(Boolean);
@@ -1590,7 +1604,7 @@
     }
 
     function deduplicarBloquesPrincipales() {
-      ["header.topbar", "main.container", ".dev-watermark", ".fab-cart"].forEach(sel => {
+      ["header.topbar", "main.container", ".portada-box", ".dev-watermark", ".fab-cart"].forEach(sel => {
         document.querySelectorAll(sel).forEach((el, idx) => { if (idx > 0) el.remove(); });
       });
     }
@@ -1701,7 +1715,7 @@
     }
 
     function sincronizarFotosAdmin(urls) {
-      state.adminFotosDraft = Array.isArray(urls) ? urls.map(u => String(u || "").trim()).filter(Boolean) : [];
+      state.adminFotosDraft = deduplicarUrls(urls);
       const ta = $("prodImagenUrl");
       if (ta) ta.value = state.adminFotosDraft.join(" | ");
       renderListaFotosAdmin(state.adminFotosDraft);
@@ -1832,6 +1846,7 @@
     const normalizarHandleInstagram = (raw) => { const l = String(raw || "").trim().replace(/^@+/, ""); return l ? `@${l}` : ""; };
 
     function aplicarTemaYMarca() {
+      deduplicarBloquesPrincipales();
       const c = state.config;
       aplicarColoresDesdeCfg(c);
       actualizarControlesColorAdmin(c);
@@ -1879,9 +1894,18 @@
         logoWrap?.classList.remove("has-logo");
       }
 
-      const portadaBox = $("portadaBox");
-      if (c.portada_url) { $("portadaImg").src = c.portada_url; portadaBox.style.display = "block"; }
-      else portadaBox.style.display = "none";
+      const portadaUrl = String(c.portada_url || "").trim();
+      const portadaBoxes = Array.from(document.querySelectorAll(".portada-box"));
+      portadaBoxes.forEach((box, idx) => {
+        const img = box.querySelector("img");
+        if (idx > 0 || !portadaUrl) {
+          box.style.display = "none";
+          if (img) img.removeAttribute("src");
+        } else {
+          if (img && img.getAttribute("src") !== portadaUrl) img.setAttribute("src", portadaUrl);
+          box.style.display = "block";
+        }
+      });
       poblarSelectorMetodosPago();
     }
 
@@ -1937,7 +1961,7 @@
         const stock = Number(p.stock) || 0, stockSiempre = esCantidadDesactivadaProducto(p, state.categorias), sinStock = !stockSiempre && stock <= 0;
         const stockTxt = stockSiempre ? (esAcc ? "Stock permanente • Repuesto disponible" : "Disponible • Stock permanente") : (sinStock ? "Agotado por ahora" : `Disponible: ${stock} und.`);
         const coloresArr = parseColoresReloj(p.colores), tieneVariosColores = coloresArr.length > 1;
-        const fotosArr = p.fotos?.length ? p.fotos : parseImagenesProducto(p.imagen_url), imgPrincipal = fotosArr[0] || "";
+        const fotosArr = deduplicarUrls(p.fotos?.length ? p.fotos : parseImagenesProducto(p.imagen_url)), imgPrincipal = fotosArr[0] || "";
         const imgHtml = imgPrincipal
           ? `<img src="${escAttr(imgPrincipal)}" alt="${escAttr(p.nombre)}" loading="lazy" decoding="async" />`
           : `<span style="font-family:var(--font-titulos);font-size:24px;font-weight:700;color:var(--acento);opacity:0.65;">${escHtml(p.categoria.slice(0,2).toUpperCase())}</span>`;
@@ -1966,7 +1990,9 @@
     }
 
     function renderGaleriaLightbox() {
-      const fotos = state.lightboxFotos || [], imgEl = $("lbImg"), prevBtn = $("btnGalleryPrev"), nextBtn = $("btnGalleryNext"), strip = $("lbThumbsStrip");
+      const fotos = deduplicarUrls(state.lightboxFotos || []);
+      state.lightboxFotos = fotos;
+      const imgEl = $("lbImg"), prevBtn = $("btnGalleryPrev"), nextBtn = $("btnGalleryNext"), strip = $("lbThumbsStrip");
       if (!fotos.length) {
         if (imgEl) { imgEl.src = ""; imgEl.style.display = "none"; }
         prevBtn?.classList.remove("visible"); nextBtn?.classList.remove("visible");
@@ -2008,7 +2034,7 @@
       state.lightboxQty = 1;
       const coloresArr = parseColoresReloj(prod.colores);
       state.lightboxColor = coloresArr.length === 1 ? coloresArr[0] : "";
-      state.lightboxFotos = prod.fotos?.length ? prod.fotos.slice() : parseImagenesProducto(prod.imagen_url);
+      state.lightboxFotos = deduplicarUrls(prod.fotos?.length ? prod.fotos : parseImagenesProducto(prod.imagen_url));
       state.lightboxFotoIdx = 0;
 
       const usd = Number(prod.precio_usd) || 0, stock = Number(prod.stock) || 0;
@@ -2574,23 +2600,23 @@
     function editarProductoPorId(prodId) {
       const p = normalizarRelojSheet((state.adminData?.productos || []).find(x => String(x.id) === String(prodId)));
       if (!p) return;
+      const fotosLimpias = deduplicarUrls(p.fotos?.length ? p.fotos : parseImagenesProducto(p.imagen_url));
       for (const [elId, prop, def] of PROD_FIELDS) {
-        $(elId).value = prop === "imagen_url" ? (p.fotos?.length ? p.fotos.join(" | ") : (p[prop] ?? def)) : (p[prop] ?? def);
+        $(elId).value = prop === "imagen_url" ? fotosLimpias.join(" | ") : (p[prop] ?? def);
       }
       if ($("prodStockSiempre")) $("prodStockSiempre").checked = isOffFlag(p.control_cantidad ?? p.cantidad_activa);
       if ($("prodFotoFile")) $("prodFotoFile").value = "";
       actualizarEtiquetasFormAdmin();
-      actualizarPreviewLibro();
+      sincronizarFotosAdmin(fotosLimpias);
     }
 
     function limpiarFormProducto() {
       for (const [elId, , def] of PROD_FIELDS) $(elId).value = def;
-      state.adminFotosDraft = [];
       if ($("prodStockSiempre")) $("prodStockSiempre").checked = false;
       if ($("prodFotoFile")) $("prodFotoFile").value = "";
       $("prodStock").value = "5";
       actualizarEtiquetasFormAdmin();
-      actualizarPreviewLibro();
+      sincronizarFotosAdmin([]);
     }
 
     async function guardarProductoAdmin() {
@@ -2599,7 +2625,7 @@
       const coloresVal = $("prodColores")?.value.trim() || "", detalleBase = $("prodDetalle")?.value.trim() || "";
       const descVal = $("prodDescripcion")?.value.trim() || "", precioNum = parseFloat($("prodPrecioUsd").value);
       const stockSiempre = Boolean($("prodStockSiempre")?.checked);
-      const fotosArr = parseImagenesProducto($("prodImagenUrl").value), imagenSerializada = fotosArr.join(" | ");
+      const fotosArr = deduplicarUrls(parseImagenesProducto($("prodImagenUrl").value)), imagenSerializada = fotosArr.join(" | ");
 
       if (!nombreVal) { $("prodNombre")?.focus(); return mostrarMsg(msg, "Completa el campo Nombre / Modelo antes de guardar.", false); }
       if (!marcaVal) { $("prodMarca")?.focus(); return mostrarMsg(msg, "Completa el campo Marca antes de guardar.", false); }
@@ -2632,10 +2658,12 @@
     async function subirArchivoConfig(inp, dest) {
       const f = inp.files?.[0]; if (!f) return;
       const r = await subirBase64Drive(f);
+      inp.value = "";
       if (r.url) {
         const targetEl = $(dest === "logo_url" ? "cfgLogoUrl" : "cfgPortadaUrl");
         if (targetEl) targetEl.value = r.url;
         if (dest === "logo_url") { state.config.logo_url = r.url; aplicarTemaYMarca(); }
+        else { state.config.portada_url = r.url; aplicarTemaYMarca(); }
       }
     }
 
@@ -2644,7 +2672,7 @@
       if (!files.length) return;
       const msg = $("msgAdminProd");
       mostrarMsg(msg, `Subiendo ${files.length} foto(s) a Google Drive...`, true);
-      const actuales = state.adminFotosDraft.length ? state.adminFotosDraft.slice() : parseImagenesProducto($("prodImagenUrl")?.value || "");
+      const actuales = deduplicarUrls(state.adminFotosDraft.length ? state.adminFotosDraft.slice() : parseImagenesProducto($("prodImagenUrl")?.value || ""));
       let agregadas = 0;
 
       for (const f of files) {
