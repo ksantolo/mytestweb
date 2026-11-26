@@ -16,7 +16,8 @@
     .topbar { background: linear-gradient(135deg, #141417 0%, #24171A 65%, var(--acento) 135%); color: var(--blanco); padding: 14px 20px; position: sticky; top: 0; z-index: 40; box-shadow: 0 4px 20px rgba(20, 20, 23, 0.25); }
     .topbar-inner { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
     .brand { display: flex; align-items: center; gap: 16px; }
-    .brand-logo-wrap { width: 96px; height: 82px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: visible; }
+    .brand-logo-wrap { width: 96px; height: 82px; display: none; align-items: center; justify-content: center; flex-shrink: 0; overflow: visible; }
+    .brand-logo-wrap.has-logo { display: flex; }
     .brand-logo { width: 56px; height: 48px; transform: scale(1.7); transform-origin: center; border-radius: 10px; background: var(--blanco); border: 1.5px solid rgba(255,255,255,0.75); box-shadow: 0 6px 16px rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: var(--primario); overflow: hidden; }
     .brand-logo img, .brand-logo svg { width: 100%; height: 100%; object-fit: contain; display: block; }
     .brand-title { font-size: 20px; font-weight: 800; letter-spacing: 0.2px; cursor: pointer; }
@@ -209,27 +210,19 @@
     <symbol id="ico-qty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></symbol>
     <symbol id="ico-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></symbol>
     <symbol id="ico-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></symbol>
-    <symbol id="ico-jc-watch" viewBox="0 0 120 110">
-      <circle cx="60" cy="52" r="32" fill="#141417" stroke="#A61C1C" stroke-width="3" />
-      <circle cx="60" cy="52" r="24" fill="#FFFFFF" />
-      <line x1="60" y1="52" x2="60" y2="36" stroke="#141417" stroke-width="2.6" stroke-linecap="round" />
-      <line x1="60" y1="52" x2="72" y2="52" stroke="#A61C1C" stroke-width="2.4" stroke-linecap="round" />
-      <circle cx="60" cy="52" r="2.8" fill="#141417" />
-      <text x="60" y="98" text-anchor="middle" font-size="13" font-weight="900" fill="#141417" letter-spacing="1.6">JC</text>
-    </symbol>
   </svg>
 
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <div class="brand-logo-wrap">
-          <div class="brand-logo" id="brandLogo"><svg aria-hidden="true"><use href="#ico-jc-watch"></use></svg></div>
+        <div class="brand-logo-wrap" id="brandLogoWrap">
+          <div class="brand-logo" id="brandLogo"></div>
         </div>
         <div>
           <div class="brand-title" id="brandTitle" role="button" tabindex="0" onclick="abrirModalPin()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();abrirModalPin();}">JC</div>
-          <div class="brand-sub" id="brandSub">Tienda virtual de relojes • Entregas y envíos en EE. UU.</div>
+          <div class="brand-sub" id="brandSub">Tienda virtual de relojes • Entregas y envíos</div>
           <div class="brand-delivery">
-            <div>Entregas locales y envíos a todo EE. UU.</div>
+            <div>Entrega personal y envíos nacionales / internacionales</div>
             <div>-Previo acuerdo-</div>
             <div>Atención todos los días</div>
           </div>
@@ -239,10 +232,9 @@
         <a id="headerInstagram" class="top-pill" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" title="Síguenos en Instagram" style="display:none;">
           <svg width="16" height="16" aria-hidden="true"><use href="#ico-ig"></use></svg><span id="headerIgText"></span>
         </a>
-        <a id="headerWhatsApp" class="top-pill" href="https://wa.me/10000000000" target="_blank" rel="noopener noreferrer" title="Escríbenos por WhatsApp" style="display:none;">
+        <a id="headerWhatsApp" class="top-pill" href="https://wa.me/10000000000" target="_blank" rel="noopener noreferrer" title="Número oficial por WhatsApp" style="display:none;">
           <svg width="16" height="16" aria-hidden="true"><use href="#ico-wa"></use></svg><span id="headerWaText"></span>
         </a>
-        <div class="top-pill" id="monedaPill">USD ($) • EE. UU.</div>
       </div>
     </div>
   </header>
@@ -274,7 +266,7 @@
   <a id="fabInstagram" class="fab-social fab-ig" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Visitar Instagram de JC" title="Visitar Instagram de JC" style="display:none;">
     <svg width="26" height="26" aria-hidden="true"><use href="#ico-ig"></use></svg>
   </a>
-  <a id="fabWhatsApp" class="fab-social fab-wa" href="https://wa.me/10000000000" target="_blank" rel="noopener noreferrer" aria-label="Chatear por WhatsApp con JC" title="Chatear por WhatsApp con JC" style="display:none;">
+  <a id="fabWhatsApp" class="fab-social fab-wa" href="https://wa.me/10000000000" target="_blank" rel="noopener noreferrer" aria-label="Chatear por WhatsApp con JC" title="WhatsApp oficial de JC" style="display:none;">
     <svg width="28" height="28" aria-hidden="true"><use href="#ico-wa"></use></svg>
   </a>
   <button class="fab-cart" type="button" onclick="abrirCarrito()">
@@ -340,14 +332,18 @@
           <div class="field">
             <label>Modalidad de Entrega / Envío *</label>
             <select id="cliEntrega" required>
-              <option value="Entrega local">Entrega local</option>
-              <option value="Envío en EE. UU.">Envío en EE. UU.</option>
+              <option value="Entrega personal">Entrega personal</option>
+              <option value="Envío nacional / internacional">Envío nacional / internacional</option>
             </select>
           </div>
           <div class="field">
             <label>Método de Pago *</label>
             <select id="cliPago" required onchange="renderModalCarrito()"></select>
           </div>
+        </div>
+        <div class="field">
+          <label>Dirección a entregar *</label>
+          <textarea id="cliDireccion" rows="2" required placeholder="Ciudad, estado/país, calle, edificio o punto de referencia para entrega personal o envío..."></textarea>
         </div>
         <button class="btn btn-primary" style="width:100%;padding:12px;" type="submit" id="btnConfirmarPedido">Confirmar y Reservar Pedido</button>
         <div class="status-msg" id="msgPedido"></div>
@@ -388,24 +384,24 @@
           <div class="field"><label>Horas expiración carrito</label><input type="number" step="0.5" min="0.5" id="cfgHorasExp" /></div>
           <div class="field"><label>Nombre de la Tienda</label><input type="text" id="cfgNombreTienda" /></div>
           <div class="field"><label>Subtítulo de la Tienda</label><input type="text" id="cfgSubtituloTienda" /></div>
-          <div class="field"><label>WhatsApp (ej. 13055550199)</label><input type="text" id="cfgWhatsapp" /></div>
+          <div class="field"><label>WhatsApp Oficial (ej. 13055550199)</label><input type="text" id="cfgWhatsapp" /></div>
           <div class="field"><label>Instagram (ej. @jc.watches)</label><input type="text" id="cfgInstagram" /></div>
           <div class="field"><label>Comisión PayPal (%)</label><input type="number" step="0.01" min="0" id="cfgPaypalPct" /></div>
           <div class="field"><label>Comisión PayPal Fija (USD)</label><input type="number" step="0.01" min="0" id="cfgPaypalFija" /></div>
           <div class="field">
-            <label>Subir Logo (se guarda en Google Drive y Sheet)</label>
+            <label>Adjuntar Logo (se sube a Google Drive y guarda en Sheet)</label>
             <input type="file" accept="image/*" onchange="subirArchivoConfig(this,'logo_url')" />
-            <input type="text" id="cfgLogoUrl" placeholder="URL del logo" style="margin-top:6px;" />
+            <input type="text" id="cfgLogoUrl" placeholder="URL del logo" style="margin-top:6px;" oninput="aplicarTemaYMarca()" />
           </div>
           <div class="field">
-            <label>Subir Portada (se guarda en Google Drive y Sheet)</label>
+            <label>Adjuntar Portada (se sube a Google Drive y guarda en Sheet)</label>
             <input type="file" accept="image/*" onchange="subirArchivoConfig(this,'portada_url')" />
             <input type="text" id="cfgPortadaUrl" placeholder="URL de portada" style="margin-top:6px;" />
           </div>
           <div class="field" style="grid-column:1 / -1;">
             <label>Métodos de Pago (Añadir o Quitar — base: Zelle)</label>
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
-              <input type="text" id="nuevoMetodoPagoInput" placeholder="Ej. Efectivo USD, Transferencia ACH, Wire..." style="flex:1;min-width:200px;" onkeydown="if(event.key==='Enter'){event.preventDefault();agregarMetodoPagoAdmin();}" />
+              <input type="text" id="nuevoMetodoPagoInput" placeholder="Ej. Efectivo, Transferencia, PayPal..." style="flex:1;min-width:200px;" onkeydown="if(event.key==='Enter'){event.preventDefault();agregarMetodoPagoAdmin();}" />
               <button class="btn btn-soft btn-sm" type="button" onclick="agregarMetodoPagoAdmin()">+ Añadir método</button>
             </div>
             <div id="adminMetodosPagoList" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
@@ -493,7 +489,7 @@
       <div class="admin-panel" id="tabPedidos">
         <div class="admin-quick-search">
           <svg width="18" height="18" style="color:var(--acento);flex-shrink:0;" aria-hidden="true"><use href="#ico-search"></use></svg>
-          <input type="search" id="pedidosSearchInput" placeholder="Buscar pedido por ID, cliente, teléfono, reloj, estado..." oninput="filtrarPedidosAdmin()" />
+          <input type="search" id="pedidosSearchInput" placeholder="Buscar pedido por ID, cliente, teléfono, dirección, reloj, estado..." oninput="filtrarPedidosAdmin()" />
           <button class="btn btn-soft btn-sm" type="button" id="btnLimpiarPedidosSearch" onclick="limpiarBusquedaPedidos()" style="display:none;">Limpiar</button>
         </div>
         <div class="table-wrap">
@@ -517,7 +513,7 @@
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbymvw6JRnAXE_5QZ1MfAhmqnuEwkJVjuKQjHkzUN67EcB72zwt43veUnFXmrtWtbsBP/exec";
-    const DEV_WA_URL = "https://wa.me/13055550199?text=Hola%20Kevin%2C%20vi%20la%20p%C3%A1gina%20de%20JC%20y%20me%20gustar%C3%ADa%20cotizar%20una%20web%20para%20mi%20negocio.";
+    const DEV_WA_URL = "https://wa.me/573000000000?text=Hola%20Kevin%2C%20vi%20la%20p%C3%A1gina%20de%20JC%20y%20me%20gustar%C3%ADa%20cotizar%20una%20web%20para%20mi%20negocio.";
     const ADMIN_PIN_PRUEBAS = "JC.2027";
 
     const PAISES = [
@@ -537,7 +533,7 @@
     const state = {
       config: {
         estado_servicio: "ACTIVO", horas_expiracion_carrito: 2,
-        nombre_tienda: "JC", subtitulo_tienda: "Tienda virtual de relojes • Entregas y envíos en EE. UU.",
+        nombre_tienda: "JC", subtitulo_tienda: "Tienda virtual de relojes • Entregas y envíos",
         whatsapp: "", instagram: "", metodos_pago: "Zelle",
         paypal_comision_pct: 5.4, paypal_comision_fija: 0.30, color_primario: "#17171A", color_fondo: "#F7F5F2",
         color_acento: "#A61C1C", logo_url: "", portada_url: ""
@@ -738,7 +734,7 @@
       root.setProperty("--acento", (!c.color_acento || esLila(c.color_acento)) ? "#A61C1C" : c.color_acento);
 
       const nombreTienda = String(c.nombre_tienda || "").trim() || "JC";
-      const subtituloTienda = String(c.subtitulo_tienda || "").trim() || "Tienda virtual de relojes • Entregas y envíos en EE. UU.";
+      const subtituloTienda = String(c.subtitulo_tienda || "").trim() || "Tienda virtual de relojes • Entregas y envíos";
 
       $("brandTitle").textContent = nombreTienda;
       $("brandSub").textContent = subtituloTienda;
@@ -758,17 +754,30 @@
 
       const waNum = String(c.whatsapp || "").replace(/\D/g, "");
       if (waNum) {
+        const waVisible = formatearTelefonoVisible(waNum);
         const waUrl = `https://wa.me/${waNum}`;
         $("headerWhatsApp").href = waUrl; $("headerWhatsApp").style.display = "inline-flex";
+        $("headerWhatsApp").title = `WhatsApp oficial: ${waVisible}`;
         $("fabWhatsApp").href = waUrl; $("fabWhatsApp").style.display = "flex";
-        $("headerWaText").textContent = formatearTelefonoVisible(waNum);
+        $("fabWhatsApp").title = `WhatsApp oficial: ${waVisible}`;
+        $("headerWaText").textContent = waVisible;
       } else {
         $("headerWhatsApp").style.display = "none";
         $("fabWhatsApp").style.display = "none";
       }
 
       $("bannerPausa").style.display = String(c.estado_servicio).toUpperCase() === "ACTIVO" ? "none" : "block";
-      $("brandLogo").innerHTML = c.logo_url ? `<img src="${escAttr(c.logo_url)}" alt="Logo ${escAttr(nombreTienda)}" />` : `<svg aria-hidden="true"><use href="#ico-jc-watch"></use></svg>`;
+
+      const logoUrl = String(c.logo_url || "").trim();
+      const logoWrap = $("brandLogoWrap");
+      const logoBox = $("brandLogo");
+      if (logoUrl) {
+        logoBox.innerHTML = `<img src="${escAttr(logoUrl)}" alt="Logo ${escAttr(nombreTienda)}" />`;
+        logoWrap?.classList.add("has-logo");
+      } else {
+        logoBox.innerHTML = "";
+        logoWrap?.classList.remove("has-logo");
+      }
 
       const portadaBox = $("portadaBox");
       if (c.portada_url) { $("portadaImg").src = c.portada_url; portadaBox.style.display = "block"; }
@@ -969,6 +978,8 @@
       if (!state.carrito.length) return mostrarMsg(msg, "Agrega al menos un reloj al carrito.", false);
       const tel = construirTelefonoCompleto($("cliCodigoPais").value, $("cliTelefono").value.trim());
       if (!tel || tel.length < 8) return mostrarMsg(msg, "Ingresa un número de WhatsApp válido.", false);
+      const direccion = String($("cliDireccion")?.value || "").trim();
+      if (!direccion) return mostrarMsg(msg, "Ingresa la dirección a entregar.", false);
 
       const metodoPago = $("cliPago").value;
       const { totalUsd, comisionPayPalUsd, usaPayPal } = calcularTotalesCarrito(metodoPago);
@@ -977,7 +988,19 @@
 
       const btn = $("btnConfirmarPedido"); btn.disabled = true; btn.textContent = "Registrando pedido...";
       try {
-        const data = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "createOrder", cliente: $("cliNombre").value.trim(), telefono: `+${tel}`, modalidad_entrega: $("cliEntrega").value, metodo_pago: metodoPago, total_usd: Number(totalUsd.toFixed(2)), items }) })).json();
+        const data = await (await fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify({
+            action: "createOrder",
+            cliente: $("cliNombre").value.trim(),
+            telefono: `+${tel}`,
+            modalidad_entrega: `${$("cliEntrega").value} • Dirección: ${direccion}`,
+            direccion_entrega: direccion,
+            metodo_pago: metodoPago,
+            total_usd: Number(totalUsd.toFixed(2)),
+            items
+          })
+        })).json();
         if (!data.ok) throw new Error(data.error || "No se pudo registrar el pedido");
         state.carrito = []; actualizarBadgeCarrito(); renderModalCarrito(); $("formPedido").reset(); $("cliCodigoPais").value = "1";
         await cargarCatalogo();
@@ -1074,7 +1097,7 @@
             <td>${escHtml(ped.fecha)}</td>
             <td><b>${escHtml(ped.cliente)}</b><br><small>${escHtml(ped.telefono)}</small>${wa ? `<br><a class="btn-wa-mini" href="https://wa.me/${wa}?text=${encodeURIComponent(cuerpo)}" target="_blank" rel="noopener noreferrer">WhatsApp (+${wa})</a>` : ""}</td>
             <td><b>$${usd.toFixed(2)}</b></td>
-            <td><small>${escHtml(ped.detalle_items)}</small></td>
+            <td><small>${escHtml(ped.modalidad_entrega ? `${ped.modalidad_entrega} | ` : "")}${escHtml(ped.detalle_items)}</small></td>
             <td><select onchange="cambiarEstadoPedido('${escAttr(ped.pedido_id)}',this.value)">${["EN_PROCESO","APROBADO","COMPLETADO","CANCELADO","VENCIDO_2H"].map(st => `<option value="${st}" ${ped.estado === st ? "selected" : ""}>${st}</option>`).join("")}</select></td>
           </tr>`;
       }).join("");
@@ -1294,7 +1317,7 @@
       const d = state.adminData || construirDatosAdminLocales(), cfg = d.config || {};
       $("cfgHorasExp").value = cfg.horas_expiracion_carrito || "2";
       $("cfgNombreTienda").value = String(cfg.nombre_tienda || "").trim() || "JC";
-      $("cfgSubtituloTienda").value = String(cfg.subtitulo_tienda || "").trim() || "Tienda virtual de relojes • Entregas y envíos en EE. UU.";
+      $("cfgSubtituloTienda").value = String(cfg.subtitulo_tienda || "").trim() || "Tienda virtual de relojes • Entregas y envíos";
       $("cfgWhatsapp").value = cfg.whatsapp || "";
       $("cfgInstagram").value = cfg.instagram || "";
       $("cfgPaypalPct").value = cfg.paypal_comision_pct ?? state.config.paypal_comision_pct ?? "5.4";
@@ -1320,7 +1343,7 @@
         patch: {
           horas_expiracion_carrito: $("cfgHorasExp").value.trim(),
           nombre_tienda: $("cfgNombreTienda").value.trim() || "JC",
-          subtitulo_tienda: $("cfgSubtituloTienda").value.trim() || "Tienda virtual de relojes • Entregas y envíos en EE. UU.",
+          subtitulo_tienda: $("cfgSubtituloTienda").value.trim() || "Tienda virtual de relojes • Entregas y envíos",
           whatsapp: $("cfgWhatsapp").value.trim(),
           instagram: $("cfgInstagram").value.trim(),
           paypal_comision_pct: $("cfgPaypalPct")?.value.trim() || "5.4",
@@ -1373,7 +1396,18 @@
     }
 
     async function cambiarEstadoPedido(pedidoId, estado) { const d = await postAdmin({ action: "updateOrderStatus", pedido_id: pedidoId, estado }); if (d.ok) await refrescarAdminData(); }
-    async function subirArchivoConfig(inp, dest) { const f = inp.files?.[0]; if (!f) return; const r = await subirBase64Drive(f); if (r.url) $(dest === "logo_url" ? "cfgLogoUrl" : "cfgPortadaUrl").value = r.url; }
+    async function subirArchivoConfig(inp, dest) {
+      const f = inp.files?.[0]; if (!f) return;
+      const r = await subirBase64Drive(f);
+      if (r.url) {
+        const targetEl = $(dest === "logo_url" ? "cfgLogoUrl" : "cfgPortadaUrl");
+        if (targetEl) targetEl.value = r.url;
+        if (dest === "logo_url") {
+          state.config.logo_url = r.url;
+          aplicarTemaYMarca();
+        }
+      }
+    }
     async function subirFotoProducto(inp) { const f = inp.files?.[0]; if (!f) return; const r = await subirBase64Drive(f); if (r.url) { $("prodImagenUrl").value = r.url; actualizarPreviewLibro(); } }
 
     function prepararImagenParaSubida(file, maxDim = 950, quality = 0.75) {
