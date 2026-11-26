@@ -431,18 +431,6 @@
       border-radius: 4px;
       pointer-events: none;
     }
-    .card-gallery-count {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      background: rgba(26, 26, 26, 0.78);
-      color: var(--blanco);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 4px;
-      pointer-events: none;
-    }
     .card-body { padding: 14px 15px 10px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
     .card-brand {
       font-family: var(--font-desc);
@@ -548,7 +536,7 @@
     }
     .fab-cart:hover { background: var(--acento-oscuro); border-color: var(--acento-oscuro); }
 
-    /* Modales y Ficha de Reloj con Galería Movible Izquierda / Derecha */
+    /* Modales y Ficha de Reloj con Galería Fija a la Izquierda */
     .modal-backdrop { position: fixed; inset: 0; background: rgba(20, 18, 16, 0.56); display: none; align-items: center; justify-content: center; padding: 14px; z-index: 60; overflow-y: auto; }
     .modal-backdrop.open { display: flex; }
     .modal-box {
@@ -569,35 +557,7 @@
     }
 
     .lightbox-box { max-width: 820px; text-align: left; }
-    .gallery-side-switcher {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: var(--fondo);
-      border: 1px solid var(--borde);
-      border-radius: 8px;
-      padding: 3px;
-    }
-    .gallery-side-btn {
-      border: none;
-      background: transparent;
-      color: var(--texto-suave);
-      font-size: 11.5px;
-      font-weight: 600;
-      padding: 4px 9px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .gallery-side-btn.active {
-      background: var(--acento);
-      color: var(--blanco);
-    }
-
     .book-sheet-body { display: grid; grid-template-columns: 270px 1fr; gap: 20px; align-items: start; }
-    .book-sheet-body.gallery-right { grid-template-columns: 1fr 270px; }
-    .book-sheet-body.gallery-right .gallery-column { order: 2; }
-    .book-sheet-body.gallery-right .book-sheet-info { order: 1; }
 
     .gallery-column { display: flex; flex-direction: column; gap: 10px; }
     .lightbox-img-wrap {
@@ -644,8 +604,8 @@
       scrollbar-width: thin;
     }
     .gallery-thumb-btn {
-      width: 54px;
-      height: 54px;
+      width: 58px;
+      height: 58px;
       padding: 3px;
       border-radius: 6px;
       border: 1.5px solid var(--borde);
@@ -697,9 +657,7 @@
     .lb-qty-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--borde); background: var(--blanco); color: var(--texto); font-weight: 700; font-size: 15px; cursor: pointer; }
     .lb-actions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 680px) {
-      .book-sheet-body, .book-sheet-body.gallery-right { grid-template-columns: 1fr; gap: 12px; }
-      .book-sheet-body.gallery-right .gallery-column { order: 1; }
-      .book-sheet-body.gallery-right .book-sheet-info { order: 2; }
+      .book-sheet-body { grid-template-columns: 1fr; gap: 12px; }
       .lightbox-img-wrap { min-height: 195px; padding: 10px; }
       .lightbox-img-wrap img { max-height: 195px; }
     }
@@ -881,16 +839,19 @@
       position: absolute;
       top: 1px;
       right: 1px;
-      width: 17px;
-      height: 17px;
+      width: 18px;
+      height: 18px;
       border: none;
       border-radius: 4px;
-      background: rgba(177, 39, 4, 0.9);
+      background: rgba(177, 39, 4, 0.92);
       color: #fff;
       font-size: 10px;
       font-weight: 700;
       cursor: pointer;
       line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .book-fields-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
@@ -1014,13 +975,7 @@
     <div class="modal-box lightbox-box">
       <div class="modal-head">
         <div><h3 id="lbTitulo"></h3><small style="color:var(--texto-suave);" id="lbDetalle"></small></div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <div class="gallery-side-switcher" role="group" aria-label="Posición de galería">
-            <button type="button" class="gallery-side-btn active" id="btnGalleryLeft" onclick="cambiarLadoGaleria('left')">Galería Izquierda</button>
-            <button type="button" class="gallery-side-btn" id="btnGalleryRight" onclick="cambiarLadoGaleria('right')">Galería Derecha</button>
-          </div>
-          <button class="btn btn-soft" type="button" onclick="cerrarModal('modalLightbox')">✕</button>
-        </div>
+        <button class="btn btn-soft" type="button" onclick="cerrarModal('modalLightbox')">✕</button>
       </div>
       <div class="book-sheet-body" id="lbSheetBody">
         <div class="gallery-column">
@@ -1428,7 +1383,8 @@
       },
       categorias: [], productos: [], prodMap: new Map(), categoriaActiva: "TODAS", tipoActivo: "TODOS",
       carrito: [], lightboxProdId: null, lightboxQty: 1, lightboxColor: "",
-      lightboxFotos: [], lightboxFotoIdx: 0, gallerySide: "left",
+      lightboxFotos: [], lightboxFotoIdx: 0,
+      adminFotosDraft: [],
       catEditandoNombre: "", adminPin: "", adminData: null
     };
 
@@ -1444,9 +1400,18 @@
       el.style.display = "block";
     };
 
-    const parseImagenesProducto = (raw) => Array.isArray(raw)
-      ? raw.map(s => String(s || "").trim()).filter(Boolean)
-      : String(raw || "").split(/\s*\|\s*|\s*,\s*(?=https?:\/\/)/i).map(s => s.trim()).filter(Boolean);
+    function parseImagenesProducto(raw) {
+      if (Array.isArray(raw)) {
+        return raw.map(s => String(s || "").trim()).filter(Boolean);
+      }
+      const str = String(raw || "").trim();
+      if (!str) return [];
+      const matches = str.match(/(?:https?:\/\/|data:image\/[^;\s]+;base64,)[^\s|,]+/gi);
+      if (matches && matches.length) {
+        return matches.map(s => s.replace(/[|,]+$/g, "").trim()).filter(Boolean);
+      }
+      return str.split(/\s*\|\s*|\s*,\s*/).map(s => s.trim()).filter(Boolean);
+    }
 
     const parseColoresReloj = (raw) => String(raw || "").split(/[,|/;]+/).map(s => s.trim()).filter(Boolean);
 
@@ -1674,7 +1639,7 @@
         detalle = detalle.replace(/(?:^|\|\s*)Colores:\s*[^|]+/i, "").replace(/^\s*\|\s*|\s*\|\s*$/g, "").trim();
       }
 
-      const rawFotos = [p.imagen_url, p.imagen, p.foto_url, p.imagenes, p.fotos, p.galeria].filter(Boolean).join("|");
+      const rawFotos = [p.imagen_url, p.imagen, p.foto_url, p.imagenes, p.fotos, p.galeria].filter(Boolean).join(" | ");
       const fotos = parseImagenesProducto(rawFotos);
 
       const norm = {
@@ -1735,34 +1700,41 @@
       if ($("prodDetalle")) $("prodDetalle").placeholder = esAcc ? "Ej. Silicona FKM • Hebilla acero • Liberación rápida" : "Ej. 40mm • Acero 316L • Automático • 100m WR";
     }
 
+    function sincronizarFotosAdmin(urls) {
+      state.adminFotosDraft = Array.isArray(urls) ? urls.map(u => String(u || "").trim()).filter(Boolean) : [];
+      const ta = $("prodImagenUrl");
+      if (ta) ta.value = state.adminFotosDraft.join(" | ");
+      renderListaFotosAdmin(state.adminFotosDraft);
+      const img = $("prodPreviewImg"), ph = $("prodPreviewPlaceholder");
+      if (!img || !ph) return;
+      const first = state.adminFotosDraft[0] || "";
+      img.src = first;
+      img.style.display = first ? "block" : "none";
+      ph.style.display = first ? "none" : "block";
+      ph.textContent = first ? "" : "Fotos del modelo";
+    }
+
     function renderListaFotosAdmin(urls) {
       const box = $("adminFotosLista");
       if (!box) return;
       box.innerHTML = urls.length ? urls.map((u, idx) => `
         <div class="admin-photo-chip" title="Foto ${idx + 1}">
           <img src="${escAttr(u)}" alt="Foto ${idx + 1}" />
-          <button type="button" class="admin-photo-del" title="Quitar foto" onclick="quitarFotoAdmin(${idx})">✕</button>
+          <button type="button" class="admin-photo-del" title="Quitar foto ${idx + 1}" onclick="quitarFotoAdmin(${idx})">✕</button>
         </div>
       `).join("") : "";
     }
 
     function quitarFotoAdmin(idx) {
-      const urls = parseImagenesProducto($("prodImagenUrl")?.value || "");
-      urls.splice(idx, 1);
-      if ($("prodImagenUrl")) $("prodImagenUrl").value = urls.join(" | ");
-      actualizarPreviewLibro();
+      const current = state.adminFotosDraft.length ? state.adminFotosDraft.slice() : parseImagenesProducto($("prodImagenUrl")?.value || "");
+      if (idx < 0 || idx >= current.length) return;
+      current.splice(idx, 1);
+      sincronizarFotosAdmin(current);
     }
 
     function actualizarPreviewLibro() {
       const urls = parseImagenesProducto($("prodImagenUrl")?.value || "");
-      const img = $("prodPreviewImg"), ph = $("prodPreviewPlaceholder");
-      renderListaFotosAdmin(urls);
-      if (!img || !ph) return;
-      const first = urls[0] || "";
-      img.src = first;
-      img.style.display = first ? "block" : "none";
-      ph.style.display = first ? "none" : "block";
-      ph.textContent = first ? "" : "Fotos del modelo";
+      sincronizarFotosAdmin(urls);
     }
 
     function iniciarSecuenciaMarcaAgua() {
@@ -1974,7 +1946,7 @@
 
         return `
           <article class="card">
-            <div class="card-img clickable" onclick="abrirLightbox('${escAttr(p.id)}')" title="Ver galería y opciones">${imgHtml}<span class="card-badge">${escHtml(p.categoria)}</span>${esAcc ? `<span class="card-type-badge">Correa / Repuesto</span>` : ""}${fotosArr.length > 1 ? `<span class="card-gallery-count">${fotosArr.length} fotos</span>` : ""}</div>
+            <div class="card-img clickable" onclick="abrirLightbox('${escAttr(p.id)}')" title="Ver galería y opciones">${imgHtml}<span class="card-badge">${escHtml(p.categoria)}</span>${esAcc ? `<span class="card-type-badge">Correa / Repuesto</span>` : ""}</div>
             <div class="card-body">
               ${p.marca ? `<div class="card-brand">${escHtml(p.marca)}</div>` : ""}
               <div class="card-title">${escHtml(p.nombre)}</div>
@@ -1991,13 +1963,6 @@
             </div>
           </article>`;
       }).join("");
-    }
-
-    function cambiarLadoGaleria(side) {
-      state.gallerySide = side === "right" ? "right" : "left";
-      $("lbSheetBody")?.classList.toggle("gallery-right", state.gallerySide === "right");
-      $("btnGalleryLeft")?.classList.toggle("active", state.gallerySide === "left");
-      $("btnGalleryRight")?.classList.toggle("active", state.gallerySide === "right");
     }
 
     function renderGaleriaLightbox() {
@@ -2051,7 +2016,6 @@
 
       $("lbTitulo").textContent = prod.nombre || "";
       $("lbDetalle").textContent = [esAcc ? "Correa / Accesorio de repuesto" : "Reloj", prod.categoria, prod.marca].filter(Boolean).join(" • ");
-      cambiarLadoGaleria(state.gallerySide);
       renderGaleriaLightbox();
 
       $("lbMarcaLbl").textContent = esAcc ? "Compatibilidad / Marca:" : "Marca:";
@@ -2453,12 +2417,11 @@
         const idx = todos.findIndex(x => String(x.id) === String(p.id)), oculto = String(p.activo || "SI").toUpperCase() !== "SI";
         const esAcc = (p.tipo_articulo || detectarTipoArticulo(p)) === "ACCESORIO";
         const stockSiempre = esCantidadDesactivadaProducto(p, catsRef), promo = parseFloat(p.precio_promo);
-        const nFotos = p.fotos?.length ? p.fotos.length : parseImagenesProducto(p.imagen_url).length;
         return `
           <tr class="${oculto ? "prod-row-hidden" : ""}">
             <td><b>${escHtml(p.id)}</b></td>
             <td>${esAcc ? `<span class="badge-tag cat-badge-acc">CORREA/ACC</span> ` : ""}${escHtml(p.categoria)}</td>
-            <td>${p.marca ? `<b>${escHtml(p.marca)}</b> — ` : ""}${escHtml(p.nombre)}${nFotos > 1 ? ` <span class="badge-tag cat-badge-img">${nFotos} FOTOS</span>` : ""}${stockSiempre ? ` <span class="badge-tag cat-badge-qty-off">STOCK ∞</span>` : ""}${oculto ? ` <span class="badge-tag cat-badge-hidden">OCULTO</span>` : ""}</td>
+            <td>${p.marca ? `<b>${escHtml(p.marca)}</b> — ` : ""}${escHtml(p.nombre)}${stockSiempre ? ` <span class="badge-tag cat-badge-qty-off">STOCK ∞</span>` : ""}${oculto ? ` <span class="badge-tag cat-badge-hidden">OCULTO</span>` : ""}</td>
             <td><small>${escHtml(p.colores || "-")}</small></td>
             <td>$${Number(p.precio_usd || 0).toFixed(2)}</td>
             <td>${(!isNaN(promo) && promo > 0) ? `$${promo.toFixed(2)}` : "-"}</td>
@@ -2622,6 +2585,7 @@
 
     function limpiarFormProducto() {
       for (const [elId, , def] of PROD_FIELDS) $(elId).value = def;
+      state.adminFotosDraft = [];
       if ($("prodStockSiempre")) $("prodStockSiempre").checked = false;
       if ($("prodFotoFile")) $("prodFotoFile").value = "";
       $("prodStock").value = "5";
@@ -2680,7 +2644,7 @@
       if (!files.length) return;
       const msg = $("msgAdminProd");
       mostrarMsg(msg, `Subiendo ${files.length} foto(s) a Google Drive...`, true);
-      const actuales = parseImagenesProducto($("prodImagenUrl")?.value || "");
+      const actuales = state.adminFotosDraft.length ? state.adminFotosDraft.slice() : parseImagenesProducto($("prodImagenUrl")?.value || "");
       let agregadas = 0;
 
       for (const f of files) {
@@ -2689,8 +2653,7 @@
       }
 
       inp.value = "";
-      if ($("prodImagenUrl")) $("prodImagenUrl").value = actuales.join(" | ");
-      actualizarPreviewLibro();
+      sincronizarFotosAdmin(actuales);
       mostrarMsg(msg, agregadas > 0 ? `${agregadas} foto(s) agregada(s) al modelo (${actuales.length} en total). No olvides pulsar "Guardar Artículo".` : "No se pudieron subir las fotos a Drive.", agregadas > 0);
     }
 
