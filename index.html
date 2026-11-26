@@ -482,9 +482,7 @@
       bottom: 20px;
       left: 20px;
       z-index: 44;
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: var(--blanco);
       border: 1px solid var(--borde);
       border-radius: 8px;
       padding: 7px 13px;
@@ -644,7 +642,7 @@
     .order-desc-total { font-weight: 700; color: var(--texto); border-top: 1px dashed var(--borde); padding-top: 8px; line-height: 1.5; }
     .order-desc-sub { font-size: 12.5px; color: var(--texto-suave); font-weight: 400; }
 
-    /* Panel Administrativo y Controles Tipográficos */
+    /* Panel Administrativo, Colores HEX y Tipografía */
     .admin-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
     .admin-panel { display: none; }
     .admin-panel.active { display: block; }
@@ -702,6 +700,64 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .color-hex-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .color-hex-card {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      padding: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .color-hex-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .color-picker-native {
+      width: 40px;
+      height: 36px;
+      padding: 2px;
+      border: 1px solid #888C8C;
+      border-radius: 6px;
+      background: var(--blanco);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .color-hex-input {
+      flex: 1;
+      min-width: 0;
+      padding: 7px 10px;
+      border-radius: 6px;
+      border: 1px solid #888C8C;
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--texto);
+      background: var(--blanco);
+      text-transform: uppercase;
+    }
+    .color-hex-input:focus {
+      border-color: var(--acento-oscuro);
+      box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.22);
+      outline: none;
+    }
+    .color-hex-swatch {
+      height: 22px;
+      border-radius: 5px;
+      border: 1px solid var(--borde);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
     }
 
     .book-form-card { background: var(--fondo); padding: 14px; border-radius: 8px; border: 1px solid var(--borde); margin-bottom: 14px; display: grid; grid-template-columns: minmax(155px, 190px) 1fr; gap: 16px; align-items: start; }
@@ -967,7 +1023,74 @@
           </div>
         </div>
 
-        <!-- Nueva Sección de Tipografía y Tamaños -->
+        <!-- Nueva Sección de Colores por Código HEX -->
+        <div class="typo-admin-box">
+          <div class="typo-admin-head">
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--texto);">Colores de la Tienda (Código HEX)</div>
+              <small style="color:var(--texto-suave);">Escribe o pega cualquier código HEX (ej. #1A1A1A, #C5A059, #FAF8F3) y el diseño se modificará al instante.</small>
+            </div>
+            <button class="btn btn-soft btn-sm" type="button" onclick="restaurarColoresDefault()">Restaurar paleta JC</button>
+          </div>
+
+          <div class="color-hex-grid">
+            <div class="color-hex-card">
+              <label style="font-size:12px;font-weight:700;color:var(--texto);">Color Principal / Oscuro</label>
+              <div class="color-hex-row">
+                <input type="color" id="pickerColorPrimario" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_primario', this.value)" />
+                <input type="text" id="cfgColorPrimario" class="color-hex-input" maxlength="9" placeholder="#1A1A1A" oninput="sincronizarColorDesdeHex('color_primario', this.value)" />
+              </div>
+              <div class="color-hex-swatch" id="swatchColorPrimario">Primario</div>
+            </div>
+
+            <div class="color-hex-card">
+              <label style="font-size:12px;font-weight:700;color:var(--texto);">Color de Acento (Botones / Detalles)</label>
+              <div class="color-hex-row">
+                <input type="color" id="pickerColorAcento" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_acento', this.value)" />
+                <input type="text" id="cfgColorAcento" class="color-hex-input" maxlength="9" placeholder="#C5A059" oninput="sincronizarColorDesdeHex('color_acento', this.value)" />
+              </div>
+              <div class="color-hex-swatch" id="swatchColorAcento">Acento</div>
+            </div>
+
+            <div class="color-hex-card">
+              <label style="font-size:12px;font-weight:700;color:var(--texto);">Fondo General de Página</label>
+              <div class="color-hex-row">
+                <input type="color" id="pickerColorFondo" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_fondo', this.value)" />
+                <input type="text" id="cfgColorFondo" class="color-hex-input" maxlength="9" placeholder="#FAF8F3" oninput="sincronizarColorDesdeHex('color_fondo', this.value)" />
+              </div>
+              <div class="color-hex-swatch" id="swatchColorFondo">Fondo</div>
+            </div>
+
+            <div class="color-hex-card">
+              <label style="font-size:12px;font-weight:700;color:var(--texto);">Superficie (Tarjetas / Cabecera)</label>
+              <div class="color-hex-row">
+                <input type="color" id="pickerColorSuperficie" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_superficie', this.value)" />
+                <input type="text" id="cfgColorSuperficie" class="color-hex-input" maxlength="9" placeholder="#FFFFFF" oninput="sincronizarColorDesdeHex('color_superficie', this.value)" />
+              </div>
+              <div class="color-hex-swatch" id="swatchColorSuperficie">Superficie</div>
+            </div>
+
+            <div class="color-hex-card">
+              <label style="font-size:12px;font-weight:700;color:var(--texto);">Color de Texto Principal</label>
+              <div class="color-hex-row">
+                <input type="color" id="pickerColorTexto" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_texto', this.value)" />
+                <input type="text" id="cfgColorTexto" class="color-hex-input" maxlength="9" placeholder="#0F1111" oninput="sincronizarColorDesdeHex('color_texto', this.value)" />
+              </div>
+              <div class="color-hex-swatch" id="swatchColorTexto">Texto principal</div>
+            </div>
+
+            <div class="color-hex-card">
+              <label style="font-size:12px;font-weight:700;color:var(--texto);">Color de Texto Secundario</label>
+              <div class="color-hex-row">
+                <input type="color" id="pickerColorTextoSuave" class="color-picker-native" oninput="sincronizarColorDesdePicker('color_texto_suave', this.value)" />
+                <input type="text" id="cfgColorTextoSuave" class="color-hex-input" maxlength="9" placeholder="#565959" oninput="sincronizarColorDesdeHex('color_texto_suave', this.value)" />
+              </div>
+              <div class="color-hex-swatch" id="swatchColorTextoSuave">Texto suave</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección de Tipografía y Tamaños -->
         <div class="typo-admin-box">
           <div class="typo-admin-head">
             <div>
@@ -1147,6 +1270,24 @@
     const DEV_WA_URL = "https://wa.me/573000000000?text=Hola%20Kevin%2C%20vi%20la%20p%C3%A1gina%20de%20JC%20y%20me%20gustar%C3%ADa%20cotizar%20una%20web%20para%20mi%20negocio.";
     const ADMIN_PIN_PRUEBAS = "JC.2027";
 
+    const COLORES_DEFAULT = {
+      color_primario: "#1A1A1A",
+      color_acento: "#C5A059",
+      color_fondo: "#FAF8F3",
+      color_superficie: "#FFFFFF",
+      color_texto: "#0F1111",
+      color_texto_suave: "#565959"
+    };
+
+    const MAPA_CAMPOS_COLOR = [
+      { key: "color_primario", inputId: "cfgColorPrimario", pickerId: "pickerColorPrimario", swatchId: "swatchColorPrimario", cssVar: "--primario" },
+      { key: "color_acento", inputId: "cfgColorAcento", pickerId: "pickerColorAcento", swatchId: "swatchColorAcento", cssVar: "--acento" },
+      { key: "color_fondo", inputId: "cfgColorFondo", pickerId: "pickerColorFondo", swatchId: "swatchColorFondo", cssVar: "--fondo" },
+      { key: "color_superficie", inputId: "cfgColorSuperficie", pickerId: "pickerColorSuperficie", swatchId: "swatchColorSuperficie", cssVar: "--superficie" },
+      { key: "color_texto", inputId: "cfgColorTexto", pickerId: "pickerColorTexto", swatchId: "swatchColorTexto", cssVar: "--texto" },
+      { key: "color_texto_suave", inputId: "cfgColorTextoSuave", pickerId: "pickerColorTextoSuave", swatchId: "swatchColorTextoSuave", cssVar: "--texto-suave" }
+    ];
+
     const FUENTES_DISPONIBLES = [
       { key: "AMAZON", label: "Amazon Ember (Estilo Amazon)", css: '"Amazon Ember", "Helvetica Neue", Helvetica, Arial, "Inter", sans-serif' },
       { key: "INTER", label: "Inter (Moderna / Limpia)", css: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif' },
@@ -1163,7 +1304,7 @@
       ["56","+56 (CL)"],["51","+51 (PE)"],["593","+593 (EC)"],["507","+507 (PA)"],["598","+598 (UY)"],["595","+595 (PY)"],
       ["591","+591 (BO)"],["506","+506 (CR)"],["502","+502 (GT)"],["503","+503 (SV)"],["504","+504 (HN)"],["505","+505 (NI)"],
       ["53","+53 (CU)"],["1809","+1-809 (DO)"],["44","+44 (UK)"],["33","+33 (FR)"],["49","+49 (DE)"],["39","+39 (IT)"],
-      ["351","+351 (PT)"],["55","+55 (BR)"]
+      ["351","+55 (PT)"],["55","+55 (BR)"]
     ];
 
     const PROD_FIELDS = [
@@ -1178,8 +1319,14 @@
         estado_servicio: "ACTIVO", horas_expiracion_carrito: 2,
         nombre_tienda: "JC", subtitulo_tienda: "Relojes, correas y accesorios • Entregas y envíos",
         whatsapp: "", instagram: "", metodos_pago: "Zelle",
-        paypal_comision_pct: 5.4, paypal_comision_fija: 0.30, color_primario: "#1A1A1A", color_fondo: "#FAF8F3",
-        color_acento: "#C5A059", logo_url: "", portada_url: "",
+        paypal_comision_pct: 5.4, paypal_comision_fija: 0.30,
+        color_primario: COLORES_DEFAULT.color_primario,
+        color_acento: COLORES_DEFAULT.color_acento,
+        color_fondo: COLORES_DEFAULT.color_fondo,
+        color_superficie: COLORES_DEFAULT.color_superficie,
+        color_texto: COLORES_DEFAULT.color_texto,
+        color_texto_suave: COLORES_DEFAULT.color_texto_suave,
+        logo_url: "", portada_url: "",
         font_titulos: "AMAZON", size_titulos: 16,
         font_desc: "AMAZON", size_desc: 13,
         font_cat: "AMAZON", size_cat: 12.5
@@ -1195,6 +1342,114 @@
     const cerrarModal = (id) => $(id)?.classList.remove("open");
     const cerrarBackdrop = (ev, id) => { if (ev.target && ev.target.id === id) cerrarModal(id); };
     const mostrarMsg = (el, txt, ok) => { if (!el) return; el.textContent = txt; el.className = `status-msg ${ok ? "ok" : "err"}`; el.style.display = "block"; };
+
+    function normalizarHex(val, fallback) {
+      let s = String(val || "").trim();
+      if (!s) return fallback;
+      if (!s.startsWith("#")) s = "#" + s;
+      if (/^#[0-9a-fA-F]{3}$/.test(s)) {
+        s = "#" + s[1] + s[1] + s[2] + s[2] + s[3] + s[3];
+      }
+      if (/^#[0-9a-fA-F]{6}$/.test(s) || /^#[0-9a-fA-F]{8}$/.test(s)) {
+        return s.toUpperCase();
+      }
+      return fallback;
+    }
+
+    function oscurecerHex(hex, factor = 0.82) {
+      const clean = normalizarHex(hex, "#C5A059").replace("#", "");
+      if (clean.length < 6) return "#A3803D";
+      const r = Math.max(0, Math.min(255, Math.round(parseInt(clean.slice(0, 2), 16) * factor)));
+      const g = Math.max(0, Math.min(255, Math.round(parseInt(clean.slice(2, 4), 16) * factor)));
+      const b = Math.max(0, Math.min(255, Math.round(parseInt(clean.slice(4, 6), 16) * factor)));
+      return "#" + [r, g, b].map(n => n.toString(16).padStart(2, "0")).join("").toUpperCase();
+    }
+
+    function esColorClaroHex(hex) {
+      const clean = normalizarHex(hex, "#FFFFFF").replace("#", "");
+      if (clean.length < 6) return true;
+      const r = parseInt(clean.slice(0, 2), 16);
+      const g = parseInt(clean.slice(2, 4), 16);
+      const b = parseInt(clean.slice(4, 6), 16);
+      return (0.299 * r + 0.587 * g + 0.114 * b) > 155;
+    }
+
+    function aplicarColoresDesdeCfg(cfg) {
+      const root = document.documentElement.style;
+      const cPrimario = normalizarHex(cfg.color_primario, COLORES_DEFAULT.color_primario);
+      const cAcento = normalizarHex(cfg.color_acento, COLORES_DEFAULT.color_acento);
+      const cFondo = normalizarHex(cfg.color_fondo, COLORES_DEFAULT.color_fondo);
+      const cSuperficie = normalizarHex(cfg.color_superficie ?? cfg.color_blanco, COLORES_DEFAULT.color_superficie);
+      const cTexto = normalizarHex(cfg.color_texto, COLORES_DEFAULT.color_texto);
+      const cTextoSuave = normalizarHex(cfg.color_texto_suave, COLORES_DEFAULT.color_texto_suave);
+
+      root.setProperty("--primario", cPrimario);
+      root.setProperty("--acento", cAcento);
+      root.setProperty("--acento-oscuro", oscurecerHex(cAcento, 0.82));
+      root.setProperty("--fondo", cFondo);
+      root.setProperty("--superficie", cSuperficie);
+      root.setProperty("--blanco", cSuperficie);
+      root.setProperty("--texto", cTexto);
+      root.setProperty("--texto-suave", cTextoSuave);
+    }
+
+    function actualizarControlesColorAdmin(cfg) {
+      const merged = Object.assign({}, COLORES_DEFAULT, cfg || {});
+      MAPA_CAMPOS_COLOR.forEach(item => {
+        const hex = normalizarHex(merged[item.key], COLORES_DEFAULT[item.key]);
+        const inp = $(item.inputId);
+        const picker = $(item.pickerId);
+        const swatch = $(item.swatchId);
+        if (inp && document.activeElement !== inp) inp.value = hex;
+        if (picker && /^#[0-9A-F]{6}$/.test(hex)) picker.value = hex;
+        if (swatch) {
+          swatch.style.backgroundColor = hex;
+          swatch.style.color = esColorClaroHex(hex) ? "#0F1111" : "#FFFFFF";
+          swatch.textContent = hex;
+        }
+      });
+    }
+
+    function sincronizarColorDesdePicker(key, val) {
+      const item = MAPA_CAMPOS_COLOR.find(x => x.key === key);
+      if (!item) return;
+      const hex = normalizarHex(val, COLORES_DEFAULT[key]);
+      if ($(item.inputId)) $(item.inputId).value = hex;
+      state.config[key] = hex;
+      aplicarColoresDesdeCfg(state.config);
+      actualizarControlesColorAdmin(state.config);
+    }
+
+    function sincronizarColorDesdeHex(key, val) {
+      const item = MAPA_CAMPOS_COLOR.find(x => x.key === key);
+      if (!item) return;
+      let raw = String(val || "").trim();
+      if (raw && !raw.startsWith("#")) raw = "#" + raw;
+      const swatch = $(item.swatchId);
+      if (/^#[0-9a-fA-F]{3}$/.test(raw) || /^#[0-9a-fA-F]{6}$/.test(raw)) {
+        const hex = normalizarHex(raw, COLORES_DEFAULT[key]);
+        if ($(item.pickerId) && /^#[0-9A-F]{6}$/.test(hex)) $(item.pickerId).value = hex;
+        if (swatch) {
+          swatch.style.backgroundColor = hex;
+          swatch.style.color = esColorClaroHex(hex) ? "#0F1111" : "#FFFFFF";
+          swatch.textContent = hex;
+        }
+        state.config[key] = hex;
+        aplicarColoresDesdeCfg(state.config);
+      } else if (swatch) {
+        swatch.textContent = raw || "Escribe #HEX";
+      }
+    }
+
+    function restaurarColoresDefault() {
+      Object.assign(state.config, COLORES_DEFAULT);
+      MAPA_CAMPOS_COLOR.forEach(item => {
+        if ($(item.inputId)) $(item.inputId).value = COLORES_DEFAULT[item.key];
+        if ($(item.pickerId)) $(item.pickerId).value = COLORES_DEFAULT[item.key];
+      });
+      aplicarColoresDesdeCfg(COLORES_DEFAULT);
+      actualizarControlesColorAdmin(COLORES_DEFAULT);
+    }
 
     function resolverCssFuente(keyOrCss) {
       const val = String(keyOrCss || "").trim();
@@ -1392,6 +1647,8 @@
       deduplicarBloquesPrincipales();
       limpiarDatosLocalesViejos();
       poblarSelectoresTipografiaAdmin();
+      aplicarColoresDesdeCfg(state.config);
+      actualizarControlesColorAdmin(state.config);
       aplicarTipografiaGlobal();
       iniciarSecuenciaMarcaAgua();
       $("cliCodigoPais").innerHTML = PAISES.map(([c, l]) => `<option value="${c}" ${c === "1" ? "selected" : ""}>${l}</option>`).join("");
@@ -1518,12 +1775,9 @@
     }
 
     function aplicarTemaYMarca() {
-      const c = state.config, root = document.documentElement.style;
-      const esTemaAnterior = (h) => /^#(A99BE8|F4F2FC|8575D4|17171A|F7F5F2|A61C1C)$/i.test(String(h || "").trim());
-      root.setProperty("--primario", (!c.color_primario || esTemaAnterior(c.color_primario)) ? "#1A1A1A" : c.color_primario);
-      root.setProperty("--fondo", (!c.color_fondo || esTemaAnterior(c.color_fondo)) ? "#FAF8F3" : c.color_fondo);
-      root.setProperty("--acento", (!c.color_acento || esTemaAnterior(c.color_acento)) ? "#C5A059" : c.color_acento);
-
+      const c = state.config;
+      aplicarColoresDesdeCfg(c);
+      actualizarControlesColorAdmin(c);
       aplicarTipografiaGlobal(c);
 
       const nombreTienda = String(c.nombre_tienda || "").trim() || "JC";
@@ -2237,6 +2491,8 @@
       renderListaMetodosPagoAdmin(cfg.metodos_pago || state.config.metodos_pago);
       $("btnEstadoTienda").textContent = `Estado: ${String(cfg.estado_servicio || "ACTIVO").toUpperCase()}`;
 
+      actualizarControlesColorAdmin(cfg);
+
       if ($("cfgFontTitulos")) $("cfgFontTitulos").value = normalizarKeyFuente(cfg.font_titulos || state.config.font_titulos);
       if ($("cfgSizeTitulos")) $("cfgSizeTitulos").value = cfg.size_titulos ?? state.config.size_titulos ?? 16;
       if ($("cfgFontDesc")) $("cfgFontDesc").value = normalizarKeyFuente(cfg.font_desc || state.config.font_desc);
@@ -2257,6 +2513,13 @@
     };
 
     async function guardarConfigAdmin() {
+      const cPrimario = normalizarHex($("cfgColorPrimario")?.value, COLORES_DEFAULT.color_primario);
+      const cAcento = normalizarHex($("cfgColorAcento")?.value, COLORES_DEFAULT.color_acento);
+      const cFondo = normalizarHex($("cfgColorFondo")?.value, COLORES_DEFAULT.color_fondo);
+      const cSuperficie = normalizarHex($("cfgColorSuperficie")?.value, COLORES_DEFAULT.color_superficie);
+      const cTexto = normalizarHex($("cfgColorTexto")?.value, COLORES_DEFAULT.color_texto);
+      const cTextoSuave = normalizarHex($("cfgColorTextoSuave")?.value, COLORES_DEFAULT.color_texto_suave);
+
       const patch = {
         horas_expiracion_carrito: $("cfgHorasExp").value.trim(),
         nombre_tienda: $("cfgNombreTienda").value.trim() || "JC",
@@ -2268,6 +2531,12 @@
         logo_url: $("cfgLogoUrl").value.trim(),
         portada_url: $("cfgPortadaUrl").value.trim(),
         metodos_pago: $("cfgMetodosPago")?.value || "Zelle",
+        color_primario: cPrimario,
+        color_acento: cAcento,
+        color_fondo: cFondo,
+        color_superficie: cSuperficie,
+        color_texto: cTexto,
+        color_texto_suave: cTextoSuave,
         font_titulos: $("cfgFontTitulos")?.value || "AMAZON",
         size_titulos: String(parseFloat($("cfgSizeTitulos")?.value) || 16),
         font_desc: $("cfgFontDesc")?.value || "AMAZON",
@@ -2279,8 +2548,9 @@
       const data = await postAdmin({ action: "updateConfig", patch });
       if (data.ok) {
         Object.assign(state.config, patch);
+        aplicarColoresDesdeCfg(patch);
         aplicarTipografiaGlobal(patch);
-        mostrarMsg($("msgAdminCfg"), "Configuración, métodos de pago y tipografías guardados en la Sheet.", true);
+        mostrarMsg($("msgAdminCfg"), "Colores HEX, tipografías, métodos de pago y ajustes guardados en la Sheet.", true);
         await refrescarAdminData();
       } else {
         mostrarMsg($("msgAdminCfg"), data.error || "Error al guardar", false);
