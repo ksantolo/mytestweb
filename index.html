@@ -6,7 +6,7 @@
   <title>JC — Relojes, Correas y Accesorios</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primario: #1A1A1A;
@@ -21,14 +21,26 @@
       --borde: #E6DFD3;
       --exito: #007600;
       --peligro: #B12704;
+
+      /* Variables Tipográficas Configurables desde el Admin */
       --font-amazon: "Amazon Ember", "Helvetica Neue", Helvetica, Arial, "Inter", sans-serif;
+      --font-titulos: var(--font-amazon);
+      --size-titulo-tienda: 26px;
+      --size-titulo-seccion: 20px;
+      --size-titulo-card: 16px;
+
+      --font-desc: var(--font-amazon);
+      --size-desc: 13px;
+
+      --font-cat: var(--font-amazon);
+      --size-cat: 12.5px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: var(--font-amazon);
+      font-family: var(--font-desc);
     }
 
     body {
@@ -84,7 +96,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--font-amazon);
+      font-family: var(--font-titulos);
       font-weight: 700;
       font-size: 16px;
       color: var(--primario);
@@ -92,8 +104,8 @@
     }
     .brand-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
     .brand-title {
-      font-family: var(--font-amazon);
-      font-size: 26px;
+      font-family: var(--font-titulos);
+      font-size: var(--size-titulo-tienda);
       font-weight: 700;
       letter-spacing: -0.2px;
       color: var(--primario);
@@ -101,14 +113,16 @@
       line-height: 1.1;
     }
     .brand-sub {
-      font-size: 12px;
+      font-family: var(--font-desc);
+      font-size: calc(var(--size-desc) - 1px);
       font-weight: 500;
       color: var(--acento-oscuro);
       margin-top: 2px;
     }
     .brand-delivery {
       margin-top: 5px;
-      font-size: 12px;
+      font-family: var(--font-desc);
+      font-size: calc(var(--size-desc) - 1px);
       line-height: 1.4;
       color: var(--texto-suave);
     }
@@ -251,7 +265,8 @@
       border: 1px solid var(--borde);
       background: var(--fondo);
       color: var(--texto-suave);
-      font-size: 12.5px;
+      font-family: var(--font-cat);
+      font-size: var(--size-cat);
       font-weight: 500;
       cursor: pointer;
       transition: all 0.16s ease;
@@ -271,7 +286,8 @@
       border: 1px solid var(--borde);
       background: var(--fondo);
       color: var(--texto-suave);
-      font-size: 12.5px;
+      font-family: var(--font-cat);
+      font-size: var(--size-cat);
       font-weight: 500;
       cursor: pointer;
       white-space: nowrap;
@@ -288,8 +304,8 @@
 
     .cat-showcase-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 8px; }
     .cat-showcase-title {
-      font-family: var(--font-amazon);
-      font-size: 20px;
+      font-family: var(--font-titulos);
+      font-size: var(--size-titulo-seccion);
       font-weight: 700;
       color: var(--texto);
       letter-spacing: -0.2px;
@@ -326,7 +342,7 @@
     }
     .cat-visual-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .cat-visual-fallback {
-      font-family: var(--font-amazon);
+      font-family: var(--font-titulos);
       color: var(--blanco);
       font-size: 20px;
       font-weight: 700;
@@ -338,7 +354,8 @@
     }
     .cat-visual-label {
       padding: 9px 10px;
-      font-size: 12.5px;
+      font-family: var(--font-cat);
+      font-size: var(--size-cat);
       font-weight: 500;
       color: var(--texto);
       display: flex;
@@ -351,7 +368,7 @@
     .cat-visual-label span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .cat-visual-label span:last-child { color: var(--acento-oscuro); font-weight: 700; }
 
-    /* Tarjetas de Relojes estilo Boutique */
+    /* Tarjetas de Relojes */
     .grid-productos { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 20px; }
     .card {
       background: var(--blanco);
@@ -395,7 +412,8 @@
       background: var(--fondo);
       border: 1px solid var(--borde);
       color: var(--texto-suave);
-      font-size: 11px;
+      font-family: var(--font-cat);
+      font-size: calc(var(--size-cat) - 1.5px);
       font-weight: 500;
       padding: 3px 8px;
       border-radius: 4px;
@@ -415,18 +433,25 @@
     }
     .card-body { padding: 14px 15px 10px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
     .card-brand {
-      font-size: 11.5px;
+      font-family: var(--font-desc);
+      font-size: calc(var(--size-desc) - 1.5px);
       font-weight: 500;
       color: var(--texto-suave);
     }
     .card-title {
-      font-family: var(--font-amazon);
-      font-size: 16px;
-      font-weight: 500;
+      font-family: var(--font-titulos);
+      font-size: var(--size-titulo-card);
+      font-weight: 600;
       line-height: 1.3;
       color: var(--texto);
     }
-    .card-var { font-size: 12px; color: var(--texto-suave); min-height: 16px; line-height: 1.35; }
+    .card-var {
+      font-family: var(--font-desc);
+      font-size: calc(var(--size-desc) - 1px);
+      color: var(--texto-suave);
+      min-height: 16px;
+      line-height: 1.35;
+    }
     .card-colors-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
     .color-pill-mini {
       font-size: 11px;
@@ -439,9 +464,9 @@
     }
     .price-box { margin-top: auto; padding-top: 10px; }
     .price-usd {
-      font-family: var(--font-amazon);
+      font-family: var(--font-titulos);
       font-size: 21px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--texto);
       line-height: 1.2;
     }
@@ -551,8 +576,8 @@
     .lb-meta-below { display: flex; flex-direction: column; gap: 7px; padding: 12px 14px; background: var(--fondo); border: 1px solid var(--borde); border-radius: 8px; }
     .lb-editorial-row { font-size: 13px; font-weight: 600; color: var(--primario); }
     .lb-editorial-row span { color: var(--acento-oscuro); }
-    .lb-specs-row { font-size: 12.5px; font-weight: 500; color: var(--texto); }
-    .lb-desc-text { font-size: 13px; line-height: 1.45; color: var(--texto-suave); white-space: pre-line; max-height: 125px; overflow-y: auto; }
+    .lb-specs-row { font-family: var(--font-desc); font-size: calc(var(--size-desc) - 0.5px); font-weight: 500; color: var(--texto); }
+    .lb-desc-text { font-family: var(--font-desc); font-size: var(--size-desc); line-height: 1.45; color: var(--texto-suave); white-space: pre-line; max-height: 125px; overflow-y: auto; }
     .lb-colors-box { display: flex; flex-direction: column; gap: 8px; padding: 11px 13px; border-radius: 8px; background: var(--blanco); border: 1px solid var(--borde); }
     .lb-colors-label { font-size: 12.5px; font-weight: 700; color: var(--texto); }
     .lb-colors-options { display: flex; flex-wrap: wrap; gap: 7px; }
@@ -587,7 +612,7 @@
     @media (max-width: 480px) { .lb-actions-row { grid-template-columns: 1fr; } }
 
     .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--borde); gap: 10px; text-align: left; }
-    .modal-head h3 { font-family: var(--font-amazon); font-size: 20px; font-weight: 700; color: var(--primario); }
+    .modal-head h3 { font-family: var(--font-titulos); font-size: 20px; font-weight: 700; color: var(--primario); }
     .field { margin-bottom: 12px; }
     .field label { display: block; font-size: 12.5px; font-weight: 700; margin-bottom: 5px; color: var(--texto); }
     .field input, .field select, .field textarea {
@@ -614,16 +639,71 @@
     .promo-note { font-size: 12.5px; color: var(--exito); font-weight: 500; margin-top: 6px; }
     .paypal-note { margin-top: 8px; padding: 10px 12px; border-radius: 8px; background: #FDF8EB; border: 1px solid var(--acento); color: #6B5322; font-size: 12.5px; font-weight: 500; line-height: 1.4; display: none; }
     .order-desc-box { margin-top: 12px; padding: 12px; border-radius: 8px; background: var(--fondo); border: 1px solid var(--borde); font-size: 13px; }
-    .order-desc-title { font-family: var(--font-amazon); font-size: 15px; font-weight: 700; color: var(--texto); margin-bottom: 8px; }
+    .order-desc-title { font-family: var(--font-titulos); font-size: 15px; font-weight: 700; color: var(--texto); margin-bottom: 8px; }
     .order-desc-list { list-style: none; display: flex; flex-direction: column; gap: 4px; color: var(--texto-suave); margin-bottom: 8px; }
     .order-desc-total { font-weight: 700; color: var(--texto); border-top: 1px dashed var(--borde); padding-top: 8px; line-height: 1.5; }
     .order-desc-sub { font-size: 12.5px; color: var(--texto-suave); font-weight: 400; }
 
-    /* Panel Administrativo */
+    /* Panel Administrativo y Controles Tipográficos */
     .admin-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
     .admin-panel { display: none; }
     .admin-panel.active { display: block; }
     .admin-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .typo-admin-box {
+      background: var(--fondo);
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      padding: 14px;
+      margin: 14px 0;
+    }
+    .typo-admin-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--borde);
+    }
+    .typo-admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .typo-card {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .typo-card-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--acento-oscuro);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .typo-row-pair {
+      display: grid;
+      grid-template-columns: 1fr 96px;
+      gap: 8px;
+    }
+    .typo-preview-pill {
+      margin-top: 4px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: var(--fondo);
+      border: 1px dashed var(--borde);
+      color: var(--texto);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .book-form-card { background: var(--fondo); padding: 14px; border-radius: 8px; border: 1px solid var(--borde); margin-bottom: 14px; display: grid; grid-template-columns: minmax(155px, 190px) 1fr; gap: 16px; align-items: start; }
     @media (max-width: 720px) { .book-form-card { grid-template-columns: 1fr; } }
     .book-photo-panel { display: flex; flex-direction: column; gap: 8px; background: var(--blanco); border: 1px solid var(--borde); border-radius: 8px; padding: 10px; }
@@ -642,7 +722,7 @@
     .cat-create-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .cat-create-row input { flex: 1; min-width: 190px; padding: 8px 11px; border-radius: 8px; border: 1px solid #888C8C; font-size: 13px; color: var(--texto); background: var(--blanco); }
     .cat-media-editor { background: var(--blanco); border: 1px solid var(--acento); border-radius: 8px; padding: 12px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .cat-media-preview { width: 54px; height: 70px; border-radius: 6px; border: 1px solid var(--borde); background: var(--fondo); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; font-family: var(--font-amazon); font-size: 13px; font-weight: 700; color: var(--acento-oscuro); }
+    .cat-media-preview { width: 54px; height: 70px; border-radius: 6px; border: 1px solid var(--borde); background: var(--fondo); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; font-family: var(--font-titulos); font-size: 13px; font-weight: 700; color: var(--acento-oscuro); }
     .cat-media-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .cat-order-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; max-height: 240px; overflow-y: auto; }
     .cat-order-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: var(--blanco); border: 1px solid var(--borde); border-radius: 6px; padding: 6px 10px; font-size: 13px; }
@@ -886,6 +966,65 @@
             <input type="hidden" id="cfgMetodosPago" />
           </div>
         </div>
+
+        <!-- Nueva Sección de Tipografía y Tamaños -->
+        <div class="typo-admin-box">
+          <div class="typo-admin-head">
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--texto);">Tipografía y Tamaños de Letra</div>
+              <small style="color:var(--texto-suave);">Personaliza la fuente y el tamaño (px) de títulos, descripciones y botones de categoría.</small>
+            </div>
+            <button class="btn btn-soft btn-sm" type="button" onclick="restaurarTipografiaDefault()">Restaurar estilo Amazon</button>
+          </div>
+
+          <div class="typo-admin-grid">
+            <div class="typo-card">
+              <div class="typo-card-title">1. Títulos (Tienda y Relojes)</div>
+              <div class="typo-row-pair">
+                <div class="field" style="margin-bottom:0;">
+                  <label for="cfgFontTitulos">Tipo de letra</label>
+                  <select id="cfgFontTitulos" onchange="previsualizarTipografiaAdmin()"></select>
+                </div>
+                <div class="field" style="margin-bottom:0;">
+                  <label for="cfgSizeTitulos">Tamaño (px)</label>
+                  <input type="number" id="cfgSizeTitulos" min="12" max="32" step="0.5" value="16" oninput="previsualizarTipografiaAdmin()" />
+                </div>
+              </div>
+              <div class="typo-preview-pill" id="previewTypoTitulos" style="font-weight:600;">Seiko Prospex Diver 200m</div>
+            </div>
+
+            <div class="typo-card">
+              <div class="typo-card-title">2. Descripciones y Detalles</div>
+              <div class="typo-row-pair">
+                <div class="field" style="margin-bottom:0;">
+                  <label for="cfgFontDesc">Tipo de letra</label>
+                  <select id="cfgFontDesc" onchange="previsualizarTipografiaAdmin()"></select>
+                </div>
+                <div class="field" style="margin-bottom:0;">
+                  <label for="cfgSizeDesc">Tamaño (px)</label>
+                  <input type="number" id="cfgSizeDesc" min="10" max="22" step="0.5" value="13" oninput="previsualizarTipografiaAdmin()" />
+                </div>
+              </div>
+              <div class="typo-preview-pill" id="previewTypoDesc">Caja 40mm • Acero inoxidable 316L • Cristal zafiro</div>
+            </div>
+
+            <div class="typo-card">
+              <div class="typo-card-title">3. Botones de Categoría</div>
+              <div class="typo-row-pair">
+                <div class="field" style="margin-bottom:0;">
+                  <label for="cfgFontCat">Tipo de letra</label>
+                  <select id="cfgFontCat" onchange="previsualizarTipografiaAdmin()"></select>
+                </div>
+                <div class="field" style="margin-bottom:0;">
+                  <label for="cfgSizeCat">Tamaño (px)</label>
+                  <input type="number" id="cfgSizeCat" min="10" max="20" step="0.5" value="12.5" oninput="previsualizarTipografiaAdmin()" />
+                </div>
+              </div>
+              <div class="typo-preview-pill" id="previewTypoCat" style="font-weight:500;">Relojes Automáticos • Correas</div>
+            </div>
+          </div>
+        </div>
+
         <button class="btn btn-primary" type="button" onclick="guardarConfigAdmin()">Guardar Configuración</button>
         <div class="status-msg" id="msgAdminCfg"></div>
       </div>
@@ -1008,6 +1147,17 @@
     const DEV_WA_URL = "https://wa.me/573000000000?text=Hola%20Kevin%2C%20vi%20la%20p%C3%A1gina%20de%20JC%20y%20me%20gustar%C3%ADa%20cotizar%20una%20web%20para%20mi%20negocio.";
     const ADMIN_PIN_PRUEBAS = "JC.2027";
 
+    const FUENTES_DISPONIBLES = [
+      { key: "AMAZON", label: "Amazon Ember (Estilo Amazon)", css: '"Amazon Ember", "Helvetica Neue", Helvetica, Arial, "Inter", sans-serif' },
+      { key: "INTER", label: "Inter (Moderna / Limpia)", css: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif' },
+      { key: "MONTSERRAT", label: "Montserrat (Geométrica)", css: '"Montserrat", sans-serif' },
+      { key: "POPPINS", label: "Poppins (Suave / Comercial)", css: '"Poppins", sans-serif' },
+      { key: "ROBOTO", label: "Roboto (Clásica / Neutra)", css: '"Roboto", Arial, sans-serif' },
+      { key: "CORMORANT", label: "Cormorant Garamond (Relojería Lujo)", css: '"Cormorant Garamond", Georgia, serif' },
+      { key: "PLAYFAIR", label: "Playfair Display (Editorial Alta Gama)", css: '"Playfair Display", Georgia, serif' },
+      { key: "LORA", label: "Lora (Serif Elegante)", css: '"Lora", Georgia, serif' }
+    ];
+
     const PAISES = [
       ["1","+1 (US/CA)"],["58","+58 (VE)"],["57","+57 (CO)"],["34","+34 (ES)"],["52","+52 (MX)"],["54","+54 (AR)"],
       ["56","+56 (CL)"],["51","+51 (PE)"],["593","+593 (EC)"],["507","+507 (PA)"],["598","+598 (UY)"],["595","+595 (PY)"],
@@ -1029,7 +1179,10 @@
         nombre_tienda: "JC", subtitulo_tienda: "Relojes, correas y accesorios • Entregas y envíos",
         whatsapp: "", instagram: "", metodos_pago: "Zelle",
         paypal_comision_pct: 5.4, paypal_comision_fija: 0.30, color_primario: "#1A1A1A", color_fondo: "#FAF8F3",
-        color_acento: "#C5A059", logo_url: "", portada_url: ""
+        color_acento: "#C5A059", logo_url: "", portada_url: "",
+        font_titulos: "AMAZON", size_titulos: 16,
+        font_desc: "AMAZON", size_desc: 13,
+        font_cat: "AMAZON", size_cat: 12.5
       },
       categorias: [], productos: [], prodMap: new Map(), categoriaActiva: "TODAS", tipoActivo: "TODOS",
       carrito: [], lightboxProdId: null, lightboxQty: 1, lightboxColor: "",
@@ -1042,6 +1195,95 @@
     const cerrarModal = (id) => $(id)?.classList.remove("open");
     const cerrarBackdrop = (ev, id) => { if (ev.target && ev.target.id === id) cerrarModal(id); };
     const mostrarMsg = (el, txt, ok) => { if (!el) return; el.textContent = txt; el.className = `status-msg ${ok ? "ok" : "err"}`; el.style.display = "block"; };
+
+    function resolverCssFuente(keyOrCss) {
+      const val = String(keyOrCss || "").trim();
+      if (!val) return FUENTES_DISPONIBLES[0].css;
+      const found = FUENTES_DISPONIBLES.find(f => f.key.toUpperCase() === val.toUpperCase() || f.label.toLowerCase() === val.toLowerCase());
+      return found ? found.css : (val.includes(",") || val.includes('"') ? val : FUENTES_DISPONIBLES[0].css);
+    }
+
+    function normalizarKeyFuente(keyOrCss) {
+      const val = String(keyOrCss || "").trim();
+      const found = FUENTES_DISPONIBLES.find(f => f.key.toUpperCase() === val.toUpperCase() || f.css === val);
+      return found ? found.key : "AMAZON";
+    }
+
+    function aplicarTipografiaGlobal(override) {
+      const cfg = Object.assign({}, state.config, override || {});
+      const root = document.documentElement.style;
+
+      const fontTit = resolverCssFuente(cfg.font_titulos);
+      const sizeCard = Math.min(32, Math.max(12, parseFloat(cfg.size_titulos) || 16));
+      const sizeTienda = Math.round(sizeCard * 1.62);
+      const sizeSeccion = Math.round(sizeCard * 1.25);
+
+      const fontDesc = resolverCssFuente(cfg.font_desc);
+      const sizeDesc = Math.min(22, Math.max(10, parseFloat(cfg.size_desc) || 13));
+
+      const fontCat = resolverCssFuente(cfg.font_cat);
+      const sizeCat = Math.min(20, Math.max(10, parseFloat(cfg.size_cat) || 12.5));
+
+      root.setProperty("--font-titulos", fontTit);
+      root.setProperty("--size-titulo-card", `${sizeCard}px`);
+      root.setProperty("--size-titulo-tienda", `${sizeTienda}px`);
+      root.setProperty("--size-titulo-seccion", `${sizeSeccion}px`);
+
+      root.setProperty("--font-desc", fontDesc);
+      root.setProperty("--size-desc", `${sizeDesc}px`);
+
+      root.setProperty("--font-cat", fontCat);
+      root.setProperty("--size-cat", `${sizeCat}px`);
+    }
+
+    function poblarSelectoresTipografiaAdmin() {
+      const optionsHtml = FUENTES_DISPONIBLES.map(f => `<option value="${escAttr(f.key)}">${escHtml(f.label)}</option>`).join("");
+      ["cfgFontTitulos", "cfgFontDesc", "cfgFontCat"].forEach(id => {
+        const el = $(id);
+        if (el) el.innerHTML = optionsHtml;
+      });
+    }
+
+    function previsualizarTipografiaAdmin() {
+      const fTit = $("cfgFontTitulos")?.value || "AMAZON";
+      const sTit = parseFloat($("cfgSizeTitulos")?.value) || 16;
+      const fDesc = $("cfgFontDesc")?.value || "AMAZON";
+      const sDesc = parseFloat($("cfgSizeDesc")?.value) || 13;
+      const fCat = $("cfgFontCat")?.value || "AMAZON";
+      const sCat = parseFloat($("cfgSizeCat")?.value) || 12.5;
+
+      const pTit = $("previewTypoTitulos");
+      if (pTit) {
+        pTit.style.fontFamily = resolverCssFuente(fTit);
+        pTit.style.fontSize = `${Math.min(28, Math.max(12, sTit))}px`;
+      }
+      const pDesc = $("previewTypoDesc");
+      if (pDesc) {
+        pDesc.style.fontFamily = resolverCssFuente(fDesc);
+        pDesc.style.fontSize = `${Math.min(20, Math.max(10, sDesc))}px`;
+      }
+      const pCat = $("previewTypoCat");
+      if (pCat) {
+        pCat.style.fontFamily = resolverCssFuente(fCat);
+        pCat.style.fontSize = `${Math.min(19, Math.max(10, sCat))}px`;
+      }
+
+      aplicarTipografiaGlobal({
+        font_titulos: fTit, size_titulos: sTit,
+        font_desc: fDesc, size_desc: sDesc,
+        font_cat: fCat, size_cat: sCat
+      });
+    }
+
+    function restaurarTipografiaDefault() {
+      if ($("cfgFontTitulos")) $("cfgFontTitulos").value = "AMAZON";
+      if ($("cfgSizeTitulos")) $("cfgSizeTitulos").value = "16";
+      if ($("cfgFontDesc")) $("cfgFontDesc").value = "AMAZON";
+      if ($("cfgSizeDesc")) $("cfgSizeDesc").value = "13";
+      if ($("cfgFontCat")) $("cfgFontCat").value = "AMAZON";
+      if ($("cfgSizeCat")) $("cfgSizeCat").value = "12.5";
+      previsualizarTipografiaAdmin();
+    }
 
     function deduplicarBloquesPrincipales() {
       ["header.topbar", "main.container", ".dev-watermark", ".fab-cart"].forEach(sel => {
@@ -1149,6 +1391,8 @@
     document.addEventListener("DOMContentLoaded", () => {
       deduplicarBloquesPrincipales();
       limpiarDatosLocalesViejos();
+      poblarSelectoresTipografiaAdmin();
+      aplicarTipografiaGlobal();
       iniciarSecuenciaMarcaAgua();
       $("cliCodigoPais").innerHTML = PAISES.map(([c, l]) => `<option value="${c}" ${c === "1" ? "selected" : ""}>${l}</option>`).join("");
       poblarSelectorMetodosPago();
@@ -1280,6 +1524,8 @@
       root.setProperty("--fondo", (!c.color_fondo || esTemaAnterior(c.color_fondo)) ? "#FAF8F3" : c.color_fondo);
       root.setProperty("--acento", (!c.color_acento || esTemaAnterior(c.color_acento)) ? "#C5A059" : c.color_acento);
 
+      aplicarTipografiaGlobal(c);
+
       const nombreTienda = String(c.nombre_tienda || "").trim() || "JC";
       const subtituloTienda = String(c.subtitulo_tienda || "").trim() || "Relojes, correas y accesorios • Entregas y envíos";
 
@@ -1392,7 +1638,7 @@
         const tieneVariosColores = coloresArr.length > 1;
         const imgHtml = p.imagen_url
           ? `<img src="${escAttr(p.imagen_url)}" alt="${escAttr(p.nombre)}" loading="lazy" decoding="async" />`
-          : `<span style="font-family:var(--font-amazon);font-size:24px;font-weight:700;color:var(--acento);opacity:0.65;">${escHtml(p.categoria.slice(0,2).toUpperCase())}</span>`;
+          : `<span style="font-family:var(--font-titulos);font-size:24px;font-weight:700;color:var(--acento);opacity:0.65;">${escHtml(p.categoria.slice(0,2).toUpperCase())}</span>`;
         const btnTexto = sinStock
           ? "Sin stock"
           : (tieneVariosColores ? (esAcc ? "Elegir color / medida" : "Elegir color / Agregar") : "Agregar al carrito");
@@ -1991,6 +2237,14 @@
       renderListaMetodosPagoAdmin(cfg.metodos_pago || state.config.metodos_pago);
       $("btnEstadoTienda").textContent = `Estado: ${String(cfg.estado_servicio || "ACTIVO").toUpperCase()}`;
 
+      if ($("cfgFontTitulos")) $("cfgFontTitulos").value = normalizarKeyFuente(cfg.font_titulos || state.config.font_titulos);
+      if ($("cfgSizeTitulos")) $("cfgSizeTitulos").value = cfg.size_titulos ?? state.config.size_titulos ?? 16;
+      if ($("cfgFontDesc")) $("cfgFontDesc").value = normalizarKeyFuente(cfg.font_desc || state.config.font_desc);
+      if ($("cfgSizeDesc")) $("cfgSizeDesc").value = cfg.size_desc ?? state.config.size_desc ?? 13;
+      if ($("cfgFontCat")) $("cfgFontCat").value = normalizarKeyFuente(cfg.font_cat || state.config.font_cat);
+      if ($("cfgSizeCat")) $("cfgSizeCat").value = cfg.size_cat ?? state.config.size_cat ?? 12.5;
+      previsualizarTipografiaAdmin();
+
       renderListaCategoriasAdmin((d.categorias || []).map(normalizarCategoriaSheet));
       renderTablaProductosAdmin((d.productos || []).map(normalizarRelojSheet));
       renderTablaPedidosAdmin(d.pedidos || [], cfg);
@@ -2003,23 +2257,34 @@
     };
 
     async function guardarConfigAdmin() {
-      const data = await postAdmin({
-        action: "updateConfig",
-        patch: {
-          horas_expiracion_carrito: $("cfgHorasExp").value.trim(),
-          nombre_tienda: $("cfgNombreTienda").value.trim() || "JC",
-          subtitulo_tienda: $("cfgSubtituloTienda").value.trim() || "Relojes, correas y accesorios • Entregas y envíos",
-          whatsapp: $("cfgWhatsapp").value.trim(),
-          instagram: $("cfgInstagram").value.trim(),
-          paypal_comision_pct: $("cfgPaypalPct")?.value.trim() || "5.4",
-          paypal_comision_fija: $("cfgPaypalFija")?.value.trim() || "0.30",
-          logo_url: $("cfgLogoUrl").value.trim(),
-          portada_url: $("cfgPortadaUrl").value.trim(),
-          metodos_pago: $("cfgMetodosPago")?.value || "Zelle"
-        }
-      });
-      if (data.ok) { mostrarMsg($("msgAdminCfg"), "Configuración y métodos de pago guardados en la Sheet.", true); await refrescarAdminData(); }
-      else mostrarMsg($("msgAdminCfg"), data.error || "Error al guardar", false);
+      const patch = {
+        horas_expiracion_carrito: $("cfgHorasExp").value.trim(),
+        nombre_tienda: $("cfgNombreTienda").value.trim() || "JC",
+        subtitulo_tienda: $("cfgSubtituloTienda").value.trim() || "Relojes, correas y accesorios • Entregas y envíos",
+        whatsapp: $("cfgWhatsapp").value.trim(),
+        instagram: $("cfgInstagram").value.trim(),
+        paypal_comision_pct: $("cfgPaypalPct")?.value.trim() || "5.4",
+        paypal_comision_fija: $("cfgPaypalFija")?.value.trim() || "0.30",
+        logo_url: $("cfgLogoUrl").value.trim(),
+        portada_url: $("cfgPortadaUrl").value.trim(),
+        metodos_pago: $("cfgMetodosPago")?.value || "Zelle",
+        font_titulos: $("cfgFontTitulos")?.value || "AMAZON",
+        size_titulos: String(parseFloat($("cfgSizeTitulos")?.value) || 16),
+        font_desc: $("cfgFontDesc")?.value || "AMAZON",
+        size_desc: String(parseFloat($("cfgSizeDesc")?.value) || 13),
+        font_cat: $("cfgFontCat")?.value || "AMAZON",
+        size_cat: String(parseFloat($("cfgSizeCat")?.value) || 12.5)
+      };
+
+      const data = await postAdmin({ action: "updateConfig", patch });
+      if (data.ok) {
+        Object.assign(state.config, patch);
+        aplicarTipografiaGlobal(patch);
+        mostrarMsg($("msgAdminCfg"), "Configuración, métodos de pago y tipografías guardados en la Sheet.", true);
+        await refrescarAdminData();
+      } else {
+        mostrarMsg($("msgAdminCfg"), data.error || "Error al guardar", false);
+      }
     }
 
     async function toggleEstadoTiendaAdmin() {
